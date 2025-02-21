@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using System.Buffers.Binary;
+
+namespace ET.Client
 {
     public struct SceneChangeStart
     {
@@ -31,5 +33,16 @@
     public struct AfterUnitCreate
     {
         public Unit Unit;
+    }
+
+    public struct ShowUIHint
+    {
+        public string hint;
+        public bool showCloseBtn;
+    }
+
+    public struct HideUIHint
+    {
+        
     }
 }

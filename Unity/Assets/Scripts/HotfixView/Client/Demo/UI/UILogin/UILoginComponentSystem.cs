@@ -19,7 +19,7 @@ namespace ET.Client
 		}
 
 		
-		public static void OnLogin(this UILoginComponent self)
+		private static void OnLogin(this UILoginComponent self)
 		{
 			LoginHelper.Login(
 				self.Root(), 
