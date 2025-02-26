@@ -175,3 +175,52 @@ message M2M_UnitTransferResponse // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+// ResponseType L2G_GetRoomList
+message G2L_GetRoomList // IRequest
+{
+	int32 RpcId = 1;
+}
+
+message L2G_GetRoomList // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated int64 RoomId = 4;
+	repeated int64 RoomHolderId = 5;
+	repeated int32 PlayerNum = 6;
+}
+
+// ResponseType L2G_CreateRoom
+message G2L_CreateRoom // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message L2G_CreateRoom // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomId = 4;
+}
+
+// ResponseType L2G_EnterRoom
+message G2L_EnterRoom // IRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+	string Name = 4;
+}
+
+message L2G_EnterRoom // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomHolderId = 4;
+	repeated int64 PlayerId = 5;
+}

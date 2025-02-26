@@ -37,7 +37,7 @@ namespace ET.Server
 			}
 			
 			// 随机分配一个Gate
-			StartSceneConfig config = RealmGateAddressHelper.GetGate(session.Zone(), request.Account);
+			StartSceneConfig config = AddressHelper.GetGate(session.Zone(), request.Account);
 			Log.Debug($"gate address: {config}");
 			
 			// 向gate请求一个key,客户端可以拿着这个key连接gate

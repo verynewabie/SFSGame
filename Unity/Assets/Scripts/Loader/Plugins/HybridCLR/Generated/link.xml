@@ -183,6 +183,7 @@
     <type fullname="ET.CodeLoader" preserve="all" />
     <type fullname="ET.GlobalComponent" preserve="all" />
     <type fullname="ET.GlobalConfig" preserve="all" />
+    <type fullname="ET.MonoPrefabLoader" preserve="all" />
     <type fullname="ET.UILayer" preserve="all" />
     <type fullname="ReferenceCollector" preserve="all" />
   </assembly>

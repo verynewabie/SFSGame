@@ -35,7 +35,9 @@ namespace ET.Client
                 return;
             }
 
-            root.GetComponent<PlayerComponent>().MyId = response.PlayerId;
+            var playerCmpt = root.GetComponent<PlayerComponent>();
+            playerCmpt.MyId = response.PlayerId;
+            playerCmpt.Account = account;
             
             await EventSystem.Instance.PublishAsync(root, new LoginFinish());
         }

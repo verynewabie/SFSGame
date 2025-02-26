@@ -8,6 +8,8 @@ namespace ET
     {
         public MultiMap<int, StartSceneConfig> Gates = new();
         
+        public Dictionary<int, StartSceneConfig> Lobbys = new();
+        
         public MultiMap<int, StartSceneConfig> ProcessScenes = new();
         
         public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new();
@@ -68,6 +70,9 @@ namespace ET
                         break;
                     case SceneType.BenchmarkServer:
                         this.Benchmark = startSceneConfig;
+                        break;
+                    case SceneType.Lobby:
+                        this.Lobbys.Add(startSceneConfig.Zone, startSceneConfig);
                         break;
                 }
             }

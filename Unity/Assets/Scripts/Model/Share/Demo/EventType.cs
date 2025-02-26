@@ -45,4 +45,10 @@ namespace ET.Client
     {
         
     }
+
+    public struct PlayerEnterRoom
+    {
+        public string name;
+        public long playerId;
+    }
 }

@@ -3,7 +3,7 @@
 
 namespace ET.Server
 {
-	public static partial class RealmGateAddressHelper
+	public static partial class AddressHelper
 	{
 		public static StartSceneConfig GetGate(int zone, string account)
 		{
@@ -12,6 +12,11 @@ namespace ET.Server
 			List<StartSceneConfig> zoneGates = StartSceneConfigCategory.Instance.Gates[zone];
 			
 			return zoneGates[(int)(hash % (ulong)zoneGates.Count)];
+		}
+
+		public static StartSceneConfig GetLobby(int zone)
+		{
+			return StartSceneConfigCategory.Instance.Lobbys[zone];
 		}
 	}
 }

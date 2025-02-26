@@ -797,6 +797,223 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(InnerMessage.G2L_GetRoomList)]
+    [ResponseType(nameof(L2G_GetRoomList))]
+    public partial class G2L_GetRoomList : MessageObject, IRequest
+    {
+        public static G2L_GetRoomList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2L_GetRoomList), isFromPool) as G2L_GetRoomList;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.L2G_GetRoomList)]
+    public partial class L2G_GetRoomList : MessageObject, IResponse
+    {
+        public static L2G_GetRoomList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(L2G_GetRoomList), isFromPool) as L2G_GetRoomList;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<long> RoomId { get; set; } = new();
+
+        [MemoryPackOrder(4)]
+        public List<long> RoomHolderId { get; set; } = new();
+
+        [MemoryPackOrder(5)]
+        public List<int> PlayerNum { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.RoomId.Clear();
+            this.RoomHolderId.Clear();
+            this.PlayerNum.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.G2L_CreateRoom)]
+    [ResponseType(nameof(L2G_CreateRoom))]
+    public partial class G2L_CreateRoom : MessageObject, IRequest
+    {
+        public static G2L_CreateRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2L_CreateRoom), isFromPool) as G2L_CreateRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.L2G_CreateRoom)]
+    public partial class L2G_CreateRoom : MessageObject, IResponse
+    {
+        public static L2G_CreateRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(L2G_CreateRoom), isFromPool) as L2G_CreateRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public long RoomId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.RoomId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.G2L_EnterRoom)]
+    [ResponseType(nameof(L2G_EnterRoom))]
+    public partial class G2L_EnterRoom : MessageObject, IRequest
+    {
+        public static G2L_EnterRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2L_EnterRoom), isFromPool) as G2L_EnterRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long RoomId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public string Name { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+            this.RoomId = default;
+            this.Name = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.L2G_EnterRoom)]
+    public partial class L2G_EnterRoom : MessageObject, IResponse
+    {
+        public static L2G_EnterRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(L2G_EnterRoom), isFromPool) as L2G_EnterRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public long RoomHolderId { get; set; }
+
+        [MemoryPackOrder(4)]
+        public List<long> PlayerId { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.RoomHolderId = default;
+            this.PlayerId.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class InnerMessage
     {
         public const ushort ObjectQueryRequest = 20002;
@@ -822,5 +1039,11 @@ namespace ET
         public const ushort ObjectQueryResponse = 20022;
         public const ushort M2M_UnitTransferRequest = 20023;
         public const ushort M2M_UnitTransferResponse = 20024;
+        public const ushort G2L_GetRoomList = 20025;
+        public const ushort L2G_GetRoomList = 20026;
+        public const ushort G2L_CreateRoom = 20027;
+        public const ushort L2G_CreateRoom = 20028;
+        public const ushort G2L_EnterRoom = 20029;
+        public const ushort L2G_EnterRoom = 20030;
     }
 }

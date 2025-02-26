@@ -233,3 +233,58 @@ message G2C_Benchmark // ISessionResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+// ResponseType G2C_GetRoomList
+message C2G_GetRoomList // ISessionRequest
+{
+	int32 RpcId = 1;
+}
+
+message G2C_GetRoomList // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated int64 RoomId = 4;
+	repeated string RoomHolderName = 5;
+	repeated int32 PlayerNum = 6;
+}
+
+// ResponseType G2C_CreateRoom
+message C2G_CreateRoom // ISessionRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message G2C_CreateRoom // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomId = 4;
+}
+
+// ResponseType G2C_EnterRoom
+message C2G_EnterRoom // ISessionRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+	int64 RoomId = 3;
+}
+
+message G2C_EnterRoom // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	int64 RoomHolderId = 4;
+	repeated int64 PlayerId = 5;
+	repeated string PlayerName = 6;
+}
+
+message L2C_NewPlayer // IMessage
+{
+	string Name = 1;
+	int64 PlayerId = 2;
+}

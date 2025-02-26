@@ -1082,6 +1082,252 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.C2G_GetRoomList)]
+    [ResponseType(nameof(G2C_GetRoomList))]
+    public partial class C2G_GetRoomList : MessageObject, ISessionRequest
+    {
+        public static C2G_GetRoomList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_GetRoomList), isFromPool) as C2G_GetRoomList;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.G2C_GetRoomList)]
+    public partial class G2C_GetRoomList : MessageObject, ISessionResponse
+    {
+        public static G2C_GetRoomList Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_GetRoomList), isFromPool) as G2C_GetRoomList;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<long> RoomId { get; set; } = new();
+
+        [MemoryPackOrder(4)]
+        public List<string> RoomHolderName { get; set; } = new();
+
+        [MemoryPackOrder(5)]
+        public List<int> PlayerNum { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.RoomId.Clear();
+            this.RoomHolderName.Clear();
+            this.PlayerNum.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2G_CreateRoom)]
+    [ResponseType(nameof(G2C_CreateRoom))]
+    public partial class C2G_CreateRoom : MessageObject, ISessionRequest
+    {
+        public static C2G_CreateRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_CreateRoom), isFromPool) as C2G_CreateRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.G2C_CreateRoom)]
+    public partial class G2C_CreateRoom : MessageObject, ISessionResponse
+    {
+        public static G2C_CreateRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_CreateRoom), isFromPool) as G2C_CreateRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public long RoomId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.RoomId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2G_EnterRoom)]
+    [ResponseType(nameof(G2C_EnterRoom))]
+    public partial class C2G_EnterRoom : MessageObject, ISessionRequest
+    {
+        public static C2G_EnterRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_EnterRoom), isFromPool) as C2G_EnterRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long RoomId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+            this.RoomId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.G2C_EnterRoom)]
+    public partial class G2C_EnterRoom : MessageObject, ISessionResponse
+    {
+        public static G2C_EnterRoom Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_EnterRoom), isFromPool) as G2C_EnterRoom;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public long RoomHolderId { get; set; }
+
+        [MemoryPackOrder(4)]
+        public List<long> PlayerId { get; set; } = new();
+
+        [MemoryPackOrder(5)]
+        public List<string> PlayerName { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.RoomHolderId = default;
+            this.PlayerId.Clear();
+            this.PlayerName.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.L2C_NewPlayer)]
+    public partial class L2C_NewPlayer : MessageObject, IMessage
+    {
+        public static L2C_NewPlayer Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(L2C_NewPlayer), isFromPool) as L2C_NewPlayer;
+        }
+
+        [MemoryPackOrder(0)]
+        public string Name { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Name = default;
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1118,5 +1364,12 @@ namespace ET
         public const ushort M2C_TransferMap = 10033;
         public const ushort C2G_Benchmark = 10034;
         public const ushort G2C_Benchmark = 10035;
+        public const ushort C2G_GetRoomList = 10036;
+        public const ushort G2C_GetRoomList = 10037;
+        public const ushort C2G_CreateRoom = 10038;
+        public const ushort G2C_CreateRoom = 10039;
+        public const ushort C2G_EnterRoom = 10040;
+        public const ushort G2C_EnterRoom = 10041;
+        public const ushort L2C_NewPlayer = 10042;
     }
 }
