@@ -26,7 +26,7 @@ namespace ET.Server
                 await unit.AddLocation(LocationType.Unit);
             }
             // broadcast load units
-            message.PlayerId = request.PlayerId;
+            message.PlayerId.AddRange(request.PlayerId);
             room.Broadcast(message);
             await ETTask.CompletedTask;
         }
