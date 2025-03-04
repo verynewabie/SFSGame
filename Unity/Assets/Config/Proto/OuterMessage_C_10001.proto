@@ -288,3 +288,32 @@ message L2C_NewPlayer // IMessage
 	string Name = 1;
 	int64 PlayerId = 2;
 }
+
+message C2L_StartGame // ILobbyMessage
+{
+	int64 RoomId = 1;
+}
+
+message SFSUnitInfo
+{
+	int64 UnitId = 1;
+	Unity.Mathematics.float3 Position = 2;
+	Unity.Mathematics.float3 Forward = 3;
+	UnitCamp Camp = 4;
+}
+
+message Room2C_LoadGame // IMessage
+{
+	repeated SFSUnitInfo UnitInfos = 1;
+	repeated int64 PlayerId = 2;
+}
+
+message C2Room_LoadGameDone // ISFSRoomMessage
+{
+	int64 PlayerId = 1;
+}
+
+message Room2C_SFSEnterGame // IMessage
+{
+
+}

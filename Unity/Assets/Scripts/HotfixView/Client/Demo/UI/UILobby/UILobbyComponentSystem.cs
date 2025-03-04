@@ -84,7 +84,7 @@ namespace ET.Client
         
         private static void StartGame(this UILobbyComponent self)
         {
-
+            StartGameHelper.StartGame(self.Root());
         }
 
         private static async ETTask CreateRoom(this UILobbyComponent self)
@@ -123,6 +123,7 @@ namespace ET.Client
             request.RoomId = self.roomId[index];
             var response = await root.GetComponent<ClientSenderComponent>().Call(request) as G2C_EnterRoom;
             self.ShowRoomDetail(response.RoomHolderId, response.PlayerId, response.PlayerName);
+            root.GetComponent<PlayerComponent>().RoomId = request.RoomId;
         }
 
         private static void LeaveRoom(this UILobbyComponent self)

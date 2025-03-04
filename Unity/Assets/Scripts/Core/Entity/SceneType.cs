@@ -25,6 +25,7 @@ namespace ET
 		RoomRoot = 1 << 18,
 		Watcher = 1 << 19,
 		Lobby = 1 << 20,
+		SFSRoom = 1 << 21,
 
 		// 客户端
 		Demo = 1 << 30,

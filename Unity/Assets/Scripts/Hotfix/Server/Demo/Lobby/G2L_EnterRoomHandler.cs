@@ -16,7 +16,7 @@
             
             room.EnterRoom(request.PlayerId);
             response.RoomHolderId = room.RoomHolderId;
-            response.PlayerId = room.Players;
+            response.PlayerId.AddRange(room.Players);
             await ETTask.CompletedTask;
         }
     }

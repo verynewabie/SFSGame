@@ -26,7 +26,7 @@ namespace ET.Client
         public static void ShowRoomPreview(this RoomPreview self, string ownerName, int playerNum)
         {
             self.ownerName.text = ownerName;
-            self.playerNum.text = playerNum.ToString();
+            self.playerNum.text = $"{playerNum}/{ConstValue.RoomMaxPlayerCount}";
         }
     }
 }

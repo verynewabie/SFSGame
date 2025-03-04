@@ -5,6 +5,7 @@
     <type fullname="MemoryPack.Formatters.DictionaryFormatter`2" preserve="all" />
     <type fullname="MemoryPack.Formatters.ListFormatter" preserve="all" />
     <type fullname="MemoryPack.Formatters.ListFormatter`1" preserve="all" />
+    <type fullname="MemoryPack.Formatters.UnmanagedFormatter`1" preserve="all" />
     <type fullname="MemoryPack.GenerateType" preserve="all" />
     <type fullname="MemoryPack.IMemoryPackFormatterRegister" preserve="all" />
     <type fullname="MemoryPack.IMemoryPackable`1" preserve="all" />

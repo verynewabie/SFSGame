@@ -23,6 +23,12 @@ namespace ET.Server
                     MessageSessionDispatcher.Instance.Handle(session, message);
                     break;
                 }
+                case ILobbyMessage lobbyMessage:
+                {
+                    StartSceneConfig lobbyConfig = AddressHelper.GetLobby(session.Zone());
+                    session.Fiber().Root.GetComponent<MessageSender>().Send(lobbyConfig.ActorId, lobbyMessage);
+                    break;
+                }
                 case FrameMessage frameMessage:
                 {
                     Player player = session.GetComponent<SessionPlayerComponent>().Player;
@@ -37,6 +43,14 @@ namespace ET.Server
                     ActorId roomActorId = player.GetComponent<PlayerRoomComponent>().RoomActorId;
                     actorRoom.PlayerId = player.Id;
                     root.GetComponent<MessageSender>().Send(roomActorId, actorRoom);
+                    break;
+                }
+                case ISFSRoomMessage roomMessage:
+                {
+                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
+                    ActorId roomActorId = player.GetComponent<PlayerRoomComponent>().RoomActorId;
+                    roomMessage.PlayerId = player.Id;
+                    root.GetComponent<MessageSender>().Send(roomActorId, roomMessage);
                     break;
                 }
                 case ILocationMessage actorLocationMessage:

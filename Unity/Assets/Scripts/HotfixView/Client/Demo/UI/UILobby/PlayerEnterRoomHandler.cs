@@ -7,6 +7,7 @@
         {
             var cmpt = scene.GetComponent<UIComponent>().Get(UIType.UILobby).GetComponent<UILobbyComponent>();
             cmpt.PlayerEnterRoom(args.playerId, args.name);
+            await ETTask.CompletedTask;
         }
     }
 }

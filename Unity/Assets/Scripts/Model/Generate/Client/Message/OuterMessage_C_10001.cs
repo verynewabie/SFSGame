@@ -1328,6 +1328,143 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.C2L_StartGame)]
+    public partial class C2L_StartGame : MessageObject, ILobbyMessage
+    {
+        public static C2L_StartGame Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2L_StartGame), isFromPool) as C2L_StartGame;
+        }
+
+        [MemoryPackOrder(0)]
+        public long RoomId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RoomId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.SFSUnitInfo)]
+    public partial class SFSUnitInfo : MessageObject
+    {
+        public static SFSUnitInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(SFSUnitInfo), isFromPool) as SFSUnitInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(2)]
+        public Unity.Mathematics.float3 Forward { get; set; }
+
+        [MemoryPackOrder(3)]
+        public UnitCamp Camp { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.UnitId = default;
+            this.Position = default;
+            this.Forward = default;
+            this.Camp = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.Room2C_LoadGame)]
+    public partial class Room2C_LoadGame : MessageObject, IMessage
+    {
+        public static Room2C_LoadGame Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_LoadGame), isFromPool) as Room2C_LoadGame;
+        }
+
+        [MemoryPackOrder(0)]
+        public List<SFSUnitInfo> UnitInfos { get; set; } = new();
+
+        [MemoryPackOrder(1)]
+        public List<long> PlayerId { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.UnitInfos.Clear();
+            this.PlayerId.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2Room_LoadGameDone)]
+    public partial class C2Room_LoadGameDone : MessageObject, ISFSRoomMessage
+    {
+        public static C2Room_LoadGameDone Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2Room_LoadGameDone), isFromPool) as C2Room_LoadGameDone;
+        }
+
+        [MemoryPackOrder(0)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.Room2C_SFSEnterGame)]
+    public partial class Room2C_SFSEnterGame : MessageObject, IMessage
+    {
+        public static Room2C_SFSEnterGame Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_SFSEnterGame), isFromPool) as Room2C_SFSEnterGame;
+        }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1371,5 +1508,10 @@ namespace ET
         public const ushort C2G_EnterRoom = 10040;
         public const ushort G2C_EnterRoom = 10041;
         public const ushort L2C_NewPlayer = 10042;
+        public const ushort C2L_StartGame = 10043;
+        public const ushort SFSUnitInfo = 10044;
+        public const ushort Room2C_LoadGame = 10045;
+        public const ushort C2Room_LoadGameDone = 10046;
+        public const ushort Room2C_SFSEnterGame = 10047;
     }
 }

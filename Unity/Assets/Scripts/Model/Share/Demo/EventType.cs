@@ -51,4 +51,26 @@ namespace ET.Client
         public string name;
         public long playerId;
     }
+
+    public struct SFSLoadScene
+    {
+        public string sceneName;
+    }
+
+    public struct CreateSFSUnit
+    {
+        public bool IsLocalPlayer;
+        public SFSUnit unit;
+        // public bool HeroConfigId;
+    }
+
+    public struct SFSLoadSceneDone
+    {
+        
+    }
+
+    public struct InitBattleView
+    {
+        
+    }
 }

@@ -224,3 +224,37 @@ message L2G_EnterRoom // IResponse
 	int64 RoomHolderId = 4;
 	repeated int64 PlayerId = 5;
 }
+
+// ResponseType M2L_CreateBattleRoom
+message L2M_CreateBattleRoom // IRequest
+{
+	int32 RpcId = 1;
+	repeated int64 PlayerId = 2;
+}
+
+message M2L_CreateBattleRoom // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	ActorId ActorId = 4;
+}
+
+message L2G_NotifyStartBattle // IMessage
+{
+	ActorId ActorId = 1;
+}
+
+// ResponseType Room2M_Init
+message M2Room_Init // IRequest
+{
+	int32 RpcId = 1;
+	repeated int64 PlayerId = 2;
+}
+
+message Room2M_Init // IResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+}

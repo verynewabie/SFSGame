@@ -29,11 +29,16 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AfterCreateCurrentScene>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AfterUnitCreate>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AppStartInitFinish>
+	// ET.AEvent.<Handle>d__3<object,ET.Client.CreateSFSUnit>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.EnterMapFinish>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.HideUIHint>
+	// ET.AEvent.<Handle>d__3<object,ET.Client.InitBattleView>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.LSSceneChangeStart>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.LSSceneInitFinish>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.LoginFinish>
+	// ET.AEvent.<Handle>d__3<object,ET.Client.PlayerEnterRoom>
+	// ET.AEvent.<Handle>d__3<object,ET.Client.SFSLoadScene>
+	// ET.AEvent.<Handle>d__3<object,ET.Client.SFSLoadSceneDone>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.SceneChangeFinish>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.SceneChangeStart>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.ShowUIHint>
@@ -49,11 +54,16 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.AEvent<object,ET.Client.AfterCreateCurrentScene>
 	// ET.AEvent<object,ET.Client.AfterUnitCreate>
 	// ET.AEvent<object,ET.Client.AppStartInitFinish>
+	// ET.AEvent<object,ET.Client.CreateSFSUnit>
 	// ET.AEvent<object,ET.Client.EnterMapFinish>
 	// ET.AEvent<object,ET.Client.HideUIHint>
+	// ET.AEvent<object,ET.Client.InitBattleView>
 	// ET.AEvent<object,ET.Client.LSSceneChangeStart>
 	// ET.AEvent<object,ET.Client.LSSceneInitFinish>
 	// ET.AEvent<object,ET.Client.LoginFinish>
+	// ET.AEvent<object,ET.Client.PlayerEnterRoom>
+	// ET.AEvent<object,ET.Client.SFSLoadScene>
+	// ET.AEvent<object,ET.Client.SFSLoadSceneDone>
 	// ET.AEvent<object,ET.Client.SceneChangeFinish>
 	// ET.AEvent<object,ET.Client.SceneChangeStart>
 	// ET.AEvent<object,ET.Client.ShowUIHint>
@@ -105,9 +115,14 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.ETTask<uint>
 	// ET.EntityRef<object>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.AppStartInitFinish>
+	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.CreateSFSUnit>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.HideUIHint>
+	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.InitBattleView>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.LSSceneChangeStart>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.LoginFinish>
+	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.PlayerEnterRoom>
+	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.SFSLoadScene>
+	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.SFSLoadSceneDone>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.ShowUIHint>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.EntryEvent1>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.EntryEvent2>
@@ -151,6 +166,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// MemoryPack.Formatters.ListFormatter<int>
 	// MemoryPack.Formatters.ListFormatter<long>
 	// MemoryPack.Formatters.ListFormatter<object>
+	// MemoryPack.Formatters.UnmanagedFormatter<int>
 	// MemoryPack.IMemoryPackFormatter<Unity.Mathematics.float3>
 	// MemoryPack.IMemoryPackFormatter<byte>
 	// MemoryPack.IMemoryPackFormatter<int>
@@ -160,6 +176,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// MemoryPack.IMemoryPackable<object>
 	// MemoryPack.MemoryPackFormatter<ET.LSInput>
 	// MemoryPack.MemoryPackFormatter<System.UIntPtr>
+	// MemoryPack.MemoryPackFormatter<int>
 	// MemoryPack.MemoryPackFormatter<object>
 	// MongoDB.Bson.Serialization.IBsonSerializer<object>
 	// MongoDB.Bson.Serialization.Serializers.SerializerBase<ET.LSInput>
@@ -598,6 +615,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object ET.Entity.AddComponent<object,int,int>(int,int,bool)
 		// object ET.Entity.AddComponent<object,int>(int,bool)
 		// object ET.Entity.AddComponent<object,object,int>(object,int,bool)
+		// object ET.Entity.AddComponent<object,object>(object,bool)
 		// object ET.Entity.AddComponent<object>(bool)
 		// object ET.Entity.AddComponentWithId<object,int,int>(long,int,int,bool)
 		// object ET.Entity.AddComponentWithId<object,int>(long,int,bool)
@@ -626,13 +644,19 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.EventSystem.Publish<object,ET.Client.LSSceneInitFinish>(object,ET.Client.LSSceneInitFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.SceneChangeFinish>(object,ET.Client.SceneChangeFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.SceneChangeStart>(object,ET.Client.SceneChangeStart)
+		// System.Void ET.EventSystem.Publish<object,ET.Client.ShowUIHint>(object,ET.Client.ShowUIHint)
 		// System.Void ET.EventSystem.Publish<object,ET.MoveStart>(object,ET.MoveStart)
 		// System.Void ET.EventSystem.Publish<object,ET.MoveStop>(object,ET.MoveStop)
 		// System.Void ET.EventSystem.Publish<object,ET.NumbericChange>(object,ET.NumbericChange)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.AppStartInitFinish>(object,ET.Client.AppStartInitFinish)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.CreateSFSUnit>(object,ET.Client.CreateSFSUnit)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.HideUIHint>(object,ET.Client.HideUIHint)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.InitBattleView>(object,ET.Client.InitBattleView)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.LSSceneChangeStart>(object,ET.Client.LSSceneChangeStart)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.LoginFinish>(object,ET.Client.LoginFinish)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.PlayerEnterRoom>(object,ET.Client.PlayerEnterRoom)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.SFSLoadScene>(object,ET.Client.SFSLoadScene)
+		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.SFSLoadSceneDone>(object,ET.Client.SFSLoadSceneDone)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.ShowUIHint>(object,ET.Client.ShowUIHint)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EntryEvent1>(object,ET.EntryEvent1)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.EntryEvent2>(object,ET.EntryEvent2)
@@ -651,8 +675,10 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// MemoryPack.MemoryPackFormatter<long> MemoryPack.MemoryPackFormatterProvider.GetFormatter<long>()
 		// MemoryPack.MemoryPackFormatter<object> MemoryPack.MemoryPackFormatterProvider.GetFormatter<object>()
 		// bool MemoryPack.MemoryPackFormatterProvider.IsRegistered<ET.LSInput>()
+		// bool MemoryPack.MemoryPackFormatterProvider.IsRegistered<int>()
 		// bool MemoryPack.MemoryPackFormatterProvider.IsRegistered<object>()
 		// System.Void MemoryPack.MemoryPackFormatterProvider.Register<ET.LSInput>(MemoryPack.MemoryPackFormatter<ET.LSInput>)
+		// System.Void MemoryPack.MemoryPackFormatterProvider.Register<int>(MemoryPack.MemoryPackFormatter<int>)
 		// System.Void MemoryPack.MemoryPackFormatterProvider.Register<object>(MemoryPack.MemoryPackFormatter<object>)
 		// System.Void MemoryPack.MemoryPackReader.DangerousReadUnmanagedArray<byte>(byte[]&)
 		// byte[] MemoryPack.MemoryPackReader.DangerousReadUnmanagedArray<byte>()
@@ -677,6 +703,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,long>(byte&,int&,long&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int>(byte&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,TrueSync.TSVector,TrueSync.TSQuaternion>(byte&,long&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,Unity.Mathematics.float3,Unity.Mathematics.float3,int>(byte&,long&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,Unity.Mathematics.float3>(byte&,long&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,int,int,Unity.Mathematics.float3,Unity.Mathematics.float3>(byte&,long&,int&,int&,Unity.Mathematics.float3&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,int,long>(byte&,long&,int&,long&)
@@ -717,6 +744,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,long>(byte,byte&,int&,long&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int>(byte,byte&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,TrueSync.TSVector,TrueSync.TSQuaternion>(byte,byte&,long&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,Unity.Mathematics.float3,Unity.Mathematics.float3,int>(byte,byte&,long&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,Unity.Mathematics.float3>(byte,byte&,long&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,int,int,Unity.Mathematics.float3,Unity.Mathematics.float3>(byte,byte&,long&,int&,int&,Unity.Mathematics.float3&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,int,long>(byte,byte&,long&,int&,long&)
