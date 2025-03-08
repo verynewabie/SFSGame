@@ -2,7 +2,7 @@
 {
     public enum UnitCamp
     {
-        Home = 0,
-        Away = 1,
+        Red = 0,
+        Blue = 1,
     }
 }

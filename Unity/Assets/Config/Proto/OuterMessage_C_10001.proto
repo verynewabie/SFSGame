@@ -317,3 +317,11 @@ message Room2C_SFSEnterGame // IMessage
 {
 
 }
+
+message MoveCmd // IRoomCmd
+{
+	int32 FrameId = 1;
+	SFSCmdType CmdType = 2;
+	int64 PlayerId = 3;
+	Unity.Mathematics.float2 Dir = 4;
+}

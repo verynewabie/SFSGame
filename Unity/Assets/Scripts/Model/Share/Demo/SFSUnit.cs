@@ -8,5 +8,6 @@ namespace ET
         public float3 Position;
         public quaternion Rotation;
         public EntityRef<BattleRoom> BattleRoom;
+        public UnitCamp UnitCamp;
     }
 }

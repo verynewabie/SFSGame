@@ -20,7 +20,7 @@ namespace ET.Client
             string assetName = "Assets/Bundles/Unit/Unit.prefab";
             GameObject bundleGameObject = await self.Room.GetComponent<ResourcesLoaderComponent>()
                     .LoadAssetAsync<GameObject>(assetName);
-            GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
+            GameObject prefab = bundleGameObject.Get<GameObject>($"{self.Unit.UnitCamp.ToString()}");
             
             GlobalComponent globalComponent = self.Root().GetComponent<GlobalComponent>();
             self.GameObject = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);

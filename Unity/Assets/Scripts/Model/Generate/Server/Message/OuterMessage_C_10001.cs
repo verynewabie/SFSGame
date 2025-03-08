@@ -1465,6 +1465,43 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.MoveCmd)]
+    public partial class MoveCmd : MessageObject, IRoomCmd
+    {
+        public static MoveCmd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(MoveCmd), isFromPool) as MoveCmd;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public SFSCmdType CmdType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long PlayerId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public Unity.Mathematics.float2 Dir { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+            this.CmdType = default;
+            this.PlayerId = default;
+            this.Dir = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1513,5 +1550,6 @@ namespace ET
         public const ushort Room2C_LoadGame = 10045;
         public const ushort C2Room_LoadGameDone = 10046;
         public const ushort Room2C_SFSEnterGame = 10047;
+        public const ushort MoveCmd = 10048;
     }
 }

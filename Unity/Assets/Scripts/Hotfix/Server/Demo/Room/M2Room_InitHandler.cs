@@ -17,7 +17,7 @@ namespace ET.Server
                 roomPlayerComponent.AddChildWithId<SFSRoomPlayer>(id);
                 SFSUnitInfo info = SFSUnitInfo.Create();
                 info.UnitId = id;
-                info.Camp = i * 2 < request.PlayerId.Count ? UnitCamp.Home : UnitCamp.Away;
+                info.Camp = i * 2 < request.PlayerId.Count ? UnitCamp.Red : UnitCamp.Blue;
                 message.UnitInfos.Add(info);
                 // Create Unit
                 // register unit location
