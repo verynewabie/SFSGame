@@ -15,6 +15,8 @@ namespace ET.Client
         public int FrameBuffer = 1;
         public int CurrentFrame;
         public int CurrentArrivedFrame;
+        public bool HasInSpeedChangeState;
+        public int FailCount;
         private EntityRef<BattleRoom> myRoom;
         public BattleRoom MyRoom
         {

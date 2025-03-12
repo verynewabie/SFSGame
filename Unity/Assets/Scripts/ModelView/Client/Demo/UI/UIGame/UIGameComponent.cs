@@ -1,4 +1,5 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace ET.Client
 {
@@ -17,5 +18,11 @@ namespace ET.Client
         public int Num;
         public Text FPS;
         public Text MS;
+        public GameObject DebugPanel;
+        public bool DebugPanelActive;
+        public Text ClientFrame;
+        public Text ServerFrame;
+        public Text ClientAheadFrame;
+        public Text FailCount;
     }
 }

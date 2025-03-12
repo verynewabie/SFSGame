@@ -10,12 +10,12 @@ namespace ET.Client
     public static partial class SFSOperaComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.Client.SFSOperaComponent self, PlayerInputComponent inputComponent)
+        private static void Awake(this SFSOperaComponent self, PlayerInputComponent inputComponent)
         {
             self.PlayerInput = inputComponent;
         }
         [EntitySystem]
-        private static void Update(this ET.Client.SFSOperaComponent self)
+        private static void Update(this SFSOperaComponent self)
         {
             PlayerInputComponent inputComponent = self.PlayerInput;
             

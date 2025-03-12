@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ET.Client
 {
@@ -80,6 +81,23 @@ namespace ET.Client
                 }
             }
             
+            if (self.CurrentAheadOfFrame != self.TargetAheadOfFrame)
+            {
+                // Log.Info("------------------进入变速状态");
+                self.HasInSpeedChangeState = true;
+                int newInterval = TimeSpan.FromTicks(TimeSpan.TicksPerSecond /
+                    (SFSConstValue.FrameCountPerSecond +
+                        self.TargetAheadOfFrame -
+                        self.CurrentAheadOfFrame
+                    )).Milliseconds;
+                self.ClientUpdate.ChangeInterval(newInterval, self.CurrentFrame);
+            }
+            else if (self.HasInSpeedChangeState)
+            {
+                // Log.Info("------------------已经对齐");
+                self.HasInSpeedChangeState = false;
+                self.ClientUpdate.ChangeInterval(SFSConstValue.UpdateInterval, self.CurrentFrame);
+            }
         }
 
         private static void Tick(this SFSComponent self)
