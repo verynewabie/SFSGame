@@ -11,5 +11,6 @@ namespace ET.Client
 	    public const string UILobby = "UILobby";
 	    public const string UIHelp = "UIHelp";
 	    public const string UIHint = "UIHint";
+	    public const string UIGame = "UIGame";
     }
 }

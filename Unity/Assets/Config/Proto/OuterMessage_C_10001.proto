@@ -315,13 +315,13 @@ message C2Room_LoadGameDone // ISFSRoomMessage
 
 message Room2C_SFSEnterGame // IMessage
 {
-
+	int64 StartTime = 1;
 }
 
 message MoveCmd // IRoomCmd
 {
 	int32 FrameId = 1;
 	SFSCmdType CmdType = 2;
-	int64 PlayerId = 3;
+	int64 UnitId = 3;
 	Unity.Mathematics.float2 Dir = 4;
 }

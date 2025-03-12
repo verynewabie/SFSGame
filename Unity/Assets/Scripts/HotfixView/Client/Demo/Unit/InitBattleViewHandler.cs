@@ -9,7 +9,9 @@ namespace ET.Client
         protected override async ETTask Run(Scene scene, InitBattleView arg)
         {
             BattleRoom room = scene.GetComponent<BattleRoom>();
-            room.AddComponent<SFSOperaComponent, PlayerInput>(arg.playerInput);
+            room.AddComponent<SFSOperaComponent, PlayerInputComponent>(arg.PlayerInputComponent);
+            room.AddComponent<UIComponent>();
+            await UIHelper.Create(room, UIType.UIGame, UILayer.Mid);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             await ETTask.CompletedTask;

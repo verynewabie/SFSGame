@@ -7,10 +7,11 @@ namespace ET
         MoveCmd
     }
 
-    public interface IRoomCmd : ISFSRoomMessage
+    public interface IRoomCmd : IMessage
     {
         int FrameId { get; set; }
         SFSCmdType CmdType { get; set; }
+        long UnitId { get; set; }
     }
     
     public interface ISFSRoomMessage : IMessage

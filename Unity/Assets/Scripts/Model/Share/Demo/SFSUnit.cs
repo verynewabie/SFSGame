@@ -7,7 +7,13 @@ namespace ET
     {
         public float3 Position;
         public quaternion Rotation;
-        public EntityRef<BattleRoom> BattleRoom;
+        private EntityRef<BattleRoom> battleRoom;
+        public BattleRoom BattleRoom
+        {
+            get { return battleRoom; }
+            set { battleRoom = value; }
+        }
         public UnitCamp UnitCamp;
+        public float3 Speed;
     }
 }

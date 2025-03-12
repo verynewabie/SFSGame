@@ -19,3 +19,8 @@ message NetClient2Main_Login // IResponse
 
 	int64 PlayerId = 4;
 }
+
+message NetClient2Main_PingChange // IMessage
+{
+	int64 NewPing = 1;
+}

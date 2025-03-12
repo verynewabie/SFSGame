@@ -1,42 +1,51 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
 namespace ET.Client
 {
 
     [EntitySystemOf(typeof(SFSOperaComponent))]
-    [FriendOf(typeof(PlayerInput))]
-    [FriendOfAttribute(typeof(ET.Client.SFSOperaComponent))]
+    [FriendOf(typeof(PlayerInputComponent))]
+    [FriendOf(typeof(SFSOperaComponent))]
     public static partial class SFSOperaComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.Client.SFSOperaComponent self, PlayerInput input)
+        private static void Awake(this ET.Client.SFSOperaComponent self, PlayerInputComponent inputComponent)
         {
-            self.PlayerInput = input;
+            self.PlayerInput = inputComponent;
         }
         [EntitySystem]
         private static void Update(this ET.Client.SFSOperaComponent self)
         {
-            PlayerInput input = self.PlayerInput;
+            PlayerInputComponent inputComponent = self.PlayerInput;
             
-            input.A_Down = Input.GetKeyDown(KeyCode.A);
-            input.A_Up = Input.GetKeyUp(KeyCode.A);
-            input.A_Press = Input.GetKey(KeyCode.A);
+            inputComponent.A_Down |= Input.GetKeyDown(KeyCode.A);
+            inputComponent.A_Up |= Input.GetKeyUp(KeyCode.A);
+            inputComponent.A_Press |= Input.GetKey(KeyCode.A);
             
-            input.D_Down = Input.GetKeyDown(KeyCode.D);
-            input.D_Up = Input.GetKeyUp(KeyCode.D);
-            input.D_Press = Input.GetKey(KeyCode.D);
+            inputComponent.D_Down |= Input.GetKeyDown(KeyCode.D);
+            inputComponent.D_Up |= Input.GetKeyUp(KeyCode.D);
+            inputComponent.D_Press |= Input.GetKey(KeyCode.D);
             
-            input.W_Down = Input.GetKeyDown(KeyCode.W);
-            input.W_Up = Input.GetKeyUp(KeyCode.W);
-            input.W_Press = Input.GetKey(KeyCode.W);
+            inputComponent.W_Down |= Input.GetKeyDown(KeyCode.W);
+            inputComponent.W_Up |= Input.GetKeyUp(KeyCode.W);
+            inputComponent.W_Press |= Input.GetKey(KeyCode.W);
             
-            input.S_Down = Input.GetKeyDown(KeyCode.S);
-            input.S_Up = Input.GetKeyUp(KeyCode.S);
-            input.S_Press = Input.GetKey(KeyCode.S);
+            inputComponent.S_Down |= Input.GetKeyDown(KeyCode.S);
+            inputComponent.S_Up |= Input.GetKeyUp(KeyCode.S);
+            inputComponent.S_Press |= Input.GetKey(KeyCode.S);
             
-            input.Q_Down = Input.GetKeyDown(KeyCode.Q);
-            input.Q_Up = Input.GetKeyUp(KeyCode.Q);
-            input.Q_Press = Input.GetKey(KeyCode.Q);
+            inputComponent.Q_Down |= Input.GetKeyDown(KeyCode.Q);
+            inputComponent.Q_Up |= Input.GetKeyUp(KeyCode.Q);
+            inputComponent.Q_Press |= Input.GetKey(KeyCode.Q);
+            
+            inputComponent.E_Down |= Input.GetKeyDown(KeyCode.E);
+            inputComponent.E_Up |= Input.GetKeyUp(KeyCode.E);
+            inputComponent.E_Press |= Input.GetKey(KeyCode.E);
+
+            Transform cameraTransform = Camera.main.transform;
+            inputComponent.Forward = new float2(cameraTransform.forward.x, cameraTransform.forward.z);
+            inputComponent.Right = new float2(cameraTransform.right.x, cameraTransform.right.z);
         }
     }
 }

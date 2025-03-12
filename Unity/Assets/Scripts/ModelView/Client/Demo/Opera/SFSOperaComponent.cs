@@ -1,8 +1,20 @@
 ﻿namespace ET.Client
 {
     [ComponentOf(typeof(BattleRoom))]
-    public class SFSOperaComponent : Entity, IAwake<PlayerInput>, IUpdate
+    public class SFSOperaComponent : Entity, IAwake<PlayerInputComponent>, IUpdate
     {
-        public EntityRef<PlayerInput> PlayerInput;
+        private EntityRef<PlayerInputComponent> playerInput;
+        public PlayerInputComponent PlayerInput
+        {
+            get { return playerInput; }
+            set { playerInput = value; }
+        }
+        
+        private EntityRef<SFSCameraComponent> camera;
+        public SFSCameraComponent Camera
+        {
+            get { return camera; }
+            set { camera = value; }
+        }
     }
 }

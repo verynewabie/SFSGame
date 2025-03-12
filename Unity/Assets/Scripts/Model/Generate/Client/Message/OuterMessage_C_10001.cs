@@ -1453,6 +1453,9 @@ namespace ET
             return ObjectPool.Instance.Fetch(typeof(Room2C_SFSEnterGame), isFromPool) as Room2C_SFSEnterGame;
         }
 
+        [MemoryPackOrder(0)]
+        public long StartTime { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -1460,7 +1463,8 @@ namespace ET
                 return;
             }
 
-            
+            this.StartTime = default;
+
             ObjectPool.Instance.Recycle(this);
         }
     }
@@ -1481,7 +1485,7 @@ namespace ET
         public SFSCmdType CmdType { get; set; }
 
         [MemoryPackOrder(2)]
-        public long PlayerId { get; set; }
+        public long UnitId { get; set; }
 
         [MemoryPackOrder(3)]
         public Unity.Mathematics.float2 Dir { get; set; }
@@ -1495,7 +1499,7 @@ namespace ET
 
             this.FrameId = default;
             this.CmdType = default;
-            this.PlayerId = default;
+            this.UnitId = default;
             this.Dir = default;
 
             ObjectPool.Instance.Recycle(this);

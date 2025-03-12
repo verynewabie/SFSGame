@@ -71,6 +71,6 @@ namespace ET.Client
 
     public struct InitBattleView
     {
-        public PlayerInput playerInput;
+        public PlayerInputComponent PlayerInputComponent;
     }
 }

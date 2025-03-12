@@ -3,7 +3,7 @@
 namespace ET.Client
 {
     [ChildOf(typeof(SFSUnitViewComponent))]
-    public class SFSUnitView : Entity, IAwake<SFSUnit>
+    public class SFSUnitView : Entity, IAwake<SFSUnit>, IUpdate, IDestroy
     {
         public GameObject GameObject;
         public Transform Transform;

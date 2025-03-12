@@ -13,8 +13,10 @@
             if (component.IsAllReady())
             {
                 Room2C_SFSEnterGame room2C_SFSEnterGame = Room2C_SFSEnterGame.Create();
+                room2C_SFSEnterGame.StartTime = TimeInfo.Instance.ServerFrameTime();
                 room.Broadcast(room2C_SFSEnterGame);
             }
+            // TODO StartSync In Server
             await ETTask.CompletedTask;
         }
     }

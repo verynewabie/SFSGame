@@ -44,8 +44,15 @@ namespace ET.Client
                     }
 
                     long time2 = TimeInfo.Instance.ClientNow();
+                    long oldPing = self.Ping;
                     self.Ping = time2 - time1;
-                    
+                    if (oldPing != self.Ping)
+                    {
+                        NetClient2Main_PingChange message = NetClient2Main_PingChange.Create();
+                        message.NewPing = self.Ping;
+                        self.Root().GetComponent<ProcessInnerSender>()
+                                .Send(new ActorId(self.Fiber().Process, ConstFiberId.Main), message);
+                    }
                     TimeInfo.Instance.ServerMinusClientTime = response.Time + (time2 - time1) / 2 - time2;
                 }
                 catch (RpcException e)

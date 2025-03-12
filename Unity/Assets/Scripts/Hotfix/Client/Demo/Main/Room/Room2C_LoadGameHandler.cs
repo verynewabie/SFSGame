@@ -20,6 +20,7 @@ namespace ET.Client
             root.GetComponent<SFSRoomsComponent>().RemoveChild(roomId);
 
             var room = root.AddComponent<BattleRoom, List<long>>(message.PlayerId);
+            room.AddComponent<SFSComponent>();
             // Load Map, 这一步给BattleRoom加了 ResourcesLoaderComponent
             await EventSystem.Instance.PublishAsync(root, new SFSLoadScene
             {
@@ -43,10 +44,10 @@ namespace ET.Client
                 });
             }
             // Add SFSOperaComponent And So On
-            PlayerInput input = room.AddChild<PlayerInput>();
+            PlayerInputComponent inputComponent = room.AddComponent<PlayerInputComponent>();
             await EventSystem.Instance.PublishAsync(root, new InitBattleView
             {
-                playerInput = input
+                PlayerInputComponent = inputComponent
             });
             // Load Complete, Send Message
             C2Room_LoadGameDone notify = C2Room_LoadGameDone.Create();

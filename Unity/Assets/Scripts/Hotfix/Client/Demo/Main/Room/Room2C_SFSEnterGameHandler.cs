@@ -7,6 +7,7 @@
         protected override async ETTask Run(Scene root, Room2C_SFSEnterGame message)
         {
             await EventSystem.Instance.PublishAsync(root, new HideUIHint());
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().StartSync(message.StartTime);
         }
     }
 }

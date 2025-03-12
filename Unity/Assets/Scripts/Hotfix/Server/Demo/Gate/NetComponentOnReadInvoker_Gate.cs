@@ -73,6 +73,11 @@ namespace ET.Server
                     }
                     break;
                 }
+                case IRoomCmd roomCmd:
+                {
+                    Log.Error($"Receive RoomCmd Success: {roomCmd.CmdType}");
+                    break;
+                }
                 case IRequest actorRequest:  // 分发IActorRequest消息，目前没有用到，需要的自己添加
                 {
                     break;

@@ -84,9 +84,35 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(ClientMessage.NetClient2Main_PingChange)]
+    public partial class NetClient2Main_PingChange : MessageObject, IMessage
+    {
+        public static NetClient2Main_PingChange Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(NetClient2Main_PingChange), isFromPool) as NetClient2Main_PingChange;
+        }
+
+        [MemoryPackOrder(0)]
+        public long NewPing { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.NewPing = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class ClientMessage
     {
         public const ushort Main2NetClient_Login = 1001;
         public const ushort NetClient2Main_Login = 1002;
+        public const ushort NetClient2Main_PingChange = 1003;
     }
 }

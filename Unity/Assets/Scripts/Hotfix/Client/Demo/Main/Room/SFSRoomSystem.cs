@@ -9,10 +9,5 @@
         {
             self.MaxPlayerCount = ConstValue.RoomMaxPlayerCount;
         }
-
-        public static void Show(this ET.Client.SFSRoom self, string holderName, int nowNum)
-        {
-            
-        }
     }
 }
