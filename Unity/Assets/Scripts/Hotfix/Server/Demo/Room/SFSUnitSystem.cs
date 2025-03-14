@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 
-namespace ET
+namespace ET.Server
 {
 
     [EntitySystemOf(typeof(SFSUnit))]

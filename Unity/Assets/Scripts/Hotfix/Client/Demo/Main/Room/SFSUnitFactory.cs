@@ -1,8 +1,8 @@
 ﻿using Unity.Mathematics;
 
-namespace ET
+namespace ET.Client
 {
-    [FriendOfAttribute(typeof(ET.SFSUnit))]
+    [FriendOfAttribute(typeof(SFSUnit))]
     public static partial class SFSUnitFactory
     {
         public static SFSUnit Create(BattleRoom room, SFSUnitInfo info)

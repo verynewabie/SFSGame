@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 
-namespace ET
+namespace ET.Client
 {
     [ChildOf(typeof(SFSUnitComponent))]
     public class SFSUnit : Entity, IAwake<BattleRoom>

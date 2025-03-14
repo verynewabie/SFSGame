@@ -1,4 +1,4 @@
-﻿namespace ET
+﻿namespace ET.Client
 {
 
     [EntitySystemOf(typeof(SFSUnitComponent))]
