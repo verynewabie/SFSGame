@@ -9,6 +9,7 @@ namespace ET.Client
     [ComponentOf(typeof(BattleRoom))]
     public class SFSComponent : Entity, IAwake, IUpdate
     {
+        public long LocalPlayerId;
         public bool StartSync;
         public FixedUpdate ClientUpdate;
         public FixedUpdate ServerUpdate;

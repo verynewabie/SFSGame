@@ -30,12 +30,14 @@ namespace ET.Client
             // Remove Lobby UI
             await EventSystem.Instance.PublishAsync(root, new SFSLoadSceneDone());
             
-            room.AddComponent<SFSUnitComponent>();
+            var unitComponent = room.AddComponent<SFSUnitComponent>();
             
             // Load Units
             foreach (SFSUnitInfo info in message.UnitInfos)
             {
                 SFSUnit unit = SFSUnitFactory.Create(room, info);
+                if (playerId == unit.Id)
+                    unitComponent.MyUnit = unit;
                 // Add UnitView, Animator, Camera
                 await EventSystem.Instance.PublishAsync(root, new CreateSFSUnit()
                 {

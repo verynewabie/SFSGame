@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ET.Client
 {
 
     [EntitySystemOf(typeof(SFSComponent))]
-    [FriendOfAttribute(typeof(ET.Client.SFSComponent))]
+    [FriendOf(typeof(SFSComponent))]
     public static partial class SFSComponentSystem
     {
         [EntitySystem]
@@ -14,6 +15,7 @@ namespace ET.Client
             self.StartSync = false;
             self.CurrentFrame = 0;
             self.MyRoom = self.GetParent<BattleRoom>();
+            self.LocalPlayerId = self.Root().GetComponent<PlayerComponent>().MyId;
         }
 
         [EntitySystem]
@@ -27,8 +29,8 @@ namespace ET.Client
                 return; 
             self.CurrentFrame++;
             self.CurrentArrivedFrame = self.CurrentFrame;
-            // Handle Cmd That Server Send TODO
-            
+            // Handle Cmd That Server Send
+            self.HandleCmdThatServerSend();
             // Send Cmd
             self.MyRoom.GetComponent<PlayerInputComponent>().Tick();
             // 执行玩家输入（预测），并 Tick Component
@@ -41,6 +43,82 @@ namespace ET.Client
             // 我们不需要TickView，给view相关的组件写Update即可
         }
 
+        private static void HandleCmdThatServerSend(this SFSComponent self)
+        {
+            if (self.FrameCmdToHandle.Count == 0)
+                return;
+            int frame = self.FrameCmdToHandle.First().Key;
+            Queue<IRoomCmd> cmds = self.FrameCmdToHandle.First().Value;
+            bool shouldRollback = false;
+            foreach (var cmd in cmds)
+            {
+                if (cmd.UnitId != self.LocalPlayerId)
+                    self.HandleCmd(cmd);
+                else
+                {
+                    if (!self.CheckConsistencyOnTargetFrame(frame, cmd))
+                    {
+                        shouldRollback = true;
+                        cmd.PassConsistencyCheck = false;
+                        Log.Error($"由于{MongoHelper.ToJson(cmd)}的不一致，准备进入回滚流程");
+                    }
+                    else cmd.PassConsistencyCheck = true;
+                }
+            }
+
+            if (shouldRollback)
+            {
+                self.FailCount++;
+                self.CurrentFrame = frame;
+                foreach (var cmd in cmds)
+                {
+                    // 本地玩家的的指令才会回滚
+                    if (cmd.UnitId == self.LocalPlayerId)
+                    {
+                        // 回滚处理
+                        if (!cmd.PassConsistencyCheck)
+                        {
+                            self.Rollback(cmd);
+                        }
+                        cmd.PassConsistencyCheck = true;
+                    }
+                }
+                // And Tick，这一帧结束的数据已经Rollback，从下一帧开始Tick
+                self.CurrentFrame++;
+                for (; self.CurrentFrame < self.CurrentArrivedFrame; self.CurrentFrame++)
+                    self.Tick();
+            }
+
+            self.FrameCmdToHandle.Remove(frame);
+        }
+
+        private static void Rollback(this SFSComponent self, IRoomCmd cmd)
+        {
+            SFSUnit unit = self.MyRoom.GetComponent<SFSUnitComponent>().GetChild<SFSUnit>(cmd.UnitId);
+            switch (cmd.CmdType)
+            {
+                case SFSCmdType.MoveCmd:
+                    unit.Rollback(cmd as MoveCmd);
+                    break;
+                default:
+                    Log.Error($"CmdType: {cmd.CmdType} Not Found");
+                    break;
+            }
+        }
+
+        private static bool CheckConsistencyOnTargetFrame(this SFSComponent self, int targetFrame, IRoomCmd cmd)
+        {
+            SFSUnit unit = self.MyRoom.GetComponent<SFSUnitComponent>().GetChild<SFSUnit>(cmd.UnitId);
+            switch (cmd.CmdType)
+            {
+                case SFSCmdType.MoveCmd:
+                    return unit.CheckConsistency(targetFrame, cmd as MoveCmd);
+                default:
+                    Log.Error($"CmdType: {cmd.CmdType} Not Found");
+                    return false;
+            }
+        }
+        
         public static void StartSync(this SFSComponent self, long startTime)
         {
             self.StartSync = true;
@@ -167,6 +245,21 @@ namespace ET.Client
         private static int GetServerCurrentFrame(this SFSComponent self)
         {
             return self.ServerUpdate.GetFrame(TimeInfo.Instance.ServerNow());
+        }
+
+        public static void AddCmdToHandleQueue(this SFSComponent self, IRoomCmd cmd)
+        {
+            int frame = cmd.FrameId;
+            if (self.FrameCmdToHandle.TryGetValue(frame, out Queue<IRoomCmd> queue))
+            {
+                queue.Enqueue(cmd);
+            }
+            else
+            {
+                Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
+                newQueue.Enqueue(cmd);
+                self.FrameCmdToHandle.Add(frame, newQueue);
+            }
         }
     }
 }

@@ -2,8 +2,8 @@
 
 namespace ET.Client
 {
-    [FriendOfAttribute(typeof(SFSUnit))]
-    public static partial class SFSUnitFactory
+    [FriendOf(typeof(SFSUnit))]
+    public static class SFSUnitFactory
     {
         public static SFSUnit Create(BattleRoom room, SFSUnitInfo info)
         {

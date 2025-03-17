@@ -12,6 +12,7 @@ namespace ET
         int FrameId { get; set; }
         SFSCmdType CmdType { get; set; }
         long UnitId { get; set; }
+        bool PassConsistencyCheck { get; set; }
     }
     
     public interface ISFSRoomMessage : IMessage

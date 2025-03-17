@@ -23,6 +23,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// }} 
 
 	// {{ AOT generic types
+	// ET.AEvent.<Handle>d__3<object,ET.AddCmdToSendQueue>
 	// ET.AEvent.<Handle>d__3<object,ET.ChangePosition>
 	// ET.AEvent.<Handle>d__3<object,ET.ChangeRotation>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AfterCreateClientScene>
@@ -48,6 +49,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.AEvent.<Handle>d__3<object,ET.MoveStart>
 	// ET.AEvent.<Handle>d__3<object,ET.MoveStop>
 	// ET.AEvent.<Handle>d__3<object,ET.NumbericChange>
+	// ET.AEvent<object,ET.AddCmdToSendQueue>
 	// ET.AEvent<object,ET.ChangePosition>
 	// ET.AEvent<object,ET.ChangeRotation>
 	// ET.AEvent<object,ET.Client.AfterCreateClientScene>
@@ -636,6 +638,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.EntitySystemSingleton.Awake<object>(ET.Entity,object)
 		// long ET.EnumHelper.FromString<long>(string)
 		// System.Void ET.EventSystem.Invoke<ET.NetComponentOnRead>(long,ET.NetComponentOnRead)
+		// System.Void ET.EventSystem.Publish<object,ET.AddCmdToSendQueue>(object,ET.AddCmdToSendQueue)
 		// System.Void ET.EventSystem.Publish<object,ET.ChangePosition>(object,ET.ChangePosition)
 		// System.Void ET.EventSystem.Publish<object,ET.ChangeRotation>(object,ET.ChangeRotation)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.AfterCreateCurrentScene>(object,ET.Client.AfterCreateCurrentScene)
@@ -644,7 +647,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.EventSystem.Publish<object,ET.Client.LSSceneInitFinish>(object,ET.Client.LSSceneInitFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.SceneChangeFinish>(object,ET.Client.SceneChangeFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.SceneChangeStart>(object,ET.Client.SceneChangeStart)
-		// System.Void ET.EventSystem.Publish<object,ET.Client.ShowUIHint>(object,ET.Client.ShowUIHint)
 		// System.Void ET.EventSystem.Publish<object,ET.MoveStart>(object,ET.MoveStart)
 		// System.Void ET.EventSystem.Publish<object,ET.MoveStop>(object,ET.MoveStop)
 		// System.Void ET.EventSystem.Publish<object,ET.NumbericChange>(object,ET.NumbericChange)
@@ -696,6 +698,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<Unity.Mathematics.quaternion>(Unity.Mathematics.quaternion&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,ET.ActorId>(byte&,int&,ET.ActorId&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,Unity.Mathematics.float3>(byte&,int&,Unity.Mathematics.float3&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,int,long,byte,Unity.Mathematics.float3,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte&,int&,int&,long&,byte&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,int>(byte&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,long,ET.LSInput>(byte&,int&,long&,ET.LSInput&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,long,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte&,int&,long&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
@@ -737,6 +740,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedArray<byte>(byte[])
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,ET.ActorId>(byte,byte&,int&,ET.ActorId&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,Unity.Mathematics.float3>(byte,byte&,int&,Unity.Mathematics.float3&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,int,long,byte,Unity.Mathematics.float3,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte,byte&,int&,int&,long&,byte&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,int>(byte,byte&,int&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,long,ET.LSInput>(byte,byte&,int&,long&,ET.LSInput&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,long,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte,byte&,int&,long&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
@@ -764,6 +768,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object[] System.Array.Empty<object>()
 		// int System.HashCode.Combine<TrueSync.TSVector2,int>(TrueSync.TSVector2,int)
 		// int System.HashCode.Combine<object>(object)
+		// System.Collections.Generic.KeyValuePair<int,object> System.Linq.Enumerable.First<System.Collections.Generic.KeyValuePair<int,object>>(System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<int,object>>)
 		// ET.RpcInfo[] System.Linq.Enumerable.ToArray<ET.RpcInfo>(System.Collections.Generic.IEnumerable<ET.RpcInfo>)
 		// System.Span<byte> System.MemoryExtensions.AsSpan<byte>(byte[])
 		// byte& System.Runtime.CompilerServices.Unsafe.Add<byte>(byte&,int)
@@ -804,6 +809,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void System.Runtime.CompilerServices.Unsafe.WriteUnaligned<uint>(byte&,uint)
 		// byte& System.Runtime.InteropServices.MemoryMarshal.GetReference<byte>(System.Span<byte>)
 		// System.Threading.Tasks.Task<object> System.Threading.Tasks.TaskFactory.StartNew<object>(System.Func<object>,System.Threading.CancellationToken)
+		// object UnityEngine.GameObject.AddComponent<object>()
 		// object UnityEngine.GameObject.GetComponent<object>()
 		// object UnityEngine.Object.Instantiate<object>(object,UnityEngine.Transform)
 		// object UnityEngine.Object.Instantiate<object>(object,UnityEngine.Transform,bool)

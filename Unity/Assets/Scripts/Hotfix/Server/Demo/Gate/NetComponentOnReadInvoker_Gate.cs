@@ -75,7 +75,10 @@ namespace ET.Server
                 }
                 case IRoomCmd roomCmd:
                 {
-                    Log.Error($"Receive RoomCmd Success: {roomCmd.CmdType}");
+                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
+                    ActorId roomActorId = player.GetComponent<PlayerRoomComponent>().RoomActorId;
+                    roomCmd.UnitId = player.Id;
+                    root.GetComponent<MessageSender>().Send(roomActorId, roomCmd);
                     break;
                 }
                 case IRequest actorRequest:  // 分发IActorRequest消息，目前没有用到，需要的自己添加

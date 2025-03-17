@@ -323,5 +323,9 @@ message MoveCmd // IRoomCmd
 	int32 FrameId = 1;
 	SFSCmdType CmdType = 2;
 	int64 UnitId = 3;
-	Unity.Mathematics.float2 Dir = 4;
+	bool PassConsistencyCheck = 4;
+	Unity.Mathematics.float3 Speed = 5;
+	Unity.Mathematics.float3 Pos = 6;
+	Unity.Mathematics.quaternion Rot = 7;
 }
+

@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+﻿using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -15,5 +16,6 @@ namespace ET.Client
         }
         public UnitCamp UnitCamp;
         public float3 Speed;
+        public Dictionary<int, MoveCmd> HistoryMoveState = new Dictionary<int, MoveCmd>();
     }
 }

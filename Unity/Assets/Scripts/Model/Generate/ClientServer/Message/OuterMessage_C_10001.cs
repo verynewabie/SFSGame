@@ -1488,7 +1488,16 @@ namespace ET
         public long UnitId { get; set; }
 
         [MemoryPackOrder(3)]
-        public Unity.Mathematics.float2 Dir { get; set; }
+        public bool PassConsistencyCheck { get; set; }
+
+        [MemoryPackOrder(4)]
+        public Unity.Mathematics.float3 Speed { get; set; }
+
+        [MemoryPackOrder(5)]
+        public Unity.Mathematics.float3 Pos { get; set; }
+
+        [MemoryPackOrder(6)]
+        public Unity.Mathematics.quaternion Rot { get; set; }
 
         public override void Dispose()
         {
@@ -1500,7 +1509,10 @@ namespace ET
             this.FrameId = default;
             this.CmdType = default;
             this.UnitId = default;
-            this.Dir = default;
+            this.PassConsistencyCheck = default;
+            this.Speed = default;
+            this.Pos = default;
+            this.Rot = default;
 
             ObjectPool.Instance.Recycle(this);
         }

@@ -45,7 +45,15 @@ namespace ET.Client
 
             Transform cameraTransform = Camera.main.transform;
             inputComponent.Forward = new float2(cameraTransform.forward.x, cameraTransform.forward.z);
+            inputComponent.Forward = math.normalize(inputComponent.Forward);
             inputComponent.Right = new float2(cameraTransform.right.x, cameraTransform.right.z);
+            inputComponent.Right = math.normalize(inputComponent.Right);
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
     }
 }

@@ -74,3 +74,11 @@ namespace ET.Client
         public PlayerInputComponent PlayerInputComponent;
     }
 }
+
+namespace ET
+{
+    public struct AddCmdToSendQueue
+    {
+        public IRoomCmd Cmd;
+    }
+}

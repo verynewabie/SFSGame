@@ -17,6 +17,7 @@
                 if (entity is SFSUnit unit)
                 {
                     unit.Tick();
+                    unit.TickEnd();
                 }
             }
         }
