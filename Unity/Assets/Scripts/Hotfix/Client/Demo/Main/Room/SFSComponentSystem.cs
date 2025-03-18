@@ -26,7 +26,10 @@ namespace ET.Client
             // Tick
             long timeNow = TimeInfo.Instance.ServerNow();
             if (timeNow < self.ClientUpdate.FrameTime(self.CurrentFrame + 1))
+            {
+                self.HandleAheadOfFrame();
                 return; 
+            }
             self.CurrentFrame++;
             self.CurrentArrivedFrame = self.CurrentFrame;
             // Handle Cmd That Server Send
