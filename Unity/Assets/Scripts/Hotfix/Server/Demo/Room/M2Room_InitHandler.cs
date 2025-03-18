@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Server
 {
@@ -18,10 +19,11 @@ namespace ET.Server
                 SFSUnitInfo info = SFSUnitInfo.Create();
                 info.UnitId = id;
                 info.Camp = i * 2 < request.PlayerId.Count ? UnitCamp.Red : UnitCamp.Blue;
+                info.Position = info.Camp == UnitCamp.Red ? new float3(-5f, 0f, 0f) : new float3(5f, 0f, 0f);
                 message.UnitInfos.Add(info);
                 // Create Unit
                 // register unit location
-                SFSUnit unit = SFSUnitFactory.Create(room, info);
+                SFSUnit unit = SFSUnitFactory.CreateHero(room, info);
                 // TODO 是否需要
                 await unit.AddLocation(LocationType.Unit);
             }

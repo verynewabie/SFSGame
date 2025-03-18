@@ -5,13 +5,14 @@ namespace ET.Server
     [FriendOf(typeof(SFSUnit))]
     public static class SFSUnitFactory
     {
-        public static SFSUnit Create(BattleRoom room, SFSUnitInfo info)
+        public static SFSUnit CreateHero(BattleRoom room, SFSUnitInfo info)
         {
-            SFSUnit result = room.GetComponent<SFSUnitComponent>().AddChildWithId<SFSUnit, BattleRoom>(info.UnitId, room);
-            result.Position = new float3(0f, 0.5f, 0f);
-            result.Rotation = quaternion.identity;
-            result.UnitCamp = info.Camp;
-            return result;
+            SFSUnit unit = room.GetComponent<SFSUnitComponent>().AddChildWithId<SFSUnit, BattleRoom>(info.UnitId, room);
+            unit.Position = info.Position;
+            unit.Rotation = quaternion.identity;
+            unit.UnitCamp = info.Camp;
+            unit.AddComponent<SkillComponent, SFSUnit>(unit);
+            return unit;
         }
     }
 }

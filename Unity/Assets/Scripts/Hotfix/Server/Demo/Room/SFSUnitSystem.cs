@@ -61,5 +61,10 @@ namespace ET.Server
                     target.Rot.MyEquals(moveCmd.Rot) &&
                     target.Speed.MyEquals(moveCmd.Speed);
         }
+
+        public static bool CanReleaseSkill(this SFSUnit self)
+        {
+            return true;
+        }
     }
 }

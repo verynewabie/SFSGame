@@ -1518,6 +1518,59 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.SkillCmd)]
+    public partial class SkillCmd : MessageObject, IRoomCmd
+    {
+        public static SkillCmd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(SkillCmd), isFromPool) as SkillCmd;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public SFSCmdType CmdType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public bool PassConsistencyCheck { get; set; }
+
+        [MemoryPackOrder(4)]
+        public UnitSkillState SkillState { get; set; }
+
+        [MemoryPackOrder(5)]
+        public int Duration { get; set; }
+
+        [MemoryPackOrder(6)]
+        public Unity.Mathematics.quaternion Dir { get; set; }
+
+        [MemoryPackOrder(7)]
+        public bool IsReleaseCmd { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+            this.CmdType = default;
+            this.UnitId = default;
+            this.PassConsistencyCheck = default;
+            this.SkillState = default;
+            this.Duration = default;
+            this.Dir = default;
+            this.IsReleaseCmd = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1567,5 +1620,6 @@ namespace ET
         public const ushort C2Room_LoadGameDone = 10046;
         public const ushort Room2C_SFSEnterGame = 10047;
         public const ushort MoveCmd = 10048;
+        public const ushort SkillCmd = 10049;
     }
 }

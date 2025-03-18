@@ -4,7 +4,8 @@ namespace ET
 {
     public enum SFSCmdType
     {
-        MoveCmd
+        MoveCmd,
+        SkillCmd
     }
 
     public interface IRoomCmd : IMessage

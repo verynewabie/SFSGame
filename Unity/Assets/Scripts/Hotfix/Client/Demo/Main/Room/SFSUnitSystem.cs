@@ -56,5 +56,10 @@ namespace ET.Client
             self.Rotation = moveCmd.Rot;
             self.Speed = moveCmd.Speed;
         }
+
+        public static bool CanReleaseSkill(this SFSUnit self)
+        {
+            return true;
+        }
     }
 }

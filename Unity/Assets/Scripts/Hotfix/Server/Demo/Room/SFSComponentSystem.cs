@@ -48,6 +48,9 @@ namespace ET.Server
                 case SFSCmdType.MoveCmd:
                     unit.HandleCmd(cmd as MoveCmd);
                     break;
+                case SFSCmdType.SkillCmd:
+                    unit.GetComponent<SkillComponent>().HandleCmd(cmd as SkillCmd);
+                    break;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     break;

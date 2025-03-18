@@ -61,6 +61,15 @@ namespace ET.Client
             moveCmd.Pos = unit.Position;
             moveCmd.Rot = unit.Rotation;
             EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue { Cmd = moveCmd });
+            
+            if (self.Q_Down)
+            {
+                SkillCmd skillCmd = SkillCmd.Create();
+                skillCmd.CmdType = SFSCmdType.SkillCmd;
+                skillCmd.UnitId = self.PlayerId;
+                skillCmd.IsReleaseCmd = true;
+                EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue { Cmd = skillCmd });
+            }
 
             self.Clear();
         }

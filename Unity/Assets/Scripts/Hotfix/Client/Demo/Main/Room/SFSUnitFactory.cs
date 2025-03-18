@@ -9,9 +9,10 @@ namespace ET.Client
         {
             SFSUnitComponent component = room.GetComponent<SFSUnitComponent>();
             SFSUnit unit = component.AddChildWithId<SFSUnit, BattleRoom>(info.UnitId, room);
-            unit.Position = new float3(0f, 0.5f, 0f);
+            unit.Position = info.Position;
             unit.Rotation = quaternion.identity;
             unit.UnitCamp = info.Camp;
+            unit.AddComponent<SkillComponent, SFSUnit>(unit);
             if (isLocalPlayer)
                 component.MyUnit = unit;
             // Add UnitView, Animator, Camera
