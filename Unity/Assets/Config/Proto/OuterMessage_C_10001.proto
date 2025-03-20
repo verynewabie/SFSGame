@@ -298,7 +298,10 @@ message SFSUnitInfo
 {
 	int64 UnitId = 1;
 	Unity.Mathematics.float3 Position = 2;
-	UnitCamp Camp = 3;
+	Unity.Mathematics.quaternion Forward = 3;
+	SFSUnitCamp Camp = 4;
+	SFSUnitType Type = 5;
+	SFSUnitState State = 6;
 }
 
 message Room2C_LoadGame // IMessage
@@ -334,8 +337,8 @@ message SkillCmd // IRoomCmd
 	SFSCmdType CmdType = 2;
 	int64 UnitId = 3;
 	bool PassConsistencyCheck = 4;
-	UnitSkillState SkillState = 5;
+	SFSSkillState State = 5;
 	int32 Duration = 6;
-	Unity.Mathematics.quaternion Dir = 7;
-	bool IsReleaseCmd = 8;
+	bool FromClient = 7;
+	SFSUnitInfo Info = 8;
 }

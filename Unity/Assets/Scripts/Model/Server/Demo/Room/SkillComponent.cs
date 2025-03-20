@@ -1,4 +1,6 @@
-﻿namespace ET.Server
+﻿using System.Collections.Generic;
+
+namespace ET.Server
 {
 
     [ComponentOf(typeof(SFSUnit))]
@@ -11,10 +13,14 @@
             set => owner = value;
         }
 
-        public UnitSkillState State;
+        public SFSSkillState State;
+
         /// <summary>
-        /// 持续时间，单位是帧
+        /// 单位：帧
         /// </summary>
         public int Duration;
+        
+        public Dictionary<int, SkillCmd> HistorySkillState = new Dictionary<int, SkillCmd>();
+        public SFSUnitInfo ToCreateProjectile;
     }
 }

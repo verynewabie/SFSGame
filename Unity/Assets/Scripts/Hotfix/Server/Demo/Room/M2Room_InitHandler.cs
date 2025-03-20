@@ -18,8 +18,12 @@ namespace ET.Server
                 roomPlayerComponent.AddChildWithId<SFSRoomPlayer>(id);
                 SFSUnitInfo info = SFSUnitInfo.Create();
                 info.UnitId = id;
-                info.Camp = i * 2 < request.PlayerId.Count ? UnitCamp.Red : UnitCamp.Blue;
-                info.Position = info.Camp == UnitCamp.Red ? new float3(-5f, 0f, 0f) : new float3(5f, 0f, 0f);
+                info.Camp = i * 2 < request.PlayerId.Count ? SFSUnitCamp.Red : SFSUnitCamp.Blue;
+                info.Position = info.Camp == SFSUnitCamp.Red ? new float3(-5f, 0f, 0f) : new float3(5f, 0f, 0f);
+                info.Forward = quaternion.identity;
+                info.Type = SFSUnitType.Player;
+                info.State = SFSUnitState.Free;
+                //info.
                 message.UnitInfos.Add(info);
                 // Create Unit
                 // register unit location

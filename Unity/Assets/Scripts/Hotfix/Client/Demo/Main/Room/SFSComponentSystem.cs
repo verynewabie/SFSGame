@@ -71,6 +71,7 @@ namespace ET.Client
 
             if (shouldRollback)
             {
+                self.IsInChaseFrameState = true;
                 self.FailCount++;
                 self.CurrentFrame = frame;
                 foreach (var cmd in cmds)
@@ -78,10 +79,11 @@ namespace ET.Client
                     // 本地玩家的的指令才会回滚
                     if (cmd.UnitId == self.LocalPlayerId)
                     {
+                        self.Rollback(cmd);
                         // 回滚处理
                         if (!cmd.PassConsistencyCheck)
                         {
-                            self.Rollback(cmd);
+                            self.HandleCmd(cmd);
                         }
                         cmd.PassConsistencyCheck = true;
                     }
@@ -90,6 +92,7 @@ namespace ET.Client
                 self.CurrentFrame++;
                 for (; self.CurrentFrame < self.CurrentArrivedFrame; self.CurrentFrame++)
                     self.Tick();
+                self.IsInChaseFrameState = false;
             }
 
             self.FrameCmdToHandle.Remove(frame);
@@ -102,6 +105,9 @@ namespace ET.Client
             {
                 case SFSCmdType.MoveCmd:
                     unit.Rollback(cmd as MoveCmd);
+                    break;
+                case SFSCmdType.SkillCmd:
+                    unit.GetComponent<SkillComponent>().Rollback(cmd as SkillCmd);
                     break;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
@@ -116,6 +122,8 @@ namespace ET.Client
             {
                 case SFSCmdType.MoveCmd:
                     return unit.CheckConsistency(targetFrame, cmd as MoveCmd);
+                case SFSCmdType.SkillCmd:
+                    return unit.GetComponent<SkillComponent>().CheckConsistency(targetFrame, cmd as SkillCmd);
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     return false;
@@ -192,7 +200,7 @@ namespace ET.Client
                 }
             }
             // Tick Component
-            self.MyRoom.GetComponent<SFSUnitComponent>().Tick();
+            self.MyRoom.GetComponent<SFSUnitComponent>().Tick(self.IsInChaseFrameState);
         }
 
         private static void HandleCmd(this SFSComponent self, IRoomCmd cmd)

@@ -53,5 +53,10 @@ namespace ET.Client
         /// 从客户端到服务端通信所要花费的时间（ms）半个RTT（不包括服务端的缓存帧时长）
         /// </summary>
         public long HalfRTT;
+
+        /// <summary>
+        /// 预测回滚后追帧时标记一下，此时只需要Tick MyUnit
+        /// </summary>
+        public bool IsInChaseFrameState;
     }
 }

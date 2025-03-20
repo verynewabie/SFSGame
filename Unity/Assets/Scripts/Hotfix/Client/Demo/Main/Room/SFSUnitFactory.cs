@@ -10,8 +10,10 @@ namespace ET.Client
             SFSUnitComponent component = room.GetComponent<SFSUnitComponent>();
             SFSUnit unit = component.AddChildWithId<SFSUnit, BattleRoom>(info.UnitId, room);
             unit.Position = info.Position;
-            unit.Rotation = quaternion.identity;
-            unit.UnitCamp = info.Camp;
+            unit.Rotation = info.Forward;
+            unit.SfsUnitType = info.Type;
+            unit.SfsUnitCamp = info.Camp;
+            unit.SfsUnitState = info.State;
             unit.AddComponent<SkillComponent, SFSUnit>(unit);
             if (isLocalPlayer)
                 component.MyUnit = unit;
@@ -20,6 +22,22 @@ namespace ET.Client
             {
                 unit = unit,
                 IsLocalPlayer = isLocalPlayer
+            });
+        }
+        
+        public static void CreateProjectile(BattleRoom room, SFSUnitInfo info)
+        {
+            SFSUnit unit = room.GetComponent<SFSUnitComponent>().AddChildWithId<SFSUnit, BattleRoom>(info.UnitId, room);
+            unit.Position = info.Position;
+            unit.Rotation = info.Forward;
+            unit.SfsUnitType = info.Type;
+            unit.SfsUnitCamp = info.Camp;
+            unit.SfsUnitState = info.State;
+            unit.Speed = math.forward(unit.Rotation) * 2.5f;
+            // Add UnitView
+            EventSystem.Instance.Publish(room.Root(), new CreateSFSProjectile()
+            {
+                unit = unit,
             });
         }
     }

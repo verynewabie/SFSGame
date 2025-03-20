@@ -14,8 +14,13 @@ namespace ET.Client
             get { return battleRoom; }
             set { battleRoom = value; }
         }
-        public UnitCamp UnitCamp;
+        public SFSUnitCamp SfsUnitCamp;
         public float3 Speed;
         public Dictionary<int, MoveCmd> HistoryMoveState = new Dictionary<int, MoveCmd>();
+        
+        public SFSUnitState SfsUnitState;
+        public SFSUnitType SfsUnitType;
+
+        public bool CanReleaseSkill => this.SfsUnitState == SFSUnitState.Free;
     }
 }

@@ -1369,10 +1369,16 @@ namespace ET
         public Unity.Mathematics.float3 Position { get; set; }
 
         [MemoryPackOrder(2)]
-        public Unity.Mathematics.float3 Forward { get; set; }
+        public Unity.Mathematics.quaternion Forward { get; set; }
 
         [MemoryPackOrder(3)]
-        public UnitCamp Camp { get; set; }
+        public SFSUnitCamp Camp { get; set; }
+
+        [MemoryPackOrder(4)]
+        public SFSUnitType Type { get; set; }
+
+        [MemoryPackOrder(5)]
+        public SFSUnitState State { get; set; }
 
         public override void Dispose()
         {
@@ -1385,6 +1391,8 @@ namespace ET
             this.Position = default;
             this.Forward = default;
             this.Camp = default;
+            this.Type = default;
+            this.State = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -1540,16 +1548,16 @@ namespace ET
         public bool PassConsistencyCheck { get; set; }
 
         [MemoryPackOrder(4)]
-        public UnitSkillState SkillState { get; set; }
+        public SFSSkillState State { get; set; }
 
         [MemoryPackOrder(5)]
         public int Duration { get; set; }
 
         [MemoryPackOrder(6)]
-        public Unity.Mathematics.quaternion Dir { get; set; }
+        public bool FromClient { get; set; }
 
         [MemoryPackOrder(7)]
-        public bool IsReleaseCmd { get; set; }
+        public SFSUnitInfo Info { get; set; }
 
         public override void Dispose()
         {
@@ -1562,10 +1570,10 @@ namespace ET
             this.CmdType = default;
             this.UnitId = default;
             this.PassConsistencyCheck = default;
-            this.SkillState = default;
+            this.State = default;
             this.Duration = default;
-            this.Dir = default;
-            this.IsReleaseCmd = default;
+            this.FromClient = default;
+            this.Info = default;
 
             ObjectPool.Instance.Recycle(this);
         }

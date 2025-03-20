@@ -20,7 +20,21 @@ namespace ET.Client
             string assetName = "Assets/Bundles/Unit/Unit.prefab";
             GameObject bundleGameObject = await self.Room.GetComponent<ResourcesLoaderComponent>()
                     .LoadAssetAsync<GameObject>(assetName);
-            GameObject prefab = bundleGameObject.Get<GameObject>($"{self.Unit.UnitCamp.ToString()}");
+            GameObject prefab = bundleGameObject.Get<GameObject>($"{self.Unit.SfsUnitCamp.ToString()}");
+
+            GlobalComponent globalComponent = self.Root().GetComponent<GlobalComponent>();
+            self.GameObject = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+            self.Transform = self.GameObject.transform;
+            self.Transform.position = self.Unit.Position;
+            self.Transform.rotation = self.Unit.Rotation;
+        }
+
+        public static async ETTask InitProjectile(this SFSUnitView self)
+        {
+            string assetName = "Assets/Bundles/Unit/Unit.prefab";
+            GameObject bundleGameObject = await self.Room.GetComponent<ResourcesLoaderComponent>()
+                    .LoadAssetAsync<GameObject>(assetName);
+            GameObject prefab = bundleGameObject.Get<GameObject>($"Projectile");
 
             GlobalComponent globalComponent = self.Root().GetComponent<GlobalComponent>();
             self.GameObject = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);

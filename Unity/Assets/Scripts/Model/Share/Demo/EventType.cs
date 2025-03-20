@@ -64,6 +64,11 @@ namespace ET.Client
         // public bool HeroConfigId;
     }
 
+    public struct CreateSFSProjectile
+    {
+        public SFSUnit unit;
+    }
+
     public struct SFSLoadSceneDone
     {
         
@@ -80,5 +85,10 @@ namespace ET
     public struct AddCmdToSendQueue
     {
         public IRoomCmd Cmd;
+    }
+
+    public struct AddUnitCreateInfo
+    {
+        public SFSUnitInfo Info;
     }
 }

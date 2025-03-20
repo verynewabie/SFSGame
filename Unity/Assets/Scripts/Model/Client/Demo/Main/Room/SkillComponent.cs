@@ -1,4 +1,6 @@
-﻿namespace ET.Client
+﻿using System.Collections.Generic;
+
+namespace ET.Client
 {
 
     [ComponentOf(typeof(SFSUnit))]
@@ -10,5 +12,14 @@
             get => owner;
             set => owner = value;
         }
+        
+        public SFSSkillState State;
+
+        /// <summary>
+        /// 单位：帧
+        /// </summary>
+        public int Duration;
+        
+        public Dictionary<int, SkillCmd> HistorySkillState = new Dictionary<int, SkillCmd>();
     }
 }
