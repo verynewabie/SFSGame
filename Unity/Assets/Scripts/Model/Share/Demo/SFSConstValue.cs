@@ -7,5 +7,6 @@
         public const bool EnableDelayCompensation = false;
         public const bool EnableSmoothUpdateInterval = false;
         public const int SkillCDFrame = 100;
+        public const float UpdateIntervalFloat = 0.05f;
     }
 }

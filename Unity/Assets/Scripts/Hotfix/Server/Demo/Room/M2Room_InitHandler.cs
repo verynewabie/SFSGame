@@ -9,6 +9,8 @@ namespace ET.Server
         protected override async ETTask Run(Scene root, M2Room_Init request, Room2M_Init response)
         {
             BattleRoom room = root.AddComponent<BattleRoom, List<long>>(request.PlayerId);
+            room.AddComponent<PhysicsWorldComponent>();
+            room.AddComponent<CollisionListenerComponent>();
             room.AddComponent<SFSUnitComponent>();
             var roomPlayerComponent = room.AddComponent<SFSRoomPlayerComponent>();
             Room2C_LoadGame message = Room2C_LoadGame.Create();
@@ -23,7 +25,6 @@ namespace ET.Server
                 info.Forward = quaternion.identity;
                 info.Type = SFSUnitType.Player;
                 info.State = SFSUnitState.Free;
-                //info.
                 message.UnitInfos.Add(info);
                 // Create Unit
                 // register unit location

@@ -16,26 +16,27 @@ namespace ET.Client
 
         public static void Tick(this SFSUnit self)
         {
+            self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
+            if (self.SfsUnitType == SFSUnitType.Player)
+                self.Speed = 0;
             if (self.SfsUnitType == SFSUnitType.Player)
             {
                 self.GetComponent<SkillComponent>().Tick();
             }
-            self.Position += self.Speed * SFSConstValue.UpdateInterval / 1000.0f;
-            if (self.SfsUnitType == SFSUnitType.Player)
-                self.Speed = 0;
         }
 
         public static void TickEnd(this SFSUnit self)
         {
             if (self.SfsUnitType == SFSUnitType.Projectile)
                 return;
-            self.GetComponent<SkillComponent>().TickEnd();
             MoveCmd cmd = MoveCmd.Create();
             cmd.Pos = self.Position;
             cmd.Speed = self.Speed;
             cmd.Rot = self.Rotation;
             var sfsCmpt = self.BattleRoom.GetComponent<SFSComponent>();
             self.HistoryMoveState[sfsCmpt.CurrentFrame] = cmd;
+            
+            self.GetComponent<SkillComponent>().TickEnd();
         }
 
         public static void HandleCmd(this SFSUnit self, MoveCmd moveCmd)

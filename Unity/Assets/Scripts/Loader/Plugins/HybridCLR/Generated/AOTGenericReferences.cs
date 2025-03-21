@@ -30,6 +30,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AfterCreateCurrentScene>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AfterUnitCreate>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.AppStartInitFinish>
+	// ET.AEvent.<Handle>d__3<object,ET.Client.CreateSFSProjectile>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.CreateSFSUnit>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.EnterMapFinish>
 	// ET.AEvent.<Handle>d__3<object,ET.Client.HideUIHint>
@@ -56,6 +57,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.AEvent<object,ET.Client.AfterCreateCurrentScene>
 	// ET.AEvent<object,ET.Client.AfterUnitCreate>
 	// ET.AEvent<object,ET.Client.AppStartInitFinish>
+	// ET.AEvent<object,ET.Client.CreateSFSProjectile>
 	// ET.AEvent<object,ET.Client.CreateSFSUnit>
 	// ET.AEvent<object,ET.Client.EnterMapFinish>
 	// ET.AEvent<object,ET.Client.HideUIHint>
@@ -117,7 +119,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.ETTask<uint>
 	// ET.EntityRef<object>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.AppStartInitFinish>
-	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.CreateSFSUnit>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.HideUIHint>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.InitBattleView>
 	// ET.EventSystem.<PublishAsync>d__4<object,ET.Client.LSSceneChangeStart>
@@ -643,6 +644,8 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.EventSystem.Publish<object,ET.ChangeRotation>(object,ET.ChangeRotation)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.AfterCreateCurrentScene>(object,ET.Client.AfterCreateCurrentScene)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.AfterUnitCreate>(object,ET.Client.AfterUnitCreate)
+		// System.Void ET.EventSystem.Publish<object,ET.Client.CreateSFSProjectile>(object,ET.Client.CreateSFSProjectile)
+		// System.Void ET.EventSystem.Publish<object,ET.Client.CreateSFSUnit>(object,ET.Client.CreateSFSUnit)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.EnterMapFinish>(object,ET.Client.EnterMapFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.LSSceneInitFinish>(object,ET.Client.LSSceneInitFinish)
 		// System.Void ET.EventSystem.Publish<object,ET.Client.SceneChangeFinish>(object,ET.Client.SceneChangeFinish)
@@ -651,7 +654,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.EventSystem.Publish<object,ET.MoveStop>(object,ET.MoveStop)
 		// System.Void ET.EventSystem.Publish<object,ET.NumbericChange>(object,ET.NumbericChange)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.AppStartInitFinish>(object,ET.Client.AppStartInitFinish)
-		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.CreateSFSUnit>(object,ET.Client.CreateSFSUnit)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.HideUIHint>(object,ET.Client.HideUIHint)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.InitBattleView>(object,ET.Client.InitBattleView)
 		// ET.ETTask ET.EventSystem.PublishAsync<object,ET.Client.LSSceneChangeStart>(object,ET.Client.LSSceneChangeStart)
@@ -699,6 +701,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,ET.ActorId>(byte&,int&,ET.ActorId&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,Unity.Mathematics.float3>(byte&,int&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,int,long,byte,Unity.Mathematics.float3,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte&,int&,int&,long&,byte&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,int,long,byte,int,int,byte>(byte&,int&,int&,long&,byte&,int&,int&,byte&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,int>(byte&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,long,ET.LSInput>(byte&,int&,long&,ET.LSInput&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,long,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte&,int&,long&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
@@ -706,7 +709,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int,long>(byte&,int&,long&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,int>(byte&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,TrueSync.TSVector,TrueSync.TSQuaternion>(byte&,long&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
-		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,Unity.Mathematics.float3,Unity.Mathematics.float3,int>(byte&,long&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,int&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,Unity.Mathematics.float3,Unity.Mathematics.quaternion,int,int,int>(byte&,long&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&,int&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,Unity.Mathematics.float3>(byte&,long&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,int,int,Unity.Mathematics.float3,Unity.Mathematics.float3>(byte&,long&,int&,int&,Unity.Mathematics.float3&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<byte,long,int,long>(byte&,long&,int&,long&)
@@ -741,6 +744,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,ET.ActorId>(byte,byte&,int&,ET.ActorId&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,Unity.Mathematics.float3>(byte,byte&,int&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,int,long,byte,Unity.Mathematics.float3,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte,byte&,int&,int&,long&,byte&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,int,long,byte,int,int,byte>(byte,byte&,int&,int&,long&,byte&,int&,int&,byte&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,int>(byte,byte&,int&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,long,ET.LSInput>(byte,byte&,int&,long&,ET.LSInput&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,long,Unity.Mathematics.float3,Unity.Mathematics.quaternion>(byte,byte&,int&,long&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&)
@@ -748,7 +752,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int,long>(byte,byte&,int&,long&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,int>(byte,byte&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,TrueSync.TSVector,TrueSync.TSQuaternion>(byte,byte&,long&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
-		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,Unity.Mathematics.float3,Unity.Mathematics.float3,int>(byte,byte&,long&,Unity.Mathematics.float3&,Unity.Mathematics.float3&,int&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,Unity.Mathematics.float3,Unity.Mathematics.quaternion,int,int,int>(byte,byte&,long&,Unity.Mathematics.float3&,Unity.Mathematics.quaternion&,int&,int&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,Unity.Mathematics.float3>(byte,byte&,long&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,int,int,Unity.Mathematics.float3,Unity.Mathematics.float3>(byte,byte&,long&,int&,int&,Unity.Mathematics.float3&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<byte,long,int,long>(byte,byte&,long&,int&,long&)

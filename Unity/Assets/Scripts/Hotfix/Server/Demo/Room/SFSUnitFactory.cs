@@ -14,6 +14,12 @@ namespace ET.Server
             unit.SfsUnitCamp = info.Camp;
             unit.SfsUnitState = info.State;
             unit.AddComponent<SkillComponent, SFSUnit>(unit);
+            CreateColliderInfo colliderInfo = new CreateColliderInfo
+            {  
+                radius = 1,
+                unit = unit,
+            };
+            unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
             return unit;
         }
 
@@ -26,6 +32,12 @@ namespace ET.Server
             unit.SfsUnitCamp = info.Camp;
             unit.SfsUnitState = info.State;
             unit.Speed = math.forward(unit.Rotation) * 2.5f;
+            CreateColliderInfo colliderInfo = new CreateColliderInfo
+            {  
+                radius = 0.25f,
+                unit = unit,
+            };
+            unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
         }
     }
 }

@@ -17,20 +17,25 @@ namespace ET.Server
 
         public static void Tick(this SFSUnit self)
         {
+            self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
+            if (self.SfsUnitType == SFSUnitType.Player)
+                self.Speed = 0;
             if (self.SfsUnitType == SFSUnitType.Player)
             {
                 self.GetComponent<SkillComponent>().Tick();
+                self.GetComponent<ColliderComponent>().Tick();
             }
-            self.Position += self.Speed * SFSConstValue.UpdateInterval / 1000.0f;
-            if (self.SfsUnitType == SFSUnitType.Player)
-                self.Speed = 0;
+            else
+            {
+                self.GetComponent<ColliderComponent>().Tick();
+            }
         }
 
         public static void TickEnd(this SFSUnit self)
         {
             if (self.SfsUnitType == SFSUnitType.Projectile)
                 return;
-            self.GetComponent<SkillComponent>().TickEnd();
+            
             MoveCmd cmd = MoveCmd.Create();
             cmd.Pos = self.Position;
             cmd.Speed = self.Speed;
@@ -49,6 +54,9 @@ namespace ET.Server
                 });
             }
             // TODO AddCmdToWholeCmdsBuffer
+            
+            self.GetComponent<SkillComponent>().TickEnd();
+            self.GetComponent<ColliderComponent>().TickEnd();
         }
 
         public static void HandleCmd(this SFSUnit self, MoveCmd moveCmd)

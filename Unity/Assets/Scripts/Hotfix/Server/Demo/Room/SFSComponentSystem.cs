@@ -61,6 +61,7 @@ namespace ET.Server
         {
             // TickComponent
             self.MyRoom.GetComponent<SFSUnitComponent>().Tick();
+            self.MyRoom.GetComponent<PhysicsWorldComponent>().Tick();
         }
         
         public static void StartSync(this SFSComponent self, long startTime)
