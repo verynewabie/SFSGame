@@ -1,9 +1,11 @@
-﻿namespace ET.Client
+﻿using UnityEngine;
+
+namespace ET.Client
 {
 
     [ComponentOf(typeof(SFSUnitView))]
-    public class SFSAnimatorComponent : Entity, IAwake
+    public class SFSAnimatorComponent : Entity, IAwake<SFSUnitView>
     {
-        // TODO complete
+        public Animator Animator;
     }
 }

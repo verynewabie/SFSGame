@@ -61,6 +61,7 @@ namespace ET.Server
         {
             // TickComponent
             self.MyRoom.GetComponent<SFSUnitComponent>().Tick();
+            // 这里 Tick 时会删除Unit（添加到队列）
             self.MyRoom.GetComponent<PhysicsWorldComponent>().Tick();
         }
         

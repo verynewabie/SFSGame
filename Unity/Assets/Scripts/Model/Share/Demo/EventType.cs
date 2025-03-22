@@ -1,4 +1,5 @@
-﻿using System.Buffers.Binary;
+﻿using System.Collections.Generic;
+using Box2DSharp.Dynamics;
 
 namespace ET.Client
 {
@@ -78,6 +79,11 @@ namespace ET.Client
     {
         public PlayerInputComponent PlayerInputComponent;
     }
+
+    public struct RemoveUnitView
+    {
+        public List<long> UnitToDelete;
+    }
 }
 
 namespace ET
@@ -90,5 +96,15 @@ namespace ET
     public struct AddUnitCreateInfo
     {
         public SFSUnitInfo Info;
+    }
+
+    public struct AddUnitToRemove
+    {
+        public long UnitId;
+    }
+
+    public struct AddBodyToRemove
+    {
+        public Body Body;
     }
 }

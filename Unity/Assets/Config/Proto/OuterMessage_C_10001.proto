@@ -342,3 +342,12 @@ message SkillCmd // IRoomCmd
 	bool FromClient = 7;
 	SFSUnitInfo Info = 8;
 }
+
+message Room2C_DeleteUnit // IRoomCmd
+{
+	int32 FrameId = 1;
+	SFSCmdType CmdType = 2;
+	int64 UnitId = 3;
+	bool PassConsistencyCheck = 4;
+	repeated int64 UnitToDelete = 5;
+}

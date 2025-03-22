@@ -12,7 +12,7 @@
             var unitView = unitViewComponent.AddChildWithId<SFSUnitView, SFSUnit>(arg.unit.Id, arg.unit);
             await unitView.InitAsync();
             // 这些必须等GameObject生成出来再做
-            unitView.AddComponent<SFSAnimatorComponent>();
+            unitView.AddComponent<SFSAnimatorComponent, SFSUnitView>(unitView);
             if (arg.IsLocalPlayer)
             {
                 // Add CameraComponent

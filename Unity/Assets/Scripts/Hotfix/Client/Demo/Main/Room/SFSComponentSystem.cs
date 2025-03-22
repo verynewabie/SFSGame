@@ -214,6 +214,20 @@ namespace ET.Client
                 case SFSCmdType.SkillCmd:
                     unit.GetComponent<SkillComponent>().HandleCmd(cmd as SkillCmd);
                     break;
+                case SFSCmdType.DeleteUnitCmd:
+                {
+                    Room2C_DeleteUnit msg = cmd as Room2C_DeleteUnit;
+                    var unitCmpt = self.MyRoom.GetComponent<SFSUnitComponent>();
+                    foreach (var id in msg.UnitToDelete)
+                    {
+                        unitCmpt.RemoveChild(id);
+                    }
+                    EventSystem.Instance.Publish(self.Root(), new RemoveUnitView
+                    {
+                        UnitToDelete = msg.UnitToDelete
+                    });
+                }
+                    break;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     break;

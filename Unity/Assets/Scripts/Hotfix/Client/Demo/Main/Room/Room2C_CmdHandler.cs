@@ -19,4 +19,14 @@
             await ETTask.CompletedTask;
         }
     }
+    
+    [MessageHandler(SceneType.Demo)]
+    public class Room2C_DeleteUnitHandler : MessageHandler<Scene, Room2C_DeleteUnit>
+    {
+        protected override async ETTask Run(Scene root, Room2C_DeleteUnit message)
+        {
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            await ETTask.CompletedTask;
+        }
+    }
 }

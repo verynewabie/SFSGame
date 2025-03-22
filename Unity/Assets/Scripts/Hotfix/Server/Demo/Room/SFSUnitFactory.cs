@@ -16,7 +16,7 @@ namespace ET.Server
             unit.AddComponent<SkillComponent, SFSUnit>(unit);
             CreateColliderInfo colliderInfo = new CreateColliderInfo
             {  
-                radius = 1,
+                radius = 1f,
                 unit = unit,
             };
             unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
