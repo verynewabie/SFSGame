@@ -46,7 +46,7 @@ namespace ET.Server
         
         private static void SyncBody(this ColliderComponent self)
         {
-            self.Body.SetTransform(new Vector2(self.Unit.Position.x, self.Unit.Position.y),self.Body.GetAngle());
+            self.Body.SetTransform(new Vector2(self.Unit.Position.x, self.Unit.Position.z),self.Body.GetAngle());
         }
 
         // 1 red hero

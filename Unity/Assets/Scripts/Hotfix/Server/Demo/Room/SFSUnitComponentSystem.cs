@@ -3,6 +3,7 @@
 
     [EntitySystemOf(typeof(SFSUnitComponent))]
     [FriendOf(typeof(SFSUnitComponent))]
+    [FriendOf(typeof(SFSUnit))]
     public static partial class SFSUnitComponentSystem
     {
         [EntitySystem]
@@ -16,6 +17,7 @@
             foreach (var info in self.unitToCreate)
             {
                 SFSUnitFactory.CreateProjectile(self.GetParent<BattleRoom>(), info);
+                Log.Error($"Create Projectile In {info.Position.ToString()}");
             }
             self.unitToCreate.Clear();
 
@@ -35,7 +37,7 @@
                 });
             }
             self.unitToDelete.Clear();
-            
+
             foreach (var entity in self.Children.Values)
             {
                 if (entity is SFSUnit unit)
@@ -44,6 +46,22 @@
                     unit.TickEnd();
                 }
             }
+
+            // Send Debug Info
+            Room2C_DebugInfo debugInfo = Room2C_DebugInfo.Create();
+            debugInfo.CmdType = SFSCmdType.DebugInfoCmd;
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit)
+                {
+                    debugInfo.Pos.Add(unit.Position);
+                    debugInfo.Radius.Add(unit.SfsUnitType == SFSUnitType.Player ? 1f : 0.25f);
+                }
+            }
+            EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
+            {
+                Cmd = debugInfo
+            });
         }
 
         public static void AddUnitToCreate(this SFSUnitComponent self, SFSUnitInfo unitInfo)

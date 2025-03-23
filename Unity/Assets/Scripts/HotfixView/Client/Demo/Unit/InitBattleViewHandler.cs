@@ -11,6 +11,8 @@ namespace ET.Client
             BattleRoom room = scene.GetComponent<BattleRoom>();
             room.AddComponent<SFSOperaComponent, PlayerInputComponent>(arg.PlayerInputComponent);
             room.AddComponent<UIComponent>();
+            // TODO Remove Debug Info
+            // room.AddComponent<GraphicsDebugComponent>();
             await UIHelper.Create(room, UIType.UIGame, UILayer.Mid);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

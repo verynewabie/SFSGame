@@ -351,3 +351,13 @@ message Room2C_DeleteUnit // IRoomCmd
 	bool PassConsistencyCheck = 4;
 	repeated int64 UnitToDelete = 5;
 }
+
+message Room2C_DebugInfo // IRoomCmd
+{
+	int32 FrameId = 1;
+	SFSCmdType CmdType = 2;
+	int64 UnitId = 3;
+	bool PassConsistencyCheck = 4;
+	repeated Unity.Mathematics.float3 Pos = 5;
+	repeated float Radius = 6;
+}

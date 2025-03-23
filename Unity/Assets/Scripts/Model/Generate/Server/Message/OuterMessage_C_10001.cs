@@ -1620,6 +1620,51 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.Room2C_DebugInfo)]
+    public partial class Room2C_DebugInfo : MessageObject, IRoomCmd
+    {
+        public static Room2C_DebugInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_DebugInfo), isFromPool) as Room2C_DebugInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public SFSCmdType CmdType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public bool PassConsistencyCheck { get; set; }
+
+        [MemoryPackOrder(4)]
+        public List<Unity.Mathematics.float3> Pos { get; set; } = new();
+
+        [MemoryPackOrder(5)]
+        public List<float> Radius { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+            this.CmdType = default;
+            this.UnitId = default;
+            this.PassConsistencyCheck = default;
+            this.Pos.Clear();
+            this.Radius.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1671,5 +1716,6 @@ namespace ET
         public const ushort MoveCmd = 10048;
         public const ushort SkillCmd = 10049;
         public const ushort Room2C_DeleteUnit = 10050;
+        public const ushort Room2C_DebugInfo = 10051;
     }
 }

@@ -29,4 +29,14 @@
             await ETTask.CompletedTask;
         }
     }
+    
+    [MessageHandler(SceneType.Demo)]
+    public class Room2C_DebugInfoHandler : MessageHandler<Scene, Room2C_DebugInfo>
+    {
+        protected override async ETTask Run(Scene root, Room2C_DebugInfo message)
+        {
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            await ETTask.CompletedTask;
+        }
+    }
 }

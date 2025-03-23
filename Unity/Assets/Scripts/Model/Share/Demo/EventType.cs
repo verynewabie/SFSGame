@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Box2DSharp.Dynamics;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -83,6 +84,12 @@ namespace ET.Client
     public struct RemoveUnitView
     {
         public List<long> UnitToDelete;
+    }
+
+    public struct ShowDebugInfo
+    {
+        public List<float3> Pos;
+        public List<float> Radius;
     }
 }
 

@@ -5,6 +5,7 @@ using Box2DSharp.Dynamics.Contacts;
 namespace ET.Server
 {
     [EnableClass]
+    [FriendOf(typeof(SFSUnit))]
     public class SFSCollisionListener : IContactListener
     {
         // 这些方法在PhysicsWorld Tick/World Step时触发
@@ -16,7 +17,8 @@ namespace ET.Server
             {
                 return;
             }
-            
+            Log.Error($"{unitA.SfsUnitCamp.ToString()} {unitA.SfsUnitType.ToString()} {unitA.Position.ToString()} Contact " +
+                $"{unitB.SfsUnitCamp.ToString()} {unitB.SfsUnitType.ToString()} {unitB.Position.ToString()}");
             // Destroy Unit, Remove Body
             EventSystem.Instance.Publish(unitB.Root(), new AddUnitToRemove
             {
@@ -27,7 +29,7 @@ namespace ET.Server
                 Body = contact.FixtureB.Body
             });
             // Add Buff, Take Damage
-            
+
         }
 
         public void EndContact(Contact contact)

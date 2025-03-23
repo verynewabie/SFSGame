@@ -14,12 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuildinFiles:
   - PackageName: DefaultPackage
-    FileName: 040bc4e15435475d174eabbb137382c5.bundle
-    FileCRC32: 7934bbac
-  - PackageName: DefaultPackage
-    FileName: 05d63abf0d28250a926ae92dfda3c146.bundle
-    FileCRC32: fb5d2ce5
-  - PackageName: DefaultPackage
     FileName: 07644cecf43ef39f6107e2e3576434a7.bundle
     FileCRC32: ea213838
   - PackageName: DefaultPackage
@@ -89,11 +83,17 @@ MonoBehaviour:
     FileName: 91f3991d31b0aeabb9986e9b0fae4d4f.bundle
     FileCRC32: 2ff8990e
   - PackageName: DefaultPackage
+    FileName: 92e36d075780569a32d1615cc1b85fcd.bundle
+    FileCRC32: 2ed9742a
+  - PackageName: DefaultPackage
     FileName: 97f4a4974fa1ccb5ae59aeac0b09191d.bundle
     FileCRC32: 14774a75
   - PackageName: DefaultPackage
     FileName: a6c48f901b224771e825f31432879683.bundle
     FileCRC32: bb8440ae
+  - PackageName: DefaultPackage
+    FileName: a949107f9211c68cc09212eb82cb0933.bundle
+    FileCRC32: b84b6f77
   - PackageName: DefaultPackage
     FileName: aa6a271e8979a4ae92e9f4254b509673.bundle
     FileCRC32: db9fee2e

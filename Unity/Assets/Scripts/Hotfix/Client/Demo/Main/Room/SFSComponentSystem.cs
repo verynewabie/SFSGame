@@ -228,6 +228,16 @@ namespace ET.Client
                     });
                 }
                     break;
+                case SFSCmdType.DebugInfoCmd:
+                {
+                    Room2C_DebugInfo msg = cmd as Room2C_DebugInfo;
+                    EventSystem.Instance.Publish(self.Root(), new ShowDebugInfo
+                    {
+                        Pos = msg.Pos,
+                        Radius = msg.Radius,
+                    });
+                }
+                    break;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     break;

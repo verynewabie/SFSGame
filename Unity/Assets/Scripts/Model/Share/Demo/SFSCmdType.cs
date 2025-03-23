@@ -7,6 +7,7 @@ namespace ET
         MoveCmd,
         SkillCmd,
         DeleteUnitCmd,
+        DebugInfoCmd,
     }
 
     public interface IRoomCmd : IMessage
