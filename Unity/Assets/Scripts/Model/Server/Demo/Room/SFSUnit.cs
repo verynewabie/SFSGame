@@ -22,5 +22,7 @@ namespace ET.Server
         public SFSUnitType SfsUnitType;
 
         public bool CanReleaseSkill => this.SfsUnitState == SFSUnitState.Free;
+        
+        public int HP = 100;
     }
 }

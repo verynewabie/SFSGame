@@ -13,6 +13,18 @@ namespace ET.Client
             get { return sfsComponent; }
             set { sfsComponent = value; }
         }
+        private EntityRef<SFSUnit> myUnit;
+        public SFSUnit MyUnit
+        {
+            get { return myUnit; }
+            set { myUnit = value; }
+        }
+        private EntityRef<SkillComponent> mySkill;
+        public SkillComponent MySkill
+        {
+            get { return mySkill; }
+            set { mySkill = value; }
+        }
 
         public float AccTime;
         public int Num;
@@ -24,5 +36,9 @@ namespace ET.Client
         public Text ServerFrame;
         public Text ClientAheadFrame;
         public Text FailCount;
+
+        public Image HP;
+        public GameObject Mask;
+        public Text CDNum;
     }
 }
