@@ -60,6 +60,7 @@ namespace ET.Client
             moveCmd.UnitId = self.PlayerId;
             moveCmd.Pos = unit.Position;
             moveCmd.Rot = unit.Rotation;
+            moveCmd.FromClient = true;
             EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue { Cmd = moveCmd });
             
             if (self.Q_Down)

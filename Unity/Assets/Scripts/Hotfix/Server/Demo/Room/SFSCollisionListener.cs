@@ -29,7 +29,8 @@ namespace ET.Server
                 Body = contact.FixtureB.Body
             });
             // Add Buff, Take Damage
-
+            unitA.GetComponent<BuffComponent>().AddBuff(new StunBuff());
+            unitA.TakeDamage(40);
         }
 
         public void EndContact(Contact contact)

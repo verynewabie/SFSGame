@@ -8,8 +8,11 @@ namespace ET
         SkillCmd,
         DeleteUnitCmd,
         DebugInfoCmd,
+        StateCmd,
+        AttributeCmd,
+        BuffCmd
     }
-
+    
     public interface IRoomCmd : IMessage
     {
         int FrameId { get; set; }

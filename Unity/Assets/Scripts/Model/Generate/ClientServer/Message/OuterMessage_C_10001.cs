@@ -1507,6 +1507,9 @@ namespace ET
         [MemoryPackOrder(6)]
         public Unity.Mathematics.quaternion Rot { get; set; }
 
+        [MemoryPackOrder(7)]
+        public bool FromClient { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -1521,6 +1524,7 @@ namespace ET
             this.Speed = default;
             this.Pos = default;
             this.Rot = default;
+            this.FromClient = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -1665,6 +1669,158 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.StateCmd)]
+    public partial class StateCmd : MessageObject, IRoomCmd
+    {
+        public static StateCmd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(StateCmd), isFromPool) as StateCmd;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public SFSCmdType CmdType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public bool PassConsistencyCheck { get; set; }
+
+        [MemoryPackOrder(4)]
+        public SFSUnitState State { get; set; }
+
+        [MemoryPackOrder(5)]
+        public int Duration { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+            this.CmdType = default;
+            this.UnitId = default;
+            this.PassConsistencyCheck = default;
+            this.State = default;
+            this.Duration = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.AttributeCmd)]
+    public partial class AttributeCmd : MessageObject, IRoomCmd
+    {
+        public static AttributeCmd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(AttributeCmd), isFromPool) as AttributeCmd;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public SFSCmdType CmdType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public bool PassConsistencyCheck { get; set; }
+
+        [MemoryPackOrder(4)]
+        public int HP { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+            this.CmdType = default;
+            this.UnitId = default;
+            this.PassConsistencyCheck = default;
+            this.HP = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.BuffCmd)]
+    public partial class BuffCmd : MessageObject, IRoomCmd
+    {
+        public static BuffCmd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(BuffCmd), isFromPool) as BuffCmd;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public SFSCmdType CmdType { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(3)]
+        public bool PassConsistencyCheck { get; set; }
+
+        [MemoryPackOrder(4)]
+        public SFSBuffType Type { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+            this.CmdType = default;
+            this.UnitId = default;
+            this.PassConsistencyCheck = default;
+            this.Type = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.Room2C_OneFrameEnd)]
+    public partial class Room2C_OneFrameEnd : MessageObject, IMessage
+    {
+        public static Room2C_OneFrameEnd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_OneFrameEnd), isFromPool) as Room2C_OneFrameEnd;
+        }
+
+        [MemoryPackOrder(0)]
+        public int FrameId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.FrameId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1717,5 +1873,9 @@ namespace ET
         public const ushort SkillCmd = 10049;
         public const ushort Room2C_DeleteUnit = 10050;
         public const ushort Room2C_DebugInfo = 10051;
+        public const ushort StateCmd = 10052;
+        public const ushort AttributeCmd = 10053;
+        public const ushort BuffCmd = 10054;
+        public const ushort Room2C_OneFrameEnd = 10055;
     }
 }

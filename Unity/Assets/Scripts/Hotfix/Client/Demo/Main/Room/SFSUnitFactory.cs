@@ -15,6 +15,7 @@ namespace ET.Client
             unit.SfsUnitCamp = info.Camp;
             unit.SfsUnitState = info.State;
             unit.AddComponent<SkillComponent, SFSUnit>(unit);
+            unit.AddComponent<BuffComponent, SFSUnit>(unit);
             if (isLocalPlayer)
                 component.MyUnit = unit;
             // Add UnitView, Animator, Camera

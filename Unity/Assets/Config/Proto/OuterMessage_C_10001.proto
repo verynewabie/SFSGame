@@ -329,6 +329,7 @@ message MoveCmd // IRoomCmd
 	Unity.Mathematics.float3 Speed = 5;
 	Unity.Mathematics.float3 Pos = 6;
 	Unity.Mathematics.quaternion Rot = 7;
+	bool FromClient = 8;
 }
 
 message SkillCmd // IRoomCmd
@@ -360,4 +361,37 @@ message Room2C_DebugInfo // IRoomCmd
 	bool PassConsistencyCheck = 4;
 	repeated Unity.Mathematics.float3 Pos = 5;
 	repeated float Radius = 6;
+}
+
+message StateCmd // IRoomCmd
+{
+	int32 FrameId = 1;
+	SFSCmdType CmdType = 2;
+	int64 UnitId = 3;
+	bool PassConsistencyCheck = 4;
+	SFSUnitState State = 5;
+	int32 Duration = 6;
+}
+
+message AttributeCmd // IRoomCmd
+{
+	int32 FrameId = 1;
+	SFSCmdType CmdType = 2;
+	int64 UnitId = 3;
+	bool PassConsistencyCheck = 4;
+	int32 HP = 5;
+}
+
+message BuffCmd // IRoomCmd
+{
+	int32 FrameId = 1;
+	SFSCmdType CmdType = 2;
+	int64 UnitId = 3;
+	bool PassConsistencyCheck = 4;
+	SFSBuffType Type = 5;
+}
+
+message Room2C_OneFrameEnd // IMessage
+{
+	int32 FrameId = 1;
 }

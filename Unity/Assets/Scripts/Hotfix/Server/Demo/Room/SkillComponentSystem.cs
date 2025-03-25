@@ -62,17 +62,18 @@ namespace ET.Server
 
         public static void TickEnd(this SkillComponent self)
         {
+            var sfsCmpt = self.Owner.BattleRoom.GetComponent<SFSComponent>();
+            
             SkillCmd cmd = SkillCmd.Create();
             cmd.State = self.State;
             cmd.Duration = self.Duration;
             cmd.UnitId = self.Owner.Id;
             cmd.CmdType = SFSCmdType.SkillCmd;
             cmd.Info = self.ToCreateProjectile;
-
-            var sfsCmpt = self.Owner.BattleRoom.GetComponent<SFSComponent>();
-            self.HistorySkillState[sfsCmpt.CurrentFrame] = cmd;
             cmd.FrameId = sfsCmpt.CurrentFrame;
-
+            
+            self.HistorySkillState[sfsCmpt.CurrentFrame] = cmd;
+            
             if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, cmd))
             {
                 EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue

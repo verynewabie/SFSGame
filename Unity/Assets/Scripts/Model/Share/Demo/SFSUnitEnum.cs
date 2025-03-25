@@ -3,8 +3,8 @@
     public enum SFSUnitState
     {
         Free = 0,
-        Forward = 1, // 施法前摇
-        Abnormal = 2, // 异常
+        // 异常
+        Abnormal = 1, 
     }
 
     public enum SFSUnitType
@@ -24,5 +24,10 @@
         None = 0,
         Forward = 1,
         CD = 2,
+    }
+
+    public enum SFSBuffType
+    {
+        Stun,
     }
 }

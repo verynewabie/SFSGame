@@ -20,6 +20,7 @@ namespace ET.Server
                 unit = unit,
             };
             unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
+            unit.AddComponent<BuffComponent, SFSUnit>(unit);
             return unit;
         }
 

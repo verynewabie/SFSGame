@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.Device;
 
 namespace ET.Client
 {
@@ -20,6 +21,8 @@ namespace ET.Client
             // 根据配置修改掉Main Fiber的SceneType
             SceneType sceneType = EnumHelper.FromString<SceneType>(globalComponent.GlobalConfig.AppType.ToString());
             root.SceneType = sceneType;
+            
+            Screen.SetResolution(720, 405, false); 
             
             await EventSystem.Instance.PublishAsync(root, new AppStartInitFinish());
         }

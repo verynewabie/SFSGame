@@ -80,6 +80,9 @@ namespace ET.Server
                     self.MyRoom.Broadcast(cmdToSend);
                 }
             }
+            Room2C_OneFrameEnd msg = Room2C_OneFrameEnd.Create();
+            msg.FrameId = self.CurrentFrame;
+            self.MyRoom.Broadcast(msg);
             self.FrameCmdToSend.Remove(self.CurrentFrame);
         }
         

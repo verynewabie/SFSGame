@@ -19,7 +19,6 @@
                 {
                     continue;
                 }
-                Log.Info($"Send {message.GetType().ToString()} Message To {roomPlayer.Id}");
                 messageLocationSenderComponent.Get(LocationType.GateSession).Send(roomPlayer.Id, message);
             }
         }

@@ -61,9 +61,9 @@ namespace ET.Client
                 {
                     if (!self.CheckConsistencyOnTargetFrame(frame, cmd))
                     {
+                        Log.Error($"In Frame {frame} rollback because {cmd.CmdType}");
                         shouldRollback = true;
                         cmd.PassConsistencyCheck = false;
-                        Log.Error($"由于{MongoHelper.ToJson(cmd)}的不一致，准备进入回滚流程");
                     }
                     else cmd.PassConsistencyCheck = true;
                 }
@@ -109,6 +109,14 @@ namespace ET.Client
                 case SFSCmdType.SkillCmd:
                     unit.GetComponent<SkillComponent>().Rollback(cmd as SkillCmd);
                     break;
+                case SFSCmdType.StateCmd:
+                    unit.Rollback(cmd as StateCmd);
+                    break;
+                case SFSCmdType.AttributeCmd:
+                    unit.Rollback(cmd as AttributeCmd);
+                    break;
+                case SFSCmdType.BuffCmd:
+                    break;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     break;
@@ -124,6 +132,12 @@ namespace ET.Client
                     return unit.CheckConsistency(targetFrame, cmd as MoveCmd);
                 case SFSCmdType.SkillCmd:
                     return unit.GetComponent<SkillComponent>().CheckConsistency(targetFrame, cmd as SkillCmd);
+                case SFSCmdType.StateCmd:
+                    return unit.CheckConsistency(targetFrame, cmd as StateCmd);
+                case SFSCmdType.AttributeCmd:
+                    return unit.CheckConsistency(targetFrame, cmd as AttributeCmd);
+                case SFSCmdType.BuffCmd:
+                    return true;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     return false;
@@ -238,6 +252,15 @@ namespace ET.Client
                     });
                 }
                     break;
+                case SFSCmdType.StateCmd:
+                    unit.HandleCmd(cmd as StateCmd);
+                    break;
+                case SFSCmdType.AttributeCmd:
+                    unit.HandleCmd(cmd as AttributeCmd);
+                    break;
+                case SFSCmdType.BuffCmd:
+                    unit.GetComponent<BuffComponent>().HandleCmd(cmd as BuffCmd);
+                    break;
                 default:
                     Log.Error($"CmdType: {cmd.CmdType} Not Found");
                     break;
@@ -287,17 +310,18 @@ namespace ET.Client
 
         public static void AddCmdToHandleQueue(this SFSComponent self, IRoomCmd cmd)
         {
-            int frame = cmd.FrameId;
-            if (self.FrameCmdToHandle.TryGetValue(frame, out Queue<IRoomCmd> queue))
+            self.CacheCmdToHandle.Enqueue(cmd);
+        }
+
+        public static void OneFrameEndHandler(this SFSComponent self, Room2C_OneFrameEnd msg)
+        {
+            Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
+            foreach (var cmd in self.CacheCmdToHandle)
             {
-                queue.Enqueue(cmd);
-            }
-            else
-            {
-                Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
                 newQueue.Enqueue(cmd);
-                self.FrameCmdToHandle.Add(frame, newQueue);
             }
+            self.FrameCmdToHandle.Add(msg.FrameId, newQueue);
+            self.CacheCmdToHandle.Clear();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using ET.Client;
+﻿using System;
 using Unity.Mathematics;
 
 namespace ET.Server
@@ -17,17 +17,33 @@ namespace ET.Server
 
         public static void Tick(this SFSUnit self)
         {
-            self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
-            if (self.SfsUnitType == SFSUnitType.Player)
-                self.Speed = 0;
+            if (self.SfsUnitState != SFSUnitState.Abnormal)
+                self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
+            else
+            {
+                self.Duration--;
+                if (self.Duration == 0)
+                {
+                    self.SfsUnitState = SFSUnitState.Free;
+                }
+            }
+            
             if (self.SfsUnitType == SFSUnitType.Player)
             {
                 self.GetComponent<SkillComponent>().Tick();
                 self.GetComponent<ColliderComponent>().Tick();
+                self.GetComponent<BuffComponent>().Tick();
             }
             else
             {
                 self.GetComponent<ColliderComponent>().Tick();
+                if (math.abs(self.Position.x) > 15 || math.abs(self.Position.z) > 15)
+                {
+                    EventSystem.Instance.Publish(self.Root(), new AddUnitToRemove
+                    {
+                        UnitId = self.Id
+                    });
+                }
             }
         }
 
@@ -35,28 +51,66 @@ namespace ET.Server
         {
             if (self.SfsUnitType == SFSUnitType.Projectile)
                 return;
-            
-            MoveCmd cmd = MoveCmd.Create();
-            cmd.Pos = self.Position;
-            cmd.Speed = self.Speed;
-            cmd.Rot = self.Rotation;
-            cmd.CmdType = SFSCmdType.MoveCmd;
-            cmd.UnitId = self.Id;
-            
             var sfsCmpt = self.BattleRoom.GetComponent<SFSComponent>();
-            self.HistoryMoveState[sfsCmpt.CurrentFrame] = cmd;
             
-            if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, cmd))
+            // Move
+            MoveCmd moveCmd = MoveCmd.Create();
+            moveCmd.Pos = self.Position;
+            moveCmd.Speed = self.Speed;
+            moveCmd.Rot = self.Rotation;
+            moveCmd.CmdType = SFSCmdType.MoveCmd;
+            moveCmd.UnitId = self.Id;
+            moveCmd.FrameId = sfsCmpt.CurrentFrame;
+            
+            self.HistoryMoveState[sfsCmpt.CurrentFrame] = moveCmd;
+            if (!self.Speed.MyEquals(float3.zero))
             {
                 EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
                 {
-                    Cmd = cmd
+                    Cmd = moveCmd
+                });
+                self.Speed = float3.zero;
+            }
+            // Log.Error($"Frame {moveCmd.FrameId} Pos: {moveCmd.Pos.ToString()}");
+            
+            // State
+            StateCmd stateCmd = StateCmd.Create();
+            stateCmd.CmdType = SFSCmdType.StateCmd;
+            stateCmd.UnitId = self.Id;
+            stateCmd.State = self.SfsUnitState;
+            stateCmd.Duration = self.Duration;
+            stateCmd.FrameId = sfsCmpt.CurrentFrame;
+            
+            self.HistoryState[sfsCmpt.CurrentFrame] = stateCmd;
+            if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, stateCmd))
+            {
+                EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
+                {
+                    Cmd = stateCmd
                 });
             }
+            
+            // Attribute
+            AttributeCmd attributeCmd = AttributeCmd.Create();
+            attributeCmd.CmdType = SFSCmdType.AttributeCmd;
+            attributeCmd.UnitId = self.Id;
+            attributeCmd.HP = self.HP;
+            attributeCmd.FrameId = sfsCmpt.CurrentFrame;
+            
+            self.HistoryAttribute[sfsCmpt.CurrentFrame] = attributeCmd;
+            if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, attributeCmd))
+            {
+                EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
+                {
+                    Cmd = attributeCmd
+                });
+            }
+            
             // TODO AddCmdToWholeCmdsBuffer
             
             self.GetComponent<SkillComponent>().TickEnd();
             self.GetComponent<ColliderComponent>().TickEnd();
+            self.GetComponent<BuffComponent>().TickEnd();
         }
 
         public static void HandleCmd(this SFSUnit self, MoveCmd moveCmd)
@@ -76,6 +130,39 @@ namespace ET.Server
             return target.Pos.MyEquals(moveCmd.Pos) &&
                     target.Rot.MyEquals(moveCmd.Rot) &&
                     target.Speed.MyEquals(moveCmd.Speed);
+        }
+        
+        private static bool CheckConsistency(this SFSUnit self, int frame, StateCmd stateCmd)
+        {
+            if (!self.HistoryMoveState.ContainsKey(frame))
+                return false;
+            StateCmd target = self.HistoryState[frame];
+            if (target.State != stateCmd.State)
+                return false;
+            if (target.State == SFSUnitState.Free)
+                return true;
+            return target.FrameId - stateCmd.FrameId == stateCmd.Duration - target.Duration;
+        }
+        
+        private static bool CheckConsistency(this SFSUnit self, int frame, AttributeCmd attributeCmd)
+        {
+            if (!self.HistoryMoveState.ContainsKey(frame))
+                return false;
+            AttributeCmd target = self.HistoryAttribute[frame];
+            return target.HP == attributeCmd.HP;
+        }
+
+        public static void ChangeUnitState(this SFSUnit self, SFSUnitState state, int duration)
+        {
+            self.SfsUnitState = state;
+            self.Duration = duration;
+        }
+
+        public static void TakeDamage(this SFSUnit self, int damage)
+        {
+            self.HP -= damage;
+            self.HP = Math.Max(0, self.HP);
+            // TODO
         }
     }
 }
