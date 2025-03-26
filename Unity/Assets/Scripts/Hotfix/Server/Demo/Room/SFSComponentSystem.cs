@@ -16,6 +16,7 @@ namespace ET.Server
             self.CurrentFrame = 0;
             self.MyRoom = self.GetParent<BattleRoom>();
         }
+        
         [EntitySystem]
         private static void Update(this SFSComponent self)
         {
@@ -63,6 +64,8 @@ namespace ET.Server
             self.MyRoom.GetComponent<SFSUnitComponent>().Tick();
             // 这里 Tick 时会删除Unit（添加到队列）
             self.MyRoom.GetComponent<PhysicsWorldComponent>().Tick();
+            // TickEnd
+            self.MyRoom.GetComponent<SFSUnitComponent>().TickEnd();
         }
         
         public static void StartSync(this SFSComponent self, long startTime)
@@ -107,7 +110,8 @@ namespace ET.Server
             int frame = cmd.FrameId;
             if (frame <= self.CurrentFrame)
             {
-                Log.Warning($"Receive Cmd: {cmd.CmdType} {cmd.FrameId}\n in Frame:{self.CurrentFrame}");
+                Log.Error($"Receive Cmd: {cmd.CmdType} {cmd.FrameId}\n in Frame:{self.CurrentFrame}");
+                cmd.FrameId = frame = self.CurrentFrame + 1;
             }
             if (self.FrameCmdToHandle.TryGetValue(frame, out Queue<IRoomCmd> queue))
             {

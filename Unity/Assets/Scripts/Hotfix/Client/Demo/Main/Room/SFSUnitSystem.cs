@@ -17,7 +17,13 @@ namespace ET.Client
         public static void Tick(this SFSUnit self)
         {
             if (self.SfsUnitState != SFSUnitState.Abnormal)
+            {
+                if (!self.Speed.MyEquals(float3.zero))
+                {
+                    self.Rotation = quaternion.LookRotation(self.Speed, math.up());
+                }
                 self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
+            }
             else
             {
                 self.Duration--;
@@ -83,11 +89,8 @@ namespace ET.Client
                 self.Position = moveCmd.Pos;
                 self.Rotation = moveCmd.Rot;
             }
-            self.Speed = moveCmd.Speed;
-            if (!self.Speed.MyEquals(float3.zero))
-            {
-                self.Rotation = quaternion.LookRotation(self.Speed, math.up());
-            }
+            else
+                self.Speed = moveCmd.Speed;
         }
 
         public static bool CheckConsistency(this SFSUnit self, int frame, MoveCmd moveCmd)

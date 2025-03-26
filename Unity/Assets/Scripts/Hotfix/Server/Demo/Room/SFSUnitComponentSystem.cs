@@ -43,7 +43,6 @@
                 if (entity is SFSUnit unit)
                 {
                     unit.Tick();
-                    unit.TickEnd();
                 }
             }
 
@@ -62,6 +61,17 @@
             {
                 Cmd = debugInfo
             });
+        }
+
+        public static void TickEnd(this SFSUnitComponent self)
+        {
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit)
+                {
+                    unit.TickEnd();
+                }
+            }
         }
 
         public static void AddUnitToCreate(this SFSUnitComponent self, SFSUnitInfo unitInfo)
