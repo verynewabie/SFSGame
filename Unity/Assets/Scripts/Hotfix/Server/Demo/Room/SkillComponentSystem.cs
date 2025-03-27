@@ -56,7 +56,7 @@ namespace ET.Server
                 });
                 // self.Owner.BattleRoom.GetComponent<SFSUnitComponent>().AddUnitToCreate(info);
                 self.State = SFSSkillState.CD;
-                self.Duration = 100;
+                self.Duration = SFSConstValue.SkillCD;
             }
         }
 
@@ -88,7 +88,7 @@ namespace ET.Server
             if (self.Owner.CanReleaseSkill && self.State == SFSSkillState.None)
             {
                 self.State = SFSSkillState.Forward;
-                self.Duration = 10;
+                self.Duration = SFSConstValue.SkillForward;
             }
         }
 

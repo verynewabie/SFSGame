@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 
 namespace ET.Client
 {
@@ -188,11 +189,21 @@ namespace ET.Client
             {
                 // Log.Info("------------------进入变速状态");
                 self.HasInSpeedChangeState = true;
-                int newInterval = TimeSpan.FromTicks(TimeSpan.TicksPerSecond /
-                    (SFSConstValue.FrameCountPerSecond +
+                int newSecondFrame = SFSConstValue.FrameCountPerSecond +
                         self.TargetAheadOfFrame -
-                        self.CurrentAheadOfFrame
-                    )).Milliseconds;
+                        self.CurrentAheadOfFrame;
+                int limit = SFSConstValue.FrameCountPerSecond / 10;
+                if (newSecondFrame > SFSConstValue.FrameCountPerSecond - limit
+                    && newSecondFrame < SFSConstValue.FrameCountPerSecond)
+                    newSecondFrame = SFSConstValue.FrameCountPerSecond - limit;
+                if (newSecondFrame < SFSConstValue.FrameCountPerSecond + limit
+                    && newSecondFrame > SFSConstValue.FrameCountPerSecond)
+                    newSecondFrame = SFSConstValue.FrameCountPerSecond + limit;
+                newSecondFrame = math.clamp(newSecondFrame, 
+                    SFSConstValue.FrameCountPerSecond * 3 / 4,
+                    SFSConstValue.FrameCountPerSecond * 5 / 4);
+                int newInterval = TimeSpan.FromTicks(TimeSpan.TicksPerSecond /
+                    newSecondFrame).Milliseconds;
                 self.ClientUpdate.ChangeInterval(newInterval, self.CurrentFrame);
             }
             else if (self.HasInSpeedChangeState)

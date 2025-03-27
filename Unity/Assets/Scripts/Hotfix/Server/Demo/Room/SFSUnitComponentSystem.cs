@@ -42,7 +42,8 @@
             {
                 if (entity is SFSUnit unit)
                 {
-                    unit.Tick();
+                    if (unit.SfsUnitState != SFSUnitState.Die)
+                        unit.Tick();
                 }
             }
 
@@ -69,7 +70,14 @@
             {
                 if (entity is SFSUnit unit)
                 {
-                    unit.TickEnd();
+                    if (unit.SfsUnitState != SFSUnitState.Die)
+                        unit.TickEnd();
+                    else if (unit.SfsUnitState == SFSUnitState.Die
+                             && unit.Duration > 0)
+                    {
+                        unit.Duration = 0;
+                        unit.TickEnd();
+                    }
                 }
             }
         }

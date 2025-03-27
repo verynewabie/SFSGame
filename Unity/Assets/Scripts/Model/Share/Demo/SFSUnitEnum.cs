@@ -5,6 +5,7 @@
         Free = 0,
         // 异常
         Abnormal = 1, 
+        Die = 2
     }
 
     public enum SFSUnitType

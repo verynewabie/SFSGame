@@ -4,7 +4,7 @@
     {
         public StunBuff()
         {
-            this.Duration = 50;
+            this.Duration = 2 * SFSConstValue.FrameCountPerSecond;
         }
 
         public override void ApplyEffect(SFSUnit target)

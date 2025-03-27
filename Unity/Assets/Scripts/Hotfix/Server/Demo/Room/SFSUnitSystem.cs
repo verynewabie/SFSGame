@@ -7,6 +7,7 @@ namespace ET.Server
     [EntitySystemOf(typeof(SFSUnit))]
     [FriendOf(typeof(SFSUnit))]
     [FriendOf(typeof(SFSComponent))]
+    [FriendOf(typeof(ColliderComponent))]
     public static partial class SFSUnitSystem
     {
         [EntitySystem]
@@ -17,7 +18,7 @@ namespace ET.Server
 
         public static void Tick(this SFSUnit self)
         {
-            if (self.SfsUnitState != SFSUnitState.Abnormal)
+            if (self.SfsUnitState == SFSUnitState.Free)
             {
                 if (!self.Speed.MyEquals(float3.zero))
                 {
@@ -27,13 +28,14 @@ namespace ET.Server
             }
             else
             {
+                self.Speed = float3.zero;
                 self.Duration--;
                 if (self.Duration == 0)
                 {
                     self.SfsUnitState = SFSUnitState.Free;
                 }
             }
-            
+
             if (self.SfsUnitType == SFSUnitType.Player)
             {
                 self.GetComponent<SkillComponent>().Tick();
@@ -58,7 +60,7 @@ namespace ET.Server
             if (self.SfsUnitType == SFSUnitType.Projectile)
                 return;
             var sfsCmpt = self.BattleRoom.GetComponent<SFSComponent>();
-            
+
             // Move
             MoveCmd moveCmd = MoveCmd.Create();
             moveCmd.Pos = self.Position;
@@ -67,18 +69,17 @@ namespace ET.Server
             moveCmd.CmdType = SFSCmdType.MoveCmd;
             moveCmd.UnitId = self.Id;
             moveCmd.FrameId = sfsCmpt.CurrentFrame;
-            
+
             self.HistoryMoveState[sfsCmpt.CurrentFrame] = moveCmd;
-            if (!self.Speed.MyEquals(float3.zero))
+            if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, moveCmd))
             {
                 EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
                 {
                     Cmd = moveCmd
                 });
-                self.Speed = float3.zero;
             }
             // Log.Error($"Frame {moveCmd.FrameId} Pos: {moveCmd.Pos.ToString()}");
-            
+
             // State
             StateCmd stateCmd = StateCmd.Create();
             stateCmd.CmdType = SFSCmdType.StateCmd;
@@ -86,7 +87,7 @@ namespace ET.Server
             stateCmd.State = self.SfsUnitState;
             stateCmd.Duration = self.Duration;
             stateCmd.FrameId = sfsCmpt.CurrentFrame;
-            
+
             self.HistoryState[sfsCmpt.CurrentFrame] = stateCmd;
             if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, stateCmd))
             {
@@ -95,14 +96,14 @@ namespace ET.Server
                     Cmd = stateCmd
                 });
             }
-            
+
             // Attribute
             AttributeCmd attributeCmd = AttributeCmd.Create();
             attributeCmd.CmdType = SFSCmdType.AttributeCmd;
             attributeCmd.UnitId = self.Id;
             attributeCmd.HP = self.HP;
             attributeCmd.FrameId = sfsCmpt.CurrentFrame;
-            
+
             self.HistoryAttribute[sfsCmpt.CurrentFrame] = attributeCmd;
             if (!self.CheckConsistency(sfsCmpt.CurrentFrame - 1, attributeCmd))
             {
@@ -111,9 +112,9 @@ namespace ET.Server
                     Cmd = attributeCmd
                 });
             }
-            
+
             // TODO AddCmdToWholeCmdsBuffer
-            
+
             self.GetComponent<SkillComponent>().TickEnd();
             self.GetComponent<ColliderComponent>().TickEnd();
             self.GetComponent<BuffComponent>().TickEnd();
@@ -123,7 +124,7 @@ namespace ET.Server
         {
             self.Speed = moveCmd.Speed;
         }
-        
+
         private static bool CheckConsistency(this SFSUnit self, int frame, MoveCmd moveCmd)
         {
             if (!self.HistoryMoveState.ContainsKey(frame))
@@ -133,7 +134,7 @@ namespace ET.Server
                     target.Rot.MyEquals(moveCmd.Rot) &&
                     target.Speed.MyEquals(moveCmd.Speed);
         }
-        
+
         private static bool CheckConsistency(this SFSUnit self, int frame, StateCmd stateCmd)
         {
             if (!self.HistoryMoveState.ContainsKey(frame))
@@ -145,7 +146,7 @@ namespace ET.Server
                 return true;
             return target.FrameId - stateCmd.FrameId == stateCmd.Duration - target.Duration;
         }
-        
+
         private static bool CheckConsistency(this SFSUnit self, int frame, AttributeCmd attributeCmd)
         {
             if (!self.HistoryMoveState.ContainsKey(frame))
@@ -164,7 +165,15 @@ namespace ET.Server
         {
             self.HP -= damage;
             self.HP = Math.Max(0, self.HP);
-            // TODO
+            if (self.HP == 0)
+            {
+                self.SfsUnitState = SFSUnitState.Die;
+                self.Duration = 1;
+                EventSystem.Instance.Publish(self.Root(), new AddBodyToRemove
+                {
+                    Body = self.GetComponent<ColliderComponent>().Body
+                });
+            }
         }
     }
 }

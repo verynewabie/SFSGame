@@ -49,7 +49,9 @@ namespace ET.Client
 
             // Debug Info
             self.ClientFrame.text = $"{self.SFSComponent.CurrentFrame.ToString()}";
-            self.ClientAheadFrame.text = $"{self.SFSComponent.CurrentAheadOfFrame.ToString()}";
+            self.ClientAheadFrame.text = $"{self.SFSComponent.CurrentAheadOfFrame.ToString()}" +
+                    $"/" +
+                    $"{self.SFSComponent.TargetAheadOfFrame.ToString()}";
             self.ServerFrame.text = $"{(self.SFSComponent.CurrentFrame - self.SFSComponent.CurrentAheadOfFrame).ToString()}";
             self.FailCount.text = $"{self.SFSComponent.FailCount.ToString()}";
             if (Input.GetKeyDown(KeyCode.Tab))

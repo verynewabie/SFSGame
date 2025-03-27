@@ -4,7 +4,7 @@ namespace ET
 {
     public static class CompareTool
     {
-        private const float Epsilon = 0.001f;
+        private const float Epsilon = 0.01f;
         public static bool MyEquals(this float2 a, float2 b)
         {
             return math.abs(a.x - b.x) < Epsilon 

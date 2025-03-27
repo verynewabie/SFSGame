@@ -20,7 +20,7 @@
             if (cmd.FromClient && self.Owner.CanReleaseSkill && self.State == SFSSkillState.None)
             {
                 self.State = SFSSkillState.Forward;
-                self.Duration = 10;
+                self.Duration = SFSConstValue.SkillForward;
                 // 不用在这里播动画，动画组件会一直读State
             }
             else if (!cmd.FromClient)

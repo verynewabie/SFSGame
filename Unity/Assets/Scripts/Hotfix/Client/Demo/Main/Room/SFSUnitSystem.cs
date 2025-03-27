@@ -16,7 +16,7 @@ namespace ET.Client
 
         public static void Tick(this SFSUnit self)
         {
-            if (self.SfsUnitState != SFSUnitState.Abnormal)
+            if (self.SfsUnitState == SFSUnitState.Free)
             {
                 if (!self.Speed.MyEquals(float3.zero))
                 {
@@ -26,6 +26,7 @@ namespace ET.Client
             }
             else
             {
+                self.Speed = float3.zero;
                 self.Duration--;
                 if (self.Duration == 0)
                 {
@@ -56,7 +57,6 @@ namespace ET.Client
             moveCmd.FrameId = sfsCmpt.CurrentFrame;
             
             self.HistoryMoveState[sfsCmpt.CurrentFrame] = moveCmd;
-            self.Speed = float3.zero;
             // Log.Error($"Frame {moveCmd.FrameId} Pos: {moveCmd.Pos.ToString()}");
             
             // State
@@ -88,6 +88,7 @@ namespace ET.Client
             {
                 self.Position = moveCmd.Pos;
                 self.Rotation = moveCmd.Rot;
+                self.Speed = moveCmd.Speed;
             }
             else
                 self.Speed = moveCmd.Speed;
