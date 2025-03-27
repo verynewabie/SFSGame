@@ -62,6 +62,13 @@ namespace ET.Server
 
         public static void TickEnd(this SkillComponent self)
         {
+            // if player dies, state change to none
+            if (self.Owner.SfsUnitState == SFSUnitState.Die)
+            {
+                self.State = SFSSkillState.None;
+                self.Duration = -1;
+            }
+            
             var sfsCmpt = self.Owner.BattleRoom.GetComponent<SFSComponent>();
             
             SkillCmd cmd = SkillCmd.Create();
