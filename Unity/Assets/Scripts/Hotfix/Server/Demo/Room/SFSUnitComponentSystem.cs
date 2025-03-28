@@ -1,6 +1,5 @@
 ﻿namespace ET.Server
 {
-
     [EntitySystemOf(typeof(SFSUnitComponent))]
     [FriendOf(typeof(SFSUnitComponent))]
     [FriendOf(typeof(SFSUnit))]
@@ -16,8 +15,8 @@
         {
             foreach (var info in self.unitToCreate)
             {
-                SFSUnitFactory.CreateProjectile(self.GetParent<BattleRoom>(), info);
-                Log.Error($"Create Projectile In {info.Position.ToString()}");
+                SFSUnitFactory.CreateProjectile(self.GetParent<BattleRoom>(), info.Info, info.BelongToUnit);
+                Log.Error($"Create Projectile In {info.Info.Position.ToString()}");
             }
             self.unitToCreate.Clear();
 
@@ -82,14 +81,58 @@
             }
         }
 
-        public static void AddUnitToCreate(this SFSUnitComponent self, SFSUnitInfo unitInfo)
+        public static void AddUnitToCreate(this SFSUnitComponent self, SFSUnitInfo unitInfo, SFSUnit unit)
         {
-            self.unitToCreate.Add(unitInfo);
+            self.unitToCreate.Add(new ProjectileInfo
+            {
+                Info = unitInfo,
+                BelongToUnit = unit,
+            });
         }
 
         public static void AddUnitToDelete(this SFSUnitComponent self, long unitId)
         {
             self.unitToDelete.Add(unitId);
+        }
+
+        public static bool IsRedAllDie(this SFSUnitComponent self)
+        {
+            int redCnt = 0;
+            int redDie = 0;
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit)
+                {
+                    if (unit.SfsUnitType == SFSUnitType.Projectile
+                        || unit.SfsUnitCamp == SFSUnitCamp.Blue)
+                        continue;
+                    if (unit.SfsUnitState == SFSUnitState.Die)
+                        redDie++;
+                    redCnt++;
+                }
+            }
+
+            return redCnt != 0 && redCnt == redDie;
+        }
+        
+        public static bool IsBlueAllDie(this SFSUnitComponent self)
+        {
+            int blueCnt = 0;
+            int blueDie = 0;
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit)
+                {
+                    if (unit.SfsUnitType == SFSUnitType.Projectile
+                        || unit.SfsUnitCamp == SFSUnitCamp.Red)
+                        continue;
+                    if (unit.SfsUnitState == SFSUnitState.Die)
+                        blueDie++;
+                    blueCnt++;
+                }
+            }
+
+            return blueCnt != 0 && blueCnt == blueDie;
         }
     }
 }

@@ -13,7 +13,9 @@ namespace ET.Server
         {
             SFSUnit unitA = (SFSUnit)contact.FixtureA.UserData; // Player
             SFSUnit unitB = (SFSUnit)contact.FixtureB.UserData; // Projectile
-            if (unitA.IsDisposed || unitB.IsDisposed)
+            if (unitA.IsDisposed || unitB.IsDisposed
+                || unitB.GetComponent<ColliderComponent>().BelongToUnit.SfsUnitState
+                == SFSUnitState.Die)
             {
                 return;
             }

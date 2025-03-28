@@ -28,7 +28,6 @@ namespace ET.Client
         /// 将要处理的命令列表
         /// </summary>
         public SortedDictionary<int, Queue<IRoomCmd>> FrameCmdToHandle = new SortedDictionary<int, Queue<IRoomCmd>>();
-        public Queue<IRoomCmd> CacheCmdToHandle = new Queue<IRoomCmd>();
         
         /// <summary>
         /// 将要发送的命令列表

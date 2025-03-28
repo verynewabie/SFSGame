@@ -34,7 +34,8 @@ namespace ET.Client
             self.CurrentFrame++;
             self.CurrentArrivedFrame = self.CurrentFrame;
             // Handle Cmd That Server Send
-            self.HandleCmdThatServerSend();
+            while(self.FrameCmdToHandle.Count > 0)
+                self.HandleCmdThatServerSend();
             // Send Cmd
             self.MyRoom.GetComponent<PlayerInputComponent>().Tick();
             // 执行玩家输入（预测），并 Tick Component
@@ -49,8 +50,6 @@ namespace ET.Client
 
         private static void HandleCmdThatServerSend(this SFSComponent self)
         {
-            if (self.FrameCmdToHandle.Count == 0)
-                return;
             int frame = self.FrameCmdToHandle.First().Key;
             Queue<IRoomCmd> cmds = self.FrameCmdToHandle.First().Value;
             bool shouldRollback = false;
@@ -321,18 +320,17 @@ namespace ET.Client
 
         public static void AddCmdToHandleQueue(this SFSComponent self, IRoomCmd cmd)
         {
-            self.CacheCmdToHandle.Enqueue(cmd);
-        }
-
-        public static void OneFrameEndHandler(this SFSComponent self, Room2C_OneFrameEnd msg)
-        {
-            Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
-            foreach (var cmd in self.CacheCmdToHandle)
+            int frame = cmd.FrameId;
+            if (self.FrameCmdToHandle.TryGetValue(frame, out Queue<IRoomCmd> queue))
             {
-                newQueue.Enqueue(cmd);
+                queue.Enqueue(cmd);
             }
-            self.FrameCmdToHandle.Add(msg.FrameId, newQueue);
-            self.CacheCmdToHandle.Clear();
+            else
+            {
+                Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
+                newQueue.Enqueue(cmd);
+                self.FrameCmdToHandle.Add(frame, newQueue);
+            }
         }
     }
 }

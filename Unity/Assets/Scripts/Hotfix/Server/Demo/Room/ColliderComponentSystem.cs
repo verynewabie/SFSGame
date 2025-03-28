@@ -16,6 +16,7 @@ namespace ET.Server
         private static void Awake(this ColliderComponent self, CreateColliderInfo info)
         {
             self.Unit = info.unit;
+            self.BelongToUnit = info.belongToUnit;
             self.Body = self.Unit.BattleRoom.GetComponent<PhysicsWorldComponent>().World.CreateBody(
                 new BodyDef() { BodyType = BodyType.DynamicBody, AllowSleep = false });
             FixtureDef fixtureDef = new FixtureDef();

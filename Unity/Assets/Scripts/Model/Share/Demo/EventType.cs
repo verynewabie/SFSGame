@@ -100,11 +100,6 @@ namespace ET
         public IRoomCmd Cmd;
     }
 
-    public struct AddUnitCreateInfo
-    {
-        public SFSUnitInfo Info;
-    }
-
     public struct AddUnitToRemove
     {
         public long UnitId;

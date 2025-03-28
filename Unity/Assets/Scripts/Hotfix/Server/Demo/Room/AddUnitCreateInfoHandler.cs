@@ -6,7 +6,7 @@
     {
         protected override async ETTask Run(Scene scene, AddUnitCreateInfo arg)
         {
-            scene.GetComponent<BattleRoom>().GetComponent<SFSUnitComponent>().AddUnitToCreate(arg.Info);
+            scene.GetComponent<BattleRoom>().GetComponent<SFSUnitComponent>().AddUnitToCreate(arg.Info, arg.BelongToUnit);
             await ETTask.CompletedTask;
         }
     }

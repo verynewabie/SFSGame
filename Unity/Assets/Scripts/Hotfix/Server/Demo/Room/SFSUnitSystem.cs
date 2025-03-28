@@ -45,11 +45,17 @@ namespace ET.Server
             else
             {
                 self.GetComponent<ColliderComponent>().Tick();
-                if (math.abs(self.Position.x) > 15 || math.abs(self.Position.z) > 15)
+                if (math.abs(self.Position.x) > 15 || math.abs(self.Position.z) > 15
+                    || self.GetComponent<ColliderComponent>().BelongToUnit.SfsUnitState
+                    == SFSUnitState.Die)
                 {
                     EventSystem.Instance.Publish(self.Root(), new AddUnitToRemove
                     {
                         UnitId = self.Id
+                    });
+                    EventSystem.Instance.Publish(self.Root(), new AddBodyToRemove
+                    {
+                        Body = self.GetComponent<ColliderComponent>().Body
                     });
                 }
             }

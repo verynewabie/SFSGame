@@ -1797,16 +1797,16 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.Room2C_OneFrameEnd)]
-    public partial class Room2C_OneFrameEnd : MessageObject, IMessage
+    [Message(OuterMessage.Room2C_GameEnd)]
+    public partial class Room2C_GameEnd : MessageObject, IMessage
     {
-        public static Room2C_OneFrameEnd Create(bool isFromPool = false)
+        public static Room2C_GameEnd Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(Room2C_OneFrameEnd), isFromPool) as Room2C_OneFrameEnd;
+            return ObjectPool.Instance.Fetch(typeof(Room2C_GameEnd), isFromPool) as Room2C_GameEnd;
         }
 
         [MemoryPackOrder(0)]
-        public int FrameId { get; set; }
+        public SFSUnitCamp WinCamp { get; set; }
 
         public override void Dispose()
         {
@@ -1815,7 +1815,7 @@ namespace ET
                 return;
             }
 
-            this.FrameId = default;
+            this.WinCamp = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -1876,6 +1876,6 @@ namespace ET
         public const ushort StateCmd = 10052;
         public const ushort AttributeCmd = 10053;
         public const ushort BuffCmd = 10054;
-        public const ushort Room2C_OneFrameEnd = 10055;
+        public const ushort Room2C_GameEnd = 10055;
     }
 }

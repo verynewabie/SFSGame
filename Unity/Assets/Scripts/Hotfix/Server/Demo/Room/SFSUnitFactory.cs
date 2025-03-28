@@ -18,13 +18,14 @@ namespace ET.Server
             {  
                 radius = 1f,
                 unit = unit,
+                belongToUnit = unit
             };
             unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
             unit.AddComponent<BuffComponent, SFSUnit>(unit);
             return unit;
         }
 
-        public static void CreateProjectile(BattleRoom room, SFSUnitInfo info)
+        public static void CreateProjectile(BattleRoom room, SFSUnitInfo info, SFSUnit belongToUnit)
         {
             SFSUnit unit = room.GetComponent<SFSUnitComponent>().AddChildWithId<SFSUnit, BattleRoom>(info.UnitId, room);
             unit.Position = info.Position;
@@ -37,6 +38,7 @@ namespace ET.Server
             {  
                 radius = 0.25f,
                 unit = unit,
+                belongToUnit = belongToUnit
             };
             unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
         }

@@ -69,14 +69,4 @@
             await ETTask.CompletedTask;
         }
     }
-    
-    [MessageHandler(SceneType.Demo)]
-    public class OneFrameEndCmdHandler : MessageHandler<Scene, Room2C_OneFrameEnd>
-    {
-        protected override async ETTask Run(Scene root, Room2C_OneFrameEnd message)
-        {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().OneFrameEndHandler(message);
-            await ETTask.CompletedTask;
-        }
-    }
 }

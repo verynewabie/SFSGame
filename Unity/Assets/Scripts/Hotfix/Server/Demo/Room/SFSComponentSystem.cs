@@ -83,10 +83,25 @@ namespace ET.Server
                     self.MyRoom.Broadcast(cmdToSend);
                 }
             }
-            Room2C_OneFrameEnd msg = Room2C_OneFrameEnd.Create();
-            msg.FrameId = self.CurrentFrame;
-            self.MyRoom.Broadcast(msg);
             self.FrameCmdToSend.Remove(self.CurrentFrame);
+            
+            // Check If Game Ends
+            if (self.MyRoom.GetComponent<SFSUnitComponent>().IsBlueAllDie())
+            {
+                self.EndGame(SFSUnitCamp.Red);
+            }
+            else if (self.MyRoom.GetComponent<SFSUnitComponent>().IsRedAllDie())
+            {
+                self.EndGame(SFSUnitCamp.Blue);
+            }
+        }
+
+        private static void EndGame(this SFSComponent self, SFSUnitCamp winCamp)
+        {
+            self.StartSync = false;
+            Room2C_GameEnd msg = Room2C_GameEnd.Create();
+            msg.WinCamp = winCamp;
+            self.MyRoom.Broadcast(msg);
         }
         
         public static void AddCmdToSendQueue(this SFSComponent self, IRoomCmd cmd)

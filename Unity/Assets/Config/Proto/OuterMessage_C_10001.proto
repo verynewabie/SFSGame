@@ -391,7 +391,7 @@ message BuffCmd // IRoomCmd
 	SFSBuffType Type = 5;
 }
 
-message Room2C_OneFrameEnd // IMessage
+message Room2C_GameEnd // IMessage
 {
-	int32 FrameId = 1;
+	SFSUnitCamp WinCamp = 1;
 }

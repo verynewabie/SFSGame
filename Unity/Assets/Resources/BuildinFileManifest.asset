@@ -17,6 +17,9 @@ MonoBehaviour:
     FileName: 07644cecf43ef39f6107e2e3576434a7.bundle
     FileCRC32: ea213838
   - PackageName: DefaultPackage
+    FileName: 08132f92500add9aaec6990655dbaa6e.bundle
+    FileCRC32: 78ca340c
+  - PackageName: DefaultPackage
     FileName: 166b81bb267f8340695bf68b64a5a2b2.bundle
     FileCRC32: 18924a91
   - PackageName: DefaultPackage
@@ -31,9 +34,6 @@ MonoBehaviour:
   - PackageName: DefaultPackage
     FileName: 2176a9b33cfb68c370fe7fe08c5bc958.bundle
     FileCRC32: e9499c7d
-  - PackageName: DefaultPackage
-    FileName: 2c9dd80aeba140f4ed9b7446f39bc242.bundle
-    FileCRC32: aaf344ff
   - PackageName: DefaultPackage
     FileName: 2f13b245b3cf5080b76375f5d731c4b6.bundle
     FileCRC32: e4f772fe

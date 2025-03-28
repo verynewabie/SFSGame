@@ -52,7 +52,8 @@ namespace ET.Server
                 self.ToCreateProjectile = info;
                 EventSystem.Instance.Publish(self.Root(), new AddUnitCreateInfo
                 {
-                    Info = info
+                    Info = info,
+                    BelongToUnit = self.Owner
                 });
                 // self.Owner.BattleRoom.GetComponent<SFSUnitComponent>().AddUnitToCreate(info);
                 self.State = SFSSkillState.CD;
