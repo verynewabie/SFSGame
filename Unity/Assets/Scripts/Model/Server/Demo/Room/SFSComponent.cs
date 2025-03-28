@@ -19,6 +19,11 @@ namespace ET.Server
         /// 将要处理的命令列表
         /// </summary>
         public Dictionary<int, Queue<IRoomCmd>> FrameCmdToHandle = new Dictionary<int, Queue<IRoomCmd>>();
+        
+        /// <summary>
+        /// 整局的Cmd
+        /// </summary>
+        public Dictionary<int, Queue<IRoomCmd>> WholeCmds = new Dictionary<int, Queue<IRoomCmd>>();
 
         /// <summary>
         /// 将要发送的命令列表

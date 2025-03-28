@@ -48,6 +48,16 @@ namespace ET.Client
             c2GLoginGate.GateId = r2CLogin.GateId;
             G2C_LoginGate g2CLoginGate = (G2C_LoginGate)await gateSession.Call(c2GLoginGate);
 
+            if (g2CLoginGate.Error == ErrorCode.ERR_PlayerReconnect)
+            {
+                response.Error = g2CLoginGate.Error;
+            }
+            else if (g2CLoginGate.Error != ErrorCode.ERR_Success)
+            {
+                response.Error = g2CLoginGate.Error;
+                return;
+            }
+            
             Log.Debug("登陆gate成功!");
 
             response.PlayerId = g2CLoginGate.PlayerId;

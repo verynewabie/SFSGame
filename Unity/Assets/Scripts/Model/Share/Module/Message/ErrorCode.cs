@@ -14,5 +14,7 @@ namespace ET
         // 110000 - 200000是抛异常的错误
         // 200001以上不抛异常
         public const int ERR_LoginPasswordError = 210000;
+        public const int ERR_PlayerAlreadyOnline = 2100001;
+        public const int ERR_PlayerReconnect = 2100002;
     }
 }

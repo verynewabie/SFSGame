@@ -17,6 +17,21 @@ namespace ET.Server
         {
             self.GetChild<SFSRoomPlayer>(playerId).IsReady = true;
         }
+        
+        public static void SetPlayerOnline(this SFSRoomPlayerComponent self, long playerId)
+        {
+            self.GetChild<SFSRoomPlayer>(playerId).IsOnline = true;
+        }
+        
+        public static void SetReconnectStartFrame(this SFSRoomPlayerComponent self, long playerId, int frame)
+        {
+            self.GetChild<SFSRoomPlayer>(playerId).ReconnectStartFrame = frame;
+        }
+        
+        public static int GetReconnectStartFrame(this SFSRoomPlayerComponent self, long playerId)
+        {
+            return self.GetChild<SFSRoomPlayer>(playerId).ReconnectStartFrame;
+        }
 
         public static bool IsAllReady(this SFSRoomPlayerComponent self)
         {

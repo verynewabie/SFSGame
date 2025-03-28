@@ -150,6 +150,13 @@ namespace ET.Client
             self.ClientUpdate = new FixedUpdate(startTime, 0, SFSConstValue.UpdateInterval);
             self.ServerUpdate = new FixedUpdate(startTime, 0, SFSConstValue.UpdateInterval);
         }
+        
+        public static void StartSync(this SFSComponent self, long startTime, int startFrame)
+        {
+            self.StartSync = true;
+            self.ClientUpdate = new FixedUpdate(startTime + startFrame * SFSConstValue.UpdateInterval, startFrame, SFSConstValue.UpdateInterval);
+            self.ServerUpdate = new FixedUpdate(startTime + startFrame * SFSConstValue.UpdateInterval, startFrame, SFSConstValue.UpdateInterval);
+        }
 
         private static void SendCurrentFrameMessage(this SFSComponent self)
         {

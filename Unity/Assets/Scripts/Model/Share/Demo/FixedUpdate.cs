@@ -6,7 +6,9 @@
     {
         private long startTime;
         private int startFrame;
-        private int Interval { get;  set; }
+        private int Interval;
+        public long StartTime => startTime;
+        public int StartFrame => startFrame;
 
         public FixedUpdate(long startTime, int startFrame, int interval)
         {

@@ -34,11 +34,31 @@ namespace ET.Client
                 });
                 return;
             }
+            if (response.Error == ErrorCode.ERR_PlayerAlreadyOnline)
+            {
+                await EventSystem.Instance.PublishAsync(root, new ShowUIHint
+                {
+                    hint = "当前用户已在线",
+                    showCloseBtn = true
+                });
+                return;
+            }
+
+            if (response.Error == ErrorCode.ERR_PlayerReconnect)
+            {
+                await EventSystem.Instance.PublishAsync(root, new ShowUIHint
+                {
+                    showCloseBtn = false,
+                    hint = "断线重连中..."
+                });
+            }
 
             var playerCmpt = root.GetComponent<PlayerComponent>();
             playerCmpt.MyId = response.PlayerId;
             playerCmpt.Account = account;
-            
+
+            if (response.Error == ErrorCode.ERR_PlayerReconnect)
+                return;
             await EventSystem.Instance.PublishAsync(root, new LoginFinish());
         }
     }

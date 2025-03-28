@@ -27,7 +27,7 @@ namespace ET.Client
     public struct LoginFinish
     {
     }
-
+    
     public struct EnterMapFinish
     {
     }
@@ -59,6 +59,11 @@ namespace ET.Client
         public string sceneName;
     }
 
+    public struct Reconnect
+    {
+        
+    }
+
     public struct CreateSFSUnit
     {
         public bool IsLocalPlayer;
@@ -72,6 +77,11 @@ namespace ET.Client
     }
 
     public struct SFSLoadSceneDone
+    {
+        
+    }
+
+    public struct GameEnd
     {
         
     }

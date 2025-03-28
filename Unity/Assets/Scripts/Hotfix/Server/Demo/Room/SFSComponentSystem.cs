@@ -1,6 +1,4 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ET.Server
 {
@@ -88,26 +86,29 @@ namespace ET.Server
             // Check If Game Ends
             if (self.MyRoom.GetComponent<SFSUnitComponent>().IsBlueAllDie())
             {
-                self.EndGame(SFSUnitCamp.Red);
+                self.EndGame(SFSUnitCamp.Red).Coroutine();
             }
             else if (self.MyRoom.GetComponent<SFSUnitComponent>().IsRedAllDie())
             {
-                self.EndGame(SFSUnitCamp.Blue);
+                self.EndGame(SFSUnitCamp.Blue).Coroutine();
             }
         }
 
-        private static void EndGame(this SFSComponent self, SFSUnitCamp winCamp)
+        private static async ETTask EndGame(this SFSComponent self, SFSUnitCamp winCamp)
         {
             self.StartSync = false;
             Room2C_GameEnd msg = Room2C_GameEnd.Create();
             msg.WinCamp = winCamp;
             self.MyRoom.Broadcast(msg);
+            await self.Root().GetComponent<TimerComponent>().WaitAsync(5000);
+            FiberManager.Instance.Remove(self.Fiber().Id).Coroutine();
         }
         
         public static void AddCmdToSendQueue(this SFSComponent self, IRoomCmd cmd)
         {
             int frame = self.CurrentFrame;
             cmd.FrameId = frame;
+            self.AddCmdToWholeBuffer(cmd);
             if (self.FrameCmdToSend.TryGetValue(frame, out Queue<IRoomCmd> queue))
             {
                 queue.Enqueue(cmd);
@@ -117,6 +118,21 @@ namespace ET.Server
                 Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
                 newQueue.Enqueue(cmd);
                 self.FrameCmdToSend.Add(frame, newQueue);
+            }
+        }
+
+        private static void AddCmdToWholeBuffer(this SFSComponent self, IRoomCmd cmd)
+        {
+            int frame = cmd.FrameId;
+            if (self.WholeCmds.TryGetValue(frame, out Queue<IRoomCmd> queue))
+            {
+                queue.Enqueue(cmd);
+            }
+            else
+            {
+                Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
+                newQueue.Enqueue(cmd);
+                self.WholeCmds.Add(frame, newQueue);
             }
         }
 
@@ -137,6 +153,20 @@ namespace ET.Server
                 Queue<IRoomCmd> newQueue = new Queue<IRoomCmd>();
                 newQueue.Enqueue(cmd);
                 self.FrameCmdToHandle.Add(frame, newQueue);
+            }
+        }
+        
+        public static void SyncAllCmd(this SFSComponent self, long unitId, int from, int to)
+        {
+            for (int i = from; i <= to; i++)
+            {
+                if (self.WholeCmds.TryGetValue(i, out Queue<IRoomCmd> queue))
+                {
+                    foreach (var cmd in queue)
+                    {
+                        self.MyRoom.SendToPlayer(cmd, unitId);
+                    }
+                }
             }
         }
     }

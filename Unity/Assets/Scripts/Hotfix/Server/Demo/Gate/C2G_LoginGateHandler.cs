@@ -35,18 +35,22 @@ namespace ET.Server
                 session.AddComponent<SessionPlayerComponent>().Player = player;
                 playerSessionComponent.Session = session;
             }
+            else if (player.IsOnline)
+            {
+                response.Error = ErrorCode.ERR_PlayerAlreadyOnline;
+                return;
+            }
             else
             {
+                session.AddComponent<SessionPlayerComponent>().Player = player;
+                player.GetComponent<PlayerSessionComponent>().Session = session;
                 // 判断是否在战斗
                 PlayerRoomComponent playerRoomComponent = player.GetComponent<PlayerRoomComponent>();
-                if (playerRoomComponent.RoomActorId != default)
+                if (playerRoomComponent != null && playerRoomComponent.RoomActorId != default)
                 {
-                    CheckRoom(player, session).Coroutine();
-                }
-                else
-                {
-                    PlayerSessionComponent playerSessionComponent = player.GetComponent<PlayerSessionComponent>();
-                    playerSessionComponent.Session = session;
+                    // 在战斗中
+                    ReConnect(player, playerRoomComponent.RoomActorId).Coroutine();
+                    response.Error = ErrorCode.ERR_PlayerReconnect;
                 }
             }
 
@@ -54,6 +58,16 @@ namespace ET.Server
             await ETTask.CompletedTask;
         }
 
+        private static async ETTask ReConnect(Player player, ActorId roomActorId)
+        {
+            Fiber fiber = player.Fiber();
+            await fiber.WaitFrameFinish();
+            
+            G2Room_PlayerReconnect msg = G2Room_PlayerReconnect.Create();
+            msg.PlayerId = player.Id;
+            player.Root().GetComponent<MessageSender>().Send(roomActorId, msg);
+        }
+        
         private static async ETTask CheckRoom(Player player, Session session)
         {
             Fiber fiber = player.Fiber();

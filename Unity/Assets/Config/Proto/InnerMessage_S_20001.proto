@@ -258,3 +258,13 @@ message Room2M_Init // IResponse
 	int32 Error = 2;
 	string Message = 3;
 }
+
+message G2Room_SessionDisconnect // ILocationMessage
+{
+	int32 RpcId = 1;
+}
+
+message G2Room_PlayerReconnect // IMessage
+{
+	int64 PlayerId = 1;
+}

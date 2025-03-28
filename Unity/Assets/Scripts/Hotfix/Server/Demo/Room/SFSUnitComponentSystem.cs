@@ -3,6 +3,8 @@
     [EntitySystemOf(typeof(SFSUnitComponent))]
     [FriendOf(typeof(SFSUnitComponent))]
     [FriendOf(typeof(SFSUnit))]
+    [FriendOfAttribute(typeof(ET.Server.BuffComponent))]
+    [FriendOfAttribute(typeof(ET.Server.SkillComponent))]
     public static partial class SFSUnitComponentSystem
     {
         [EntitySystem]
@@ -114,7 +116,7 @@
 
             return redCnt != 0 && redCnt == redDie;
         }
-        
+
         public static bool IsBlueAllDie(this SFSUnitComponent self)
         {
             int blueCnt = 0;
@@ -134,5 +136,31 @@
 
             return blueCnt != 0 && blueCnt == blueDie;
         }
+
+        public static Room2C_NotifyReconnectInfo Reconnect(this SFSUnitComponent self)
+        {
+            Room2C_NotifyReconnectInfo info = Room2C_NotifyReconnectInfo.Create();
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit)
+                {
+                    SFSReconnectInfo msg = SFSReconnectInfo.Create();
+                    msg.Position = unit.Position;
+                    msg.Camp = unit.SfsUnitCamp;
+                    msg.Forward = unit.Rotation;
+                    msg.State = unit.SfsUnitState;
+                    msg.Type = unit.SfsUnitType;
+                    msg.UnitId = unit.Id;
+                    msg.SkillState = unit.GetComponent<SkillComponent>().State;
+                    msg.SkillDuration = unit.GetComponent<SkillComponent>().Duration;
+                    msg.UnitStateDuration = unit.Duration;
+                    msg.HP = unit.HP;
+                    msg.Speed = unit.Speed;
+                    info.Units.Add(msg);
+                }
+            }
+            return info;
+        }
+        
     }
 }

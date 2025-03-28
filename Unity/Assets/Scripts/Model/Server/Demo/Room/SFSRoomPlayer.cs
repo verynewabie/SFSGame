@@ -6,5 +6,6 @@
     {
         public bool IsOnline = true;
         public bool IsReady = false;
+        public int ReconnectStartFrame = 0;
     }
 }

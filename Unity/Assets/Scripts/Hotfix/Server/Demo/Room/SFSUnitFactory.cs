@@ -22,6 +22,7 @@ namespace ET.Server
             };
             unit.AddComponent<ColliderComponent, CreateColliderInfo>(colliderInfo);
             unit.AddComponent<BuffComponent, SFSUnit>(unit);
+            unit.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.OrderedMessage);
             return unit;
         }
 

@@ -1821,6 +1821,150 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.SFSReconnectInfo)]
+    public partial class SFSReconnectInfo : MessageObject
+    {
+        public static SFSReconnectInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(SFSReconnectInfo), isFromPool) as SFSReconnectInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long UnitId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public Unity.Mathematics.float3 Position { get; set; }
+
+        [MemoryPackOrder(2)]
+        public Unity.Mathematics.quaternion Forward { get; set; }
+
+        [MemoryPackOrder(3)]
+        public SFSUnitCamp Camp { get; set; }
+
+        [MemoryPackOrder(4)]
+        public SFSUnitType Type { get; set; }
+
+        [MemoryPackOrder(5)]
+        public SFSUnitState State { get; set; }
+
+        [MemoryPackOrder(6)]
+        public int HP { get; set; }
+
+        [MemoryPackOrder(7)]
+        public SFSSkillState SkillState { get; set; }
+
+        [MemoryPackOrder(8)]
+        public int SkillDuration { get; set; }
+
+        [MemoryPackOrder(9)]
+        public int UnitStateDuration { get; set; }
+
+        [MemoryPackOrder(10)]
+        public Unity.Mathematics.float3 Speed { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.UnitId = default;
+            this.Position = default;
+            this.Forward = default;
+            this.Camp = default;
+            this.Type = default;
+            this.State = default;
+            this.HP = default;
+            this.SkillState = default;
+            this.SkillDuration = default;
+            this.UnitStateDuration = default;
+            this.Speed = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.Room2C_NotifyReconnectInfo)]
+    public partial class Room2C_NotifyReconnectInfo : MessageObject, IMessage
+    {
+        public static Room2C_NotifyReconnectInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_NotifyReconnectInfo), isFromPool) as Room2C_NotifyReconnectInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public List<SFSReconnectInfo> Units { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Units.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2Room_ReconnectDone)]
+    public partial class C2Room_ReconnectDone : MessageObject, ISFSRoomMessage
+    {
+        public static C2Room_ReconnectDone Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2Room_ReconnectDone), isFromPool) as C2Room_ReconnectDone;
+        }
+
+        [MemoryPackOrder(0)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.Room2C_ReconnectEnterGame)]
+    public partial class Room2C_ReconnectEnterGame : MessageObject, IMessage
+    {
+        public static Room2C_ReconnectEnterGame Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_ReconnectEnterGame), isFromPool) as Room2C_ReconnectEnterGame;
+        }
+
+        [MemoryPackOrder(0)]
+        public long StartTime { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long Frame { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.StartTime = default;
+            this.Frame = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -1877,5 +2021,9 @@ namespace ET
         public const ushort AttributeCmd = 10053;
         public const ushort BuffCmd = 10054;
         public const ushort Room2C_GameEnd = 10055;
+        public const ushort SFSReconnectInfo = 10056;
+        public const ushort Room2C_NotifyReconnectInfo = 10057;
+        public const ushort C2Room_ReconnectDone = 10058;
+        public const ushort Room2C_ReconnectEnterGame = 10059;
     }
 }

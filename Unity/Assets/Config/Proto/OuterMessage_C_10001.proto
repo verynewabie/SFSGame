@@ -395,3 +395,34 @@ message Room2C_GameEnd // IMessage
 {
 	SFSUnitCamp WinCamp = 1;
 }
+
+message SFSReconnectInfo
+{
+	int64 UnitId = 1;
+	Unity.Mathematics.float3 Position = 2;
+	Unity.Mathematics.quaternion Forward = 3;
+	SFSUnitCamp Camp = 4;
+	SFSUnitType Type = 5;
+	SFSUnitState State = 6;
+	int32 HP = 7;
+	SFSSkillState SkillState = 8;
+	int32 SkillDuration = 9;
+	int32 UnitStateDuration = 10;
+	Unity.Mathematics.float3 Speed = 11;
+}
+
+message Room2C_NotifyReconnectInfo // IMessage
+{
+	repeated SFSReconnectInfo Units = 1;
+}
+
+message C2Room_ReconnectDone // ISFSRoomMessage
+{
+	int64 PlayerId = 1;
+}
+
+message Room2C_ReconnectEnterGame // IMessage
+{
+	int64 StartTime = 1;
+	int64 Frame = 2;
+}

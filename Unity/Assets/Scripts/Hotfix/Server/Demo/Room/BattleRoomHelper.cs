@@ -22,5 +22,11 @@
                 messageLocationSenderComponent.Get(LocationType.GateSession).Send(roomPlayer.Id, message);
             }
         }
+
+        public static void SendToPlayer(this BattleRoom room, IMessage message, long playerId)
+        {
+            MessageLocationSenderComponent messageLocationSenderComponent = room.Root().GetComponent<MessageLocationSenderComponent>();
+            messageLocationSenderComponent.Get(LocationType.GateSession).Send(playerId, message);
+        }
     }
 }

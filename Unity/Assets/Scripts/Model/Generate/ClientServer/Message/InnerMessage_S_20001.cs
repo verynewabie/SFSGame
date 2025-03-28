@@ -1169,6 +1169,56 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(InnerMessage.G2Room_SessionDisconnect)]
+    public partial class G2Room_SessionDisconnect : MessageObject, ILocationMessage
+    {
+        public static G2Room_SessionDisconnect Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2Room_SessionDisconnect), isFromPool) as G2Room_SessionDisconnect;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(InnerMessage.G2Room_PlayerReconnect)]
+    public partial class G2Room_PlayerReconnect : MessageObject, IMessage
+    {
+        public static G2Room_PlayerReconnect Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2Room_PlayerReconnect), isFromPool) as G2Room_PlayerReconnect;
+        }
+
+        [MemoryPackOrder(0)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class InnerMessage
     {
         public const ushort ObjectQueryRequest = 20002;
@@ -1205,5 +1255,7 @@ namespace ET
         public const ushort L2G_NotifyStartBattle = 20033;
         public const ushort M2Room_Init = 20034;
         public const ushort Room2M_Init = 20035;
+        public const ushort G2Room_SessionDisconnect = 20036;
+        public const ushort G2Room_PlayerReconnect = 20037;
     }
 }

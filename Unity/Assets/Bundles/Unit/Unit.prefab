@@ -54,6 +54,9 @@ MonoBehaviour:
   - key: Blue
     gameObject: {fileID: 8230766273605467533, guid: 23d18a4111a39884aa1c869eeabbc405,
       type: 3}
-  - key: Projectile
+  - key: BlueProjectile
     gameObject: {fileID: 5570304879877336067, guid: 643f8458dc8e30042a2942ff06125c75,
+      type: 3}
+  - key: RedProjectile
+    gameObject: {fileID: 5570304879877336067, guid: 3970db9998281fb419a502230d1302d7,
       type: 3}
