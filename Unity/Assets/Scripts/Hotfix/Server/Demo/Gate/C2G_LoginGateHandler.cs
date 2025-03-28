@@ -24,6 +24,7 @@ namespace ET.Server
             if (player == null)
             {
                 player = playerComponent.AddChild<Player, string>(account);
+                player.IsOnline = true;
                 playerComponent.Add(player);
                 PlayerSessionComponent playerSessionComponent = player.AddComponent<PlayerSessionComponent>();
                 playerSessionComponent.AddComponent<MailBoxComponent, MailBoxType>(MailBoxType.GateSession);

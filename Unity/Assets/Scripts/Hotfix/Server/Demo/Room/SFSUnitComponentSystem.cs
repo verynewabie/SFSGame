@@ -151,12 +151,15 @@
                     msg.State = unit.SfsUnitState;
                     msg.Type = unit.SfsUnitType;
                     msg.UnitId = unit.Id;
-                    msg.SkillState = unit.GetComponent<SkillComponent>().State;
-                    msg.SkillDuration = unit.GetComponent<SkillComponent>().Duration;
                     msg.UnitStateDuration = unit.Duration;
                     msg.HP = unit.HP;
                     msg.Speed = unit.Speed;
                     info.Units.Add(msg);
+                    if (msg.Type == SFSUnitType.Player)
+                    {
+                        msg.SkillState = unit.GetComponent<SkillComponent>().State;
+                        msg.SkillDuration = unit.GetComponent<SkillComponent>().Duration;
+                    }
                 }
             }
             return info;
