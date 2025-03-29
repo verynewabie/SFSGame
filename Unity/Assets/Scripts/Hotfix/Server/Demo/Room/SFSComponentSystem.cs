@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using Unity.Mathematics;
 
 namespace ET.Server
 {
 
     [EntitySystemOf(typeof(SFSComponent))]
     [FriendOf(typeof(SFSComponent))]
+    [FriendOfAttribute(typeof(ET.BattleRoom))]
+    [FriendOfAttribute(typeof(ET.Server.PlayerGameInfo))]
+    [FriendOfAttribute(typeof(ET.Server.OneGameInfo))]
     public static partial class SFSComponentSystem
     {
         [EntitySystem]
@@ -14,7 +18,7 @@ namespace ET.Server
             self.CurrentFrame = 0;
             self.MyRoom = self.GetParent<BattleRoom>();
         }
-        
+
         [EntitySystem]
         private static void Update(this SFSComponent self)
         {
@@ -65,7 +69,7 @@ namespace ET.Server
             // TickEnd
             self.MyRoom.GetComponent<SFSUnitComponent>().TickEnd();
         }
-        
+
         public static void StartSync(this SFSComponent self, long startTime)
         {
             self.StartSync = true;
@@ -82,7 +86,7 @@ namespace ET.Server
                 }
             }
             self.FrameCmdToSend.Remove(self.CurrentFrame);
-            
+
             // Check If Game Ends
             if (self.MyRoom.GetComponent<SFSUnitComponent>().IsBlueAllDie())
             {
@@ -100,10 +104,42 @@ namespace ET.Server
             Room2C_GameEnd msg = Room2C_GameEnd.Create();
             msg.WinCamp = winCamp;
             self.MyRoom.Broadcast(msg);
+
+            // Save DataBase
+            List<long> playerIds = self.MyRoom.PlayerId;
+            DBComponent dbComponent = self.Root().GetComponent<DBManagerComponent>().GetZoneDB(1);
+            long battleId = self.MyRoom.InstanceId;
+            foreach (var playerId in playerIds)
+            {
+                await dbComponent.AddPlayerBattle(playerId, battleId);
+            }
+
+            OneGameInfo oneGameInfo = self.AddChild<OneGameInfo>();
+            oneGameInfo.BattleId = battleId;
+            for (int i = 0; i < playerIds.Count; i++)
+            {
+                long id = playerIds[i];
+                SFSUnitInfo info = SFSUnitInfo.Create();
+                info.UnitId = id;
+                info.Camp = i * 2 < playerIds.Count ? SFSUnitCamp.Red : SFSUnitCamp.Blue;
+                info.Position = info.Camp == SFSUnitCamp.Red ? new float3(-5f, 0f, 0f) : new float3(5f, 0f, 0f);
+                info.Forward = quaternion.identity;
+                info.Type = SFSUnitType.Player;
+                info.State = SFSUnitState.Free;
+                oneGameInfo.Units.Add(info);
+            }
+            
+            foreach ((int key, Queue<IRoomCmd> value) in self.WholeCmds)
+            {
+                oneGameInfo.Cmds.Add(key.ToString(), value);
+            }
+            await dbComponent.Save(oneGameInfo);
+
+            // Delete Room
             await self.Root().GetComponent<TimerComponent>().WaitAsync(5000);
             FiberManager.Instance.Remove(self.Fiber().Id).Coroutine();
         }
-        
+
         public static void AddCmdToSendQueue(this SFSComponent self, IRoomCmd cmd)
         {
             int frame = self.CurrentFrame;
@@ -155,7 +191,7 @@ namespace ET.Server
                 self.FrameCmdToHandle.Add(frame, newQueue);
             }
         }
-        
+
         public static void SyncAllCmd(this SFSComponent self, long unitId, int from, int to)
         {
             for (int i = from; i <= to; i++)

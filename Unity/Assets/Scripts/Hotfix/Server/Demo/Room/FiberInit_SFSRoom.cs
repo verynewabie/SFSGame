@@ -14,6 +14,7 @@
             root.AddComponent<MessageSender>();
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
+            root.AddComponent<DBManagerComponent>();
 
             await ETTask.CompletedTask;
         }
