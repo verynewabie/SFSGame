@@ -18,7 +18,7 @@
             room.GetComponent<SFSComponent>().SyncAllCmd(message.PlayerId, component.GetReconnectStartFrame(message.PlayerId) + 1, 
                 tickCmpt.CurrentFrame);
             response.StartTime = tickCmpt.FixedUpdate.StartTime;
-            response.Frame = tickCmpt.FixedUpdate.StartFrame;
+            response.Frame = tickCmpt.CurrentFrame;
             room.SendToPlayer(response, message.PlayerId);
             await ETTask.CompletedTask;
         }

@@ -424,5 +424,5 @@ message C2Room_ReconnectDone // ISFSRoomMessage
 message Room2C_ReconnectEnterGame // IMessage
 {
 	int64 StartTime = 1;
-	int64 Frame = 2;
+	int32 Frame = 2;
 }

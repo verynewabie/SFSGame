@@ -7,7 +7,7 @@
         protected override async ETTask Run(Scene root, Room2C_ReconnectEnterGame message)
         {
             await EventSystem.Instance.PublishAsync(root, new HideUIHint());
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().StartSync(message.StartTime);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().StartSync(message.StartTime, message.Frame);
         }
     }
 }

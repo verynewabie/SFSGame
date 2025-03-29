@@ -154,6 +154,7 @@ namespace ET.Client
         public static void StartSync(this SFSComponent self, long startTime, int startFrame)
         {
             self.StartSync = true;
+            self.CurrentFrame = startFrame;
             self.ClientUpdate = new FixedUpdate(startTime + startFrame * SFSConstValue.UpdateInterval, startFrame, SFSConstValue.UpdateInterval);
             self.ServerUpdate = new FixedUpdate(startTime + startFrame * SFSConstValue.UpdateInterval, startFrame, SFSConstValue.UpdateInterval);
         }

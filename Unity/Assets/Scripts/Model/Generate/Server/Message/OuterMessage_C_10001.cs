@@ -1949,7 +1949,7 @@ namespace ET
         public long StartTime { get; set; }
 
         [MemoryPackOrder(1)]
-        public long Frame { get; set; }
+        public int Frame { get; set; }
 
         public override void Dispose()
         {
