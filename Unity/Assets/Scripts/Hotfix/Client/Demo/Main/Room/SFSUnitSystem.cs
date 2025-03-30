@@ -22,11 +22,13 @@ namespace ET.Client
                 {
                     self.Rotation = quaternion.LookRotation(self.Speed, math.up());
                 }
-                self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
+                self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat * 
+                        (self.SfsUnitType == SFSUnitType.Player ? 
+                                SFSConstValue.PlayerSpeedFactor
+                                : SFSConstValue.ProjectileSpeedFactor);
             }
             else
             {
-                self.Speed = float3.zero;
                 self.Duration--;
                 if (self.Duration == 0)
                 {
@@ -91,7 +93,10 @@ namespace ET.Client
                 self.Speed = moveCmd.Speed;
             }
             else
-                self.Speed = moveCmd.Speed;
+            {
+                if (self.SfsUnitState == SFSUnitState.Free)
+                    self.Speed = moveCmd.Speed;
+            }
         }
 
         public static bool CheckConsistency(this SFSUnit self, int frame, MoveCmd moveCmd)
@@ -107,6 +112,7 @@ namespace ET.Client
 
         public static void Rollback(this SFSUnit self, MoveCmd moveCmd)
         {
+            // Log.Error($"Rollback From :{self.Position} To :{moveCmd.Pos}");
             self.Position = moveCmd.Pos;
             self.Rotation = moveCmd.Rot;
             self.Speed = moveCmd.Speed;

@@ -35,7 +35,7 @@ namespace ET.Client
             unit.SfsUnitType = info.Type;
             unit.SfsUnitCamp = info.Camp;
             unit.SfsUnitState = info.State;
-            unit.Speed = math.forward(unit.Rotation) * 2.5f;
+            unit.Speed = math.forward(unit.Rotation);
             // Add UnitView
             EventSystem.Instance.Publish(room.Root(), new CreateSFSProjectile()
             {

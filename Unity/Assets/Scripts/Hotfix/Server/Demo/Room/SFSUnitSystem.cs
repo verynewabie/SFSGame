@@ -24,11 +24,13 @@ namespace ET.Server
                 {
                     self.Rotation = quaternion.LookRotation(self.Speed, math.up());
                 }
-                self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat;
+                self.Position += self.Speed * SFSConstValue.UpdateIntervalFloat * 
+                        (self.SfsUnitType == SFSUnitType.Player ? 
+                                SFSConstValue.PlayerSpeedFactor
+                                : SFSConstValue.ProjectileSpeedFactor);
             }
             else
             {
-                self.Speed = float3.zero;
                 self.Duration--;
                 if (self.Duration == 0)
                 {
@@ -84,7 +86,10 @@ namespace ET.Server
                     Cmd = moveCmd
                 });
             }
-            // Log.Error($"Frame {moveCmd.FrameId} Pos: {moveCmd.Pos.ToString()}");
+
+            // Log.Error($"Frame {moveCmd.FrameId} Pos: {moveCmd.Pos.ToString()} " +
+            //     $"Speed :{moveCmd.Speed.ToString()} " +
+            //     $"Rotate: {moveCmd.Rot.ToString()}");
 
             // State
             StateCmd stateCmd = StateCmd.Create();
@@ -119,8 +124,6 @@ namespace ET.Server
                 });
             }
 
-            // TODO AddCmdToWholeCmdsBuffer
-
             self.GetComponent<SkillComponent>().TickEnd();
             self.GetComponent<ColliderComponent>().TickEnd();
             self.GetComponent<BuffComponent>().TickEnd();
@@ -128,7 +131,8 @@ namespace ET.Server
 
         public static void HandleCmd(this SFSUnit self, MoveCmd moveCmd)
         {
-            self.Speed = moveCmd.Speed;
+            if (self.SfsUnitState == SFSUnitState.Free)
+                self.Speed = moveCmd.Speed;
         }
 
         private static bool CheckConsistency(this SFSUnit self, int frame, MoveCmd moveCmd)
@@ -165,6 +169,8 @@ namespace ET.Server
         {
             self.SfsUnitState = state;
             self.Duration = duration;
+            if (state == SFSUnitState.Abnormal)
+                self.Speed = float3.zero;
         }
 
         public static void TakeDamage(this SFSUnit self, int damage)
@@ -175,6 +181,7 @@ namespace ET.Server
             {
                 self.SfsUnitState = SFSUnitState.Die;
                 self.Duration = 1;
+                self.Speed = float3.zero;
                 EventSystem.Instance.Publish(self.Root(), new AddBodyToRemove
                 {
                     Body = self.GetComponent<ColliderComponent>().Body

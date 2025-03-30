@@ -34,7 +34,7 @@ namespace ET.Server
             unit.SfsUnitType = info.Type;
             unit.SfsUnitCamp = info.Camp;
             unit.SfsUnitState = info.State;
-            unit.Speed = math.forward(unit.Rotation) * 2.5f;
+            unit.Speed = math.forward(unit.Rotation);
             CreateColliderInfo colliderInfo = new CreateColliderInfo
             {  
                 radius = 0.25f,
