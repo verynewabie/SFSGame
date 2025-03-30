@@ -10,6 +10,17 @@
         {
 
         }
+        
+        public static void OnlyTick(this SFSUnitComponent self)
+        {
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit && unit.SfsUnitState != SFSUnitState.Die)
+                {
+                    unit.Tick();
+                }
+            }
+        }
 
         public static void Tick(this SFSUnitComponent self, bool isInChaseFrameState)
         {
@@ -28,6 +39,13 @@
                 if (entity is SFSUnit unit && unit.SfsUnitState != SFSUnitState.Die)
                 {
                     unit.Tick();
+                }
+            }
+            
+            foreach (var entity in self.Children.Values)
+            {
+                if (entity is SFSUnit unit && unit.SfsUnitState != SFSUnitState.Die)
+                {
                     unit.TickEnd();
                 }
             }

@@ -5,11 +5,11 @@ namespace ET.Client
 {
 
     [EntitySystemOf(typeof(SFSCameraComponent))]
-    [FriendOfAttribute(typeof(ET.Client.SFSUnitView))]
+    [FriendOf(typeof(SFSUnitView))]
     public static partial class SFSCameraComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.Client.SFSCameraComponent self, ET.Client.SFSUnitView unit)
+        private static void Awake(this SFSCameraComponent self, SFSUnitView unit)
         {
             GameObject camera = GameObject.Find("VirtualCamera");
             CinemachineVirtualCamera vCamera = camera.GetComponent<CinemachineVirtualCamera>();
@@ -17,6 +17,16 @@ namespace ET.Client
             mainCamera.AddComponent<CinemachineBrain>();
             vCamera.Follow = unit.GameObject.transform;
             vCamera.LookAt = unit.GameObject.transform;
+        }
+        
+        [EntitySystem]
+        private static void Update(this SFSCameraComponent self)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
         }
     }
 }

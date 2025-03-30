@@ -8,7 +8,7 @@
         public const bool EnableSmoothUpdateInterval = false;
         public const int SkillCDFrame = 5 * FrameCountPerSecond;
         public const float UpdateIntervalFloat = UpdateInterval / 1000.0f;
-        public const int SkillForward = FrameCountPerSecond / 10 * 4;
+        public const int SkillForward = FrameCountPerSecond / 2;
         public const int SkillCD = 5 * FrameCountPerSecond;
         public const float PlayerSpeedFactor = 1f;
         public const float ProjectileSpeedFactor = 2.5f;

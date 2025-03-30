@@ -16,5 +16,6 @@ namespace ET
         public const int ERR_LoginPasswordError = 210000;
         public const int ERR_PlayerAlreadyOnline = 2100001;
         public const int ERR_PlayerReconnect = 2100002;
+        public const int ERR_ReplayDataNotFound = 2100003;
     }
 }

@@ -114,12 +114,11 @@ namespace ET.Server
             foreach (long playerId in playerIds)
             {
                 SFSUnit unit = unitComponent.GetChild<SFSUnit>(playerId);
-                await dbComponent.AddPlayerBattle(playerId, new BattleInfo
-                {
-                    BattleId = battleId,
-                    Time = self.FixedUpdate.StartTime,
-                    Win = winCamp == unit.SfsUnitCamp,
-                });
+                BattleInfo battleInfo = BattleInfo.Create();
+                battleInfo.BattleId = battleId;
+                battleInfo.Win = winCamp == unit.SfsUnitCamp;
+                battleInfo.Time = self.FixedUpdate.StartTime;
+                await dbComponent.AddPlayerBattle(playerId, battleInfo);
             }
 
             OneGameInfo oneGameInfo = self.AddChild<OneGameInfo>();

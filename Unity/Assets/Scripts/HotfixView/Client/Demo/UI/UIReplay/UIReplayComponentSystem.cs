@@ -24,6 +24,7 @@ namespace ET.Client
         private static async ETTask GetReplayList(this UIReplayComponent self)
         {
             C2G_GetPlayerBattles request = C2G_GetPlayerBattles.Create();
+            request.PlayerId = self.Root().GetComponent<PlayerComponent>().MyId;
             G2C_GetPlayerBattles response = await self.Root().GetComponent<ClientSenderComponent>().Call(request)
                     as G2C_GetPlayerBattles;
             self.RefreshReplayList(response.Battles);
@@ -64,11 +65,24 @@ namespace ET.Client
 
         private static async ETTask StartReplay(this UIReplayComponent self, long battleId)
         {
-            C2G_GetOneGameInfo request = C2G_GetOneGameInfo.Create();
+            C2G_ReplayRequest request = C2G_ReplayRequest.Create();
             request.BattleId = battleId;
-            G2C_GetOneGameInfo response = await self.Root().GetComponent<ClientSenderComponent>()
-                    .Call(request) as G2C_GetOneGameInfo;
-            Log.Error($"Replay Count: {response.Cmds.Count}");
+            G2C_ReplayResponse response = await self.Root().GetComponent<ClientSenderComponent>()
+                    .Call(request) as G2C_ReplayResponse;
+            if (response.Error != ErrorCode.ERR_Success)
+            {
+                await EventSystem.Instance.PublishAsync(self.Root(), new ShowUIHint
+                {
+                    hint = "获取回放数据失败",
+                    showCloseBtn = true
+                });
+                return;
+            }
+            EventSystem.Instance.PublishAsync(self.Root(), new ReplayGame
+            {
+                units = response.Units,
+                battleId = battleId
+            }).Coroutine();
         }
     }
 }

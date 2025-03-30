@@ -1996,6 +1996,39 @@ namespace ET
     }
 
     [MemoryPackable]
+    [Message(OuterMessage.BattleInfo)]
+    public partial class BattleInfo : MessageObject
+    {
+        public static BattleInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(BattleInfo), isFromPool) as BattleInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public long Time { get; set; }
+
+        [MemoryPackOrder(1)]
+        public bool Win { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long BattleId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Time = default;
+            this.Win = default;
+            this.BattleId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
     [Message(OuterMessage.G2C_GetPlayerBattles)]
     public partial class G2C_GetPlayerBattles : MessageObject, ISessionResponse
     {
@@ -2014,7 +2047,7 @@ namespace ET
         public string Message { get; set; }
 
         [MemoryPackOrder(3)]
-        public List<ET.BattleInfo> Battles { get; set; } = new();
+        public List<BattleInfo> Battles { get; set; } = new();
 
         public override void Dispose()
         {
@@ -2033,13 +2066,13 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.C2G_GetOneGameInfo)]
-    [ResponseType(nameof(G2C_GetOneGameInfo))]
-    public partial class C2G_GetOneGameInfo : MessageObject, ISessionRequest
+    [Message(OuterMessage.C2G_ReplayRequest)]
+    [ResponseType(nameof(G2C_ReplayResponse))]
+    public partial class C2G_ReplayRequest : MessageObject, ISessionRequest
     {
-        public static C2G_GetOneGameInfo Create(bool isFromPool = false)
+        public static C2G_ReplayRequest Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2G_GetOneGameInfo), isFromPool) as C2G_GetOneGameInfo;
+            return ObjectPool.Instance.Fetch(typeof(C2G_ReplayRequest), isFromPool) as C2G_ReplayRequest;
         }
 
         [MemoryPackOrder(0)]
@@ -2063,37 +2096,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(OuterMessage.OneFrameCmd)]
-    public partial class OneFrameCmd : MessageObject
+    [Message(OuterMessage.G2C_ReplayResponse)]
+    public partial class G2C_ReplayResponse : MessageObject, ISessionResponse
     {
-        public static OneFrameCmd Create(bool isFromPool = false)
+        public static G2C_ReplayResponse Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(OneFrameCmd), isFromPool) as OneFrameCmd;
-        }
-
-        [MemoryPackOrder(0)]
-        public List<MessageObject> Cmds { get; set; } = new();
-
-        public override void Dispose()
-        {
-            if (!this.IsFromPool)
-            {
-                return;
-            }
-
-            this.Cmds.Clear();
-
-            ObjectPool.Instance.Recycle(this);
-        }
-    }
-
-    [MemoryPackable]
-    [Message(OuterMessage.G2C_GetOneGameInfo)]
-    public partial class G2C_GetOneGameInfo : MessageObject, ISessionResponse
-    {
-        public static G2C_GetOneGameInfo Create(bool isFromPool = false)
-        {
-            return ObjectPool.Instance.Fetch(typeof(G2C_GetOneGameInfo), isFromPool) as G2C_GetOneGameInfo;
+            return ObjectPool.Instance.Fetch(typeof(G2C_ReplayResponse), isFromPool) as G2C_ReplayResponse;
         }
 
         [MemoryPackOrder(0)]
@@ -2105,11 +2113,8 @@ namespace ET
         [MemoryPackOrder(2)]
         public string Message { get; set; }
 
-        [MemoryPackOrder(3)]
-        public List<int> Frames { get; set; } = new();
-
-        [MemoryPackOrder(4)]
-        public List<OneFrameCmd> Cmds { get; set; } = new();
+        [MemoryPackOrder(5)]
+        public List<SFSUnitInfo> Units { get; set; } = new();
 
         public override void Dispose()
         {
@@ -2121,9 +2126,54 @@ namespace ET
             this.RpcId = default;
             this.Error = default;
             this.Message = default;
-            this.Frames.Clear();
-            this.Cmds.Clear();
+            this.Units.Clear();
 
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2G_RequestCmds)]
+    public partial class C2G_RequestCmds : MessageObject, ISessionMessage
+    {
+        public static C2G_RequestCmds Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_RequestCmds), isFromPool) as C2G_RequestCmds;
+        }
+
+        [MemoryPackOrder(0)]
+        public long BattleId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.BattleId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.G2C_AllCmdSend)]
+    public partial class G2C_AllCmdSend : MessageObject, IMessage
+    {
+        public static G2C_AllCmdSend Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_AllCmdSend), isFromPool) as G2C_AllCmdSend;
+        }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            
             ObjectPool.Instance.Recycle(this);
         }
     }
@@ -2189,9 +2239,11 @@ namespace ET
         public const ushort C2Room_ReconnectDone = 10058;
         public const ushort Room2C_ReconnectEnterGame = 10059;
         public const ushort C2G_GetPlayerBattles = 10060;
-        public const ushort G2C_GetPlayerBattles = 10061;
-        public const ushort C2G_GetOneGameInfo = 10062;
-        public const ushort OneFrameCmd = 10063;
-        public const ushort G2C_GetOneGameInfo = 10064;
+        public const ushort BattleInfo = 10061;
+        public const ushort G2C_GetPlayerBattles = 10062;
+        public const ushort C2G_ReplayRequest = 10063;
+        public const ushort G2C_ReplayResponse = 10064;
+        public const ushort C2G_RequestCmds = 10065;
+        public const ushort G2C_AllCmdSend = 10066;
     }
 }

@@ -49,20 +49,20 @@
             }
 
             // Send Debug Info
-            Room2C_DebugInfo debugInfo = Room2C_DebugInfo.Create();
-            debugInfo.CmdType = SFSCmdType.DebugInfoCmd;
-            foreach (var entity in self.Children.Values)
-            {
-                if (entity is SFSUnit unit)
-                {
-                    debugInfo.Pos.Add(unit.Position);
-                    debugInfo.Radius.Add(unit.SfsUnitType == SFSUnitType.Player ? 1f : 0.25f);
-                }
-            }
-            EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
-            {
-                Cmd = debugInfo
-            });
+            // Room2C_DebugInfo debugInfo = Room2C_DebugInfo.Create();
+            // debugInfo.CmdType = SFSCmdType.DebugInfoCmd;
+            // foreach (var entity in self.Children.Values)
+            // {
+            //     if (entity is SFSUnit unit)
+            //     {
+            //         debugInfo.Pos.Add(unit.Position);
+            //         debugInfo.Radius.Add(unit.SfsUnitType == SFSUnitType.Player ? 1f : 0.25f);
+            //     }
+            // }
+            // EventSystem.Instance.Publish(self.Root(), new AddCmdToSendQueue
+            // {
+            //     Cmd = debugInfo
+            // });
         }
 
         public static void TickEnd(this SFSUnitComponent self)

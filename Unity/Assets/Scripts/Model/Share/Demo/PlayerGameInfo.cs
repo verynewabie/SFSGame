@@ -8,11 +8,4 @@ namespace ET
         public long PlayerId;
         public List<BattleInfo> Battles = new List<BattleInfo>();
     }
-
-    public struct BattleInfo
-    {
-        public long Time;
-        public bool Win;
-        public long BattleId;
-    }
 }

@@ -43,6 +43,12 @@ namespace ET.Client
         public bool showCloseBtn;
     }
 
+    public struct ReplayGame
+    {
+        public List<SFSUnitInfo> units;
+        public long battleId;
+    }
+
     public struct HideUIHint
     {
         
@@ -81,6 +87,11 @@ namespace ET.Client
         
     }
 
+    public struct RemoveReplayUI
+    {
+        
+    }
+
     public struct GameEnd
     {
         
@@ -89,6 +100,11 @@ namespace ET.Client
     public struct InitBattleView
     {
         public PlayerInputComponent PlayerInputComponent;
+    }
+
+    public struct InitReplayBattleView
+    {
+        
     }
 
     public struct RemoveUnitView

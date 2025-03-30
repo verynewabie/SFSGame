@@ -5,7 +5,8 @@
     {
         protected override async ETTask Run(Scene root, MoveCmd message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }
@@ -15,7 +16,8 @@
     {
         protected override async ETTask Run(Scene root, SkillCmd message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }
@@ -25,7 +27,8 @@
     {
         protected override async ETTask Run(Scene root, Room2C_DeleteUnit message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }
@@ -35,7 +38,8 @@
     {
         protected override async ETTask Run(Scene root, Room2C_DebugInfo message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }
@@ -45,7 +49,8 @@
     {
         protected override async ETTask Run(Scene root, StateCmd message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }
@@ -55,7 +60,8 @@
     {
         protected override async ETTask Run(Scene root, BuffCmd message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }
@@ -65,7 +71,8 @@
     {
         protected override async ETTask Run(Scene root, AttributeCmd message)
         {
-            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>().AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<SFSComponent>()?.AddCmdToHandleQueue(message);
+            root.GetComponent<BattleRoom>().GetComponent<ReplayComponent>()?.AddCmdToHandleQueue(message);
             await ETTask.CompletedTask;
         }
     }

@@ -254,19 +254,29 @@ namespace ET.Server
         // 新增对局ID到PlayerGameInfo.BattleId列表（线程安全）
         public static async ETTask AddPlayerBattle(this DBComponent self, long playerId, BattleInfo battle)
         {
-            // 使用玩家ID计算锁的Key（与现有DBComponent锁策略一致）
             using (await self.Root().GetComponent<CoroutineLockComponent>().Wait(CoroutineLockType.DB, playerId % DBComponent.TaskCount))
             {
                 var collection = self.GetCollection<PlayerGameInfo>();
-
-                // 定义过滤器：按PlayerId查找文档
                 var filter = Builders<PlayerGameInfo>.Filter.Eq(p => p.PlayerId, playerId);
 
-                // 定义更新操作：向BattleId列表追加新ID（使用$push）
-                var update = Builders<PlayerGameInfo>.Update.Push(p => p.Battles, battle);
+                // 先尝试查找现有文档
+                var existingDoc = await collection.Find(filter).FirstOrDefaultAsync();
 
-                // 执行更新（若不存在则插入新文档）
-                await collection.UpdateOneAsync(filter, update, new UpdateOptions { IsUpsert = true });
+                if (existingDoc != null)
+                {
+                    // 已有文档：追加 BattleInfo
+                    var update = Builders<PlayerGameInfo>.Update.Push(p => p.Battles, battle);
+                    await collection.UpdateOneAsync(filter, update);
+                }
+                else
+                {
+                    // 新文档
+                    PlayerGameInfo info = self.AddChild<PlayerGameInfo>();
+                    info.PlayerId = playerId;
+                    info.Battles.Add(battle);
+                    await collection.InsertOneAsync(info);
+                    self.RemoveChild(info.Id);
+                }
             }
         }
 

@@ -434,31 +434,42 @@ message C2G_GetPlayerBattles // ISessionRequest
 	int64 PlayerId = 2;
 }
 
+message BattleInfo
+{
+    int64 Time = 1;
+    bool Win = 2;
+    int64 BattleId = 3;
+}
+
 message G2C_GetPlayerBattles // ISessionResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	repeated ET.BattleInfo Battles = 4;
+	repeated BattleInfo Battles = 4;
 }
 
-// ResponseType G2C_GetOneGameInfo
-message C2G_GetOneGameInfo // ISessionRequest
+// ResponseType G2C_ReplayResponse
+message C2G_ReplayRequest // ISessionRequest
 {
 	int32 RpcId = 1;
 	int64 BattleId = 2;
 }
 
-message OneFrameCmd
-{
-	repeated MessageObject Cmds = 1;
-}
-
-message G2C_GetOneGameInfo // ISessionResponse
+message G2C_ReplayResponse // ISessionResponse
 {
 	int32 RpcId = 1;
 	int32 Error = 2;
 	string Message = 3;
-	repeated int32 Frames = 4;
-	repeated OneFrameCmd Cmds = 5;
+	repeated SFSUnitInfo Units = 6;
+}
+
+message C2G_RequestCmds // ISessionMessage
+{
+	int64 BattleId = 1;
+}
+
+message G2C_AllCmdSend // IMessage
+{
+
 }

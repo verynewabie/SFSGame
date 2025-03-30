@@ -9,7 +9,7 @@
             var room = root.GetComponent<BattleRoom>();
             if (room == null)
                 return;
-            room.GetComponent<SFSComponent>().ChangePing(message.NewPing);
+            room.GetComponent<SFSComponent>()?.ChangePing(message.NewPing);
         }
     }
 }
