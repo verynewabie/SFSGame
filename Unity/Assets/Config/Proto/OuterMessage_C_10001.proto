@@ -426,3 +426,39 @@ message Room2C_ReconnectEnterGame // IMessage
 	int64 StartTime = 1;
 	int32 Frame = 2;
 }
+
+// ResponseType G2C_GetPlayerBattles
+message C2G_GetPlayerBattles // ISessionRequest
+{
+	int32 RpcId = 1;
+	int64 PlayerId = 2;
+}
+
+message G2C_GetPlayerBattles // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated ET.BattleInfo Battles = 4;
+}
+
+// ResponseType G2C_GetOneGameInfo
+message C2G_GetOneGameInfo // ISessionRequest
+{
+	int32 RpcId = 1;
+	int64 BattleId = 2;
+}
+
+message OneFrameCmd
+{
+	repeated MessageObject Cmds = 1;
+}
+
+message G2C_GetOneGameInfo // ISessionResponse
+{
+	int32 RpcId = 1;
+	int32 Error = 2;
+	string Message = 3;
+	repeated int32 Frames = 4;
+	repeated OneFrameCmd Cmds = 5;
+}

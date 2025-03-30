@@ -6,9 +6,10 @@ namespace ET.Server
 
     [EntitySystemOf(typeof(SFSComponent))]
     [FriendOf(typeof(SFSComponent))]
-    [FriendOfAttribute(typeof(ET.BattleRoom))]
-    [FriendOfAttribute(typeof(ET.Server.PlayerGameInfo))]
-    [FriendOfAttribute(typeof(ET.Server.OneGameInfo))]
+    [FriendOf(typeof(BattleRoom))]
+    [FriendOf(typeof(PlayerGameInfo))]
+    [FriendOf(typeof(OneGameInfo))]
+    [FriendOf(typeof(SFSUnit))]
     public static partial class SFSComponentSystem
     {
         [EntitySystem]
@@ -109,9 +110,16 @@ namespace ET.Server
             List<long> playerIds = self.MyRoom.PlayerId;
             DBComponent dbComponent = self.Root().GetComponent<DBManagerComponent>().GetZoneDB(1);
             long battleId = self.MyRoom.InstanceId;
-            foreach (var playerId in playerIds)
+            SFSUnitComponent unitComponent = self.MyRoom.GetComponent<SFSUnitComponent>();
+            foreach (long playerId in playerIds)
             {
-                await dbComponent.AddPlayerBattle(playerId, battleId);
+                SFSUnit unit = unitComponent.GetChild<SFSUnit>(playerId);
+                await dbComponent.AddPlayerBattle(playerId, new BattleInfo
+                {
+                    BattleId = battleId,
+                    Time = self.FixedUpdate.StartTime,
+                    Win = winCamp == unit.SfsUnitCamp,
+                });
             }
 
             OneGameInfo oneGameInfo = self.AddChild<OneGameInfo>();
@@ -128,7 +136,7 @@ namespace ET.Server
                 info.State = SFSUnitState.Free;
                 oneGameInfo.Units.Add(info);
             }
-            
+
             foreach ((int key, Queue<IRoomCmd> value) in self.WholeCmds)
             {
                 oneGameInfo.Cmds.Add(key.ToString(), value);

@@ -1965,6 +1965,169 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(OuterMessage.C2G_GetPlayerBattles)]
+    [ResponseType(nameof(G2C_GetPlayerBattles))]
+    public partial class C2G_GetPlayerBattles : MessageObject, ISessionRequest
+    {
+        public static C2G_GetPlayerBattles Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_GetPlayerBattles), isFromPool) as C2G_GetPlayerBattles;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long PlayerId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.G2C_GetPlayerBattles)]
+    public partial class G2C_GetPlayerBattles : MessageObject, ISessionResponse
+    {
+        public static G2C_GetPlayerBattles Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_GetPlayerBattles), isFromPool) as G2C_GetPlayerBattles;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<ET.BattleInfo> Battles { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.Battles.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.C2G_GetOneGameInfo)]
+    [ResponseType(nameof(G2C_GetOneGameInfo))]
+    public partial class C2G_GetOneGameInfo : MessageObject, ISessionRequest
+    {
+        public static C2G_GetOneGameInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2G_GetOneGameInfo), isFromPool) as C2G_GetOneGameInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public long BattleId { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.BattleId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.OneFrameCmd)]
+    public partial class OneFrameCmd : MessageObject
+    {
+        public static OneFrameCmd Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(OneFrameCmd), isFromPool) as OneFrameCmd;
+        }
+
+        [MemoryPackOrder(0)]
+        public List<MessageObject> Cmds { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.Cmds.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(OuterMessage.G2C_GetOneGameInfo)]
+    public partial class G2C_GetOneGameInfo : MessageObject, ISessionResponse
+    {
+        public static G2C_GetOneGameInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(G2C_GetOneGameInfo), isFromPool) as G2C_GetOneGameInfo;
+        }
+
+        [MemoryPackOrder(0)]
+        public int RpcId { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Error { get; set; }
+
+        [MemoryPackOrder(2)]
+        public string Message { get; set; }
+
+        [MemoryPackOrder(3)]
+        public List<int> Frames { get; set; } = new();
+
+        [MemoryPackOrder(4)]
+        public List<OneFrameCmd> Cmds { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.RpcId = default;
+            this.Error = default;
+            this.Message = default;
+            this.Frames.Clear();
+            this.Cmds.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     public static class OuterMessage
     {
         public const ushort HttpGetRouterResponse = 10002;
@@ -2025,5 +2188,10 @@ namespace ET
         public const ushort Room2C_NotifyReconnectInfo = 10057;
         public const ushort C2Room_ReconnectDone = 10058;
         public const ushort Room2C_ReconnectEnterGame = 10059;
+        public const ushort C2G_GetPlayerBattles = 10060;
+        public const ushort G2C_GetPlayerBattles = 10061;
+        public const ushort C2G_GetOneGameInfo = 10062;
+        public const ushort OneFrameCmd = 10063;
+        public const ushort G2C_GetOneGameInfo = 10064;
     }
 }

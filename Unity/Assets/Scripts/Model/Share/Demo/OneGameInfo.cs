@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using MemoryPack;
 
-namespace ET.Server
+namespace ET
 {
     [ChildOf]
     public class OneGameInfo : Entity, IAwake
